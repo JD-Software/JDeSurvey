@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	version="2.0">
+	
+	<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="single-column">
+    <spring:message code="date_format" var="date_format"/>	
+   	<div class="block">
+   			
+   			 	
+   			 	
+   			 	
+   			<c:if test="${surveyDefinition.isPublic eq false}" >  	
+   			 	
+			<spring:url value="/private" var="form_url" />
+			<ul class="breadcrumb">
+			    <li><a href="${form_url}"><spring:message code="mySurveys_label"/></a> <span class="divider">/</span></li>
+			    <li class="active"><c:out value="${surveyDefinition.name}"/></li>
+		    </ul>
+		    </c:if>
+   			<div id="instructions">
+   				<spring:message code="system_administrator" var="system_administrator" />
+   				<spring:message code="mySurveys_label" var="topmenu_surveys" />
+				<spring:message code="survey_menu_instructions" arguments="${surveyDefinition.name};${system_administrator};${topmenu_surveys}" argumentSeparator=";"/>
+			</div>		
+   			<c:if test="${empty userSurveyEntries}"> 
+				<span class="validationMsg"><spring:message code="nosurveys_message" arguments="${system_administrator}"/></span>
+			</c:if>	
+			<c:if test="${!empty userSurveyEntries}">
+   			<table summary="" cellpadding="0" cellspacing="0"  class="questions-table">
+				<thead>
+				<tr>
+					<th><spring:message code="com.jd.survey.domain.survey.typename_label"/></th>
+					<th><spring:message code="com.jd.survey.domain.survey.status_label"/></th>
+					<th><spring:message code="com.jd.survey.domain.survey.creationdate_label"/></th>
+					<th><spring:message code="com.jd.survey.domain.survey.lastupdatedate_label"/></th>
+					<th><spring:message code="com.jd.survey.domain.survey.submissiondate_label"/></th>
+					<th><spring:message code="global_actions_menu"/></th>
+				</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${userSurveyEntries}" var="entry" varStatus="loop">
+						<c:choose>
+							<c:when test="${loop.count % 2 == 0}">
+								<c:set var="rowStyle" scope="page" value="odd"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="rowStyle" scope="page" value="even"/>
+							</c:otherwise>
+						</c:choose>
+						<tr class="${rowStyle}">
+							<td><c:out value="${entry.typeName}"/></td>
+							<td>
+								<c:choose>
+									<c:when test="${entry.status eq 'I'}">
+										<spring:message code="survey_status_incomplete_label"/>
+									</c:when>
+									<c:when test="${entry.status eq 'S'}">
+										<spring:message code="survey_status_submitted_label"/>
+									</c:when>
+									<c:when test="${entry.status eq 'D'}">
+										<spring:message code="survey_status_deleted_label"/>
+									</c:when>
+									<c:when test="${entry.status eq 'R'}">
+										<spring:message code="survey_status_reopened_label"/>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							
+							<td><fmt:formatDate pattern="${date_format}" value="${entry.creationDate}"/></td>
+							<td><fmt:formatDate pattern="${date_format}" value="${entry.lastUpdateDate}"/></td>
+							<td><fmt:formatDate pattern="${date_format}" value="${entry.submissionDate}"/></td>
+							<td class="icon-cell">
+							  <c:if  test="${entry.status eq 'S'}"> <!-- Submitted -->
+					              <spring:url value="/${survey_base_path}/${entry.id}" var="form_url" />
+					              <spring:url value="/resources/images/show.png" var="image_url" />
+					              <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					              <spring:message arguments="${typeName}" code="survey_view" var="action_label" htmlEscape="false" />
+					              	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${survey.id}" class="showIcon">
+				              			<spring:message text="${fn:escapeXml(action_label)}: ${survey.id}" /> 
+				             	 	</a>
+				              </c:if>
+				              <c:if  test="${entry.status ne 'S'}"> <!-- Incomplete or reopened -->
+				                  <spring:url value="/${survey_base_path}/${entry.id}" var="form_url" />
+					              <spring:url value="/resources/images/update.png" var="image_url" />
+					              <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					              <spring:message arguments="${typeName}" code="survey_fill" var="action_label" htmlEscape="false" />
+					             	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${survey.id}" class="updateIcon">
+				              			<spring:message text="${fn:escapeXml(action_label)}: ${survey.id}" /> 
+				             	 	</a>
+				              </c:if>				       
+				            </td>
+						</tr>
+					</c:forEach>
+				
+						<tr class="pagebottom">
+						<td colspan="6">
+				            <span class="new">
+							<spring:url value="/${survey_base_path}/${surveyDefinition.id}" var="create_url">
+								<spring:param name="create" />
+							</spring:url>							   
+				               <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />	
+							   <spring:message arguments="${typeName}" code="survey_create" var="action_label" htmlEscape="false" />
+					              <a href="${create_url}" title="${fn:escapeXml(action_label)}" class="createIcon">
+								   		<spring:message text="${action_label} "/>
+								  </a>
+				            </span>
+				        </td>
+				      </tr>
+				
+   				</tbody>
+   			</table>
+    		</c:if>	
+    		
+    		
+    		
+    		
+    	</div>
+    </div>	
+</div>	
+

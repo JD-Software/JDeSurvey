@@ -1,0 +1,35 @@
+<jsp:root 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+  
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+  <jsp:directive.attribute name="title" type="java.lang.String" required="true" rtexprvalue="true" description="The page title (required)" />
+  <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  <jsp:directive.attribute name="openPane" type="java.lang.String" required="false" rtexprvalue="true" description="Control if the title pane is opened or closed by default (default: true)" />
+  
+  <c:if test="${empty render or render}">
+    <c:if test="${empty openPane}">
+      <c:set value="true" var="openPane" />
+    </c:if>
+  
+    <c:set var="sec_id">
+      <spring:escapeBody javaScriptEscape="true" >${id}</spring:escapeBody>
+    </c:set>
+    
+    <c:set var="sec_openPane">
+      <spring:escapeBody javaScriptEscape="true" >${openPane}</spring:escapeBody>
+    </c:set>
+    
+    <c:set var="sec_title">
+      <spring:escapeBody javaScriptEscape="true" >${title}</spring:escapeBody>
+    </c:set>
+	
+   
+    <jsp:doBody />
+   
+  </c:if>
+</jsp:root>

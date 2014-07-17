@@ -1,0 +1,54 @@
+<jsp:root 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" 
+version="2.0">
+
+  <jsp:output omit-xml-declaration="yes" />
+
+  
+  <spring:theme code="gridStyleSheet" var="grid_css" />
+  <spring:theme code="styleSheet" var="main_css" />
+  <spring:theme code="menuStyleSheet" var="menu_css" />
+  <spring:theme code="jqueryStyle" var="jquery_css" />
+  
+  
+  <spring:url value="${grid_css}" var="grid_css_url" />
+  <spring:url value="${main_css}" var="main_css_url" />
+  <spring:url value="${menu_css}" var="menu_css_url" />
+  <spring:url value="${jquery_css}" var="jquery_css_url" /> 
+  
+														
+  <spring:url value="/resources/js/jquery-1.8.3.js" var="jquery_js_url" />
+  <spring:url value="/resources/js/formee.js" var="formee_js_url" />
+  <spring:url value="/resources/js/jquery-ui-1.9.2.js" var="jquery_ui_js_url" />
+  <spring:url value="/resources/js/jquery.rating.js" var="jquery_rating_url" />   														
+									  			
+									  				
+  <script type="text/javascript" src="${jquery_js_url}"><!-- required for FF3 and Opera --></script>
+  <script type="text/javascript" src="${formee_js_url}"><!-- required for FF3 and Opera --></script>
+  <script type="text/javascript" src="${jquery_ui_js_url}"><!-- required for FF3 and Opera --></script>
+  <script type="text/javascript" src="${jquery_rating_url}"><!-- required for FF3 and Opera --></script>
+  
+  <link rel="stylesheet" type="text/css" media="all" href="${grid_css_url}" />
+  <link rel="stylesheet" type="text/css" media="all" href="${main_css_url}" />
+  <link rel="stylesheet" type="text/css" media="all" href="${menu_css_url}" />
+  <link rel="stylesheet" type="text/css" media="all" href="${jquery_css_url}" />
+  
+  
+  
+  
+  
+   <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
+  <c:set var="userLocale">
+    <c:set var="plocale">${pageContext.response.locale}</c:set>
+    <c:out value="${fn:replace(plocale, '_', '-')}" default="en" />
+  </c:set>
+  
+  <spring:url value="/resources/js/tiny_mce.js" var="tiny_mce_js_url" /> 
+  <script language="javascript" type="text/javascript" src="${tiny_mce_js_url}"><!-- required for FF3 and Opera --></script>
+  
+  
+
+</jsp:root>

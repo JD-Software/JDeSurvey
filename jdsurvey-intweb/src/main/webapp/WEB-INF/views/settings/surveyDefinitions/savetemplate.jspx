@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"  
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:springform="http://www.springframework.org/tags/form"  
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+  
+    <c:choose>
+    	<c:when test="${!empty noSectors}">
+    		<div class="block">
+    			<spring:url value="/admin/sectors/?create" var="createSector" htmlEscape="fasle"/>
+    			<div class="flash flash-notice"><spring:message code="no_sectors"/><a href="${createSector}">Create a New Sector</a></div>
+    		</div>
+    	</c:when>
+		<c:otherwise>
+    	
+    	<div class="block">
+		    	<H2><spring:message code="com.jd.survey.domain.settings.surveytemplate.saveTemplate_label"/></H2>
+		    	<spring:url value="/settings/surveyDefinitions/savetemplate" var="form_url" />
+				    <form  method="POST" action="${form_url}" enctype="multipart/form-data"	 class="formee">
+					    <div>
+					   		<label class="grid-3-12"  for="secId">Sector:</label>
+					    	<select cssclass="grid-3-12" name="secId" style="width:30%;" id="secId">
+					    		<c:forEach items="${sectors}" var="sector" varStatus="loop">
+					    			<c:if test="${sector.id eq sectorId}">
+					    				<option value="${sector.id}" selected="true"><c:out value="${sector.name}"/></option>
+					    			</c:if>
+					    			<c:if test="${sector.id ne sectorId}">
+					    				<option value="${sector.id}"><c:out value="${sector.name}"/></option>
+					    			</c:if>
+								</c:forEach> 
+					    	</select>
+					    	<input type="hidden" id="sid" name="sid" value="${sid}"></input>
+					   	</div>
+					   	<div>
+				        	<label class="grid-3-12"  for="tempName"><spring:message code="com.jd.survey.domain.settings.surveytemplate.name_label"/>:</label>
+				        	<input class="grid-4-12"  type="text" name="name" id="tempName" size="75"/>
+				        	<c:if test="${nameError}"><span class="validationMsg"><spring:message code="surveydefinition_enter_name_message" htmlEscape="false"/></span></c:if>
+				        	<c:if test="${nameDuplicateError}"><span class="validationMsg"><spring:message code="surveydefinition_duplicate_name_message" htmlEscape="false"/></span></c:if>
+				        </div>
+				        <div>
+				        	<label class="grid-3-12"  for="tempDesc"><spring:message code="com.jd.survey.domain.settings.surveytemplate.description_label"/>:</label>
+				        	<input class="grid-8-12"  type="text" name="description" id="tempDesc" size="150"/>
+				        </div>
+				   		<div class="grid-9-12 extDivButtons" id="_submit">
+							<!-- Normal Button -->
+							<spring:message code="button_save" var="save_button" htmlEscape="false" />
+							<div class="grid-9-12">
+								<input id="proceed" type="submit" name="_proceed" value="${fn:escapeXml(save_button)}" class="inputButton right" />
+							</div>
+				        </div>
+			        </form>
+			   	</div>
+			
+
+	</c:otherwise>
+  </c:choose>  
+</div>

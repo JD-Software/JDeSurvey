@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:form="http://www.springframework.org/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+   
+    
+    <div class="right-column">	
+   		<div class="block">
+   			<spring:url value="/settings/surveyDefinitions/upload" var="form_url" />
+   			<c:if test="${empty departments}"> 
+				<div class="block">
+					<span class="errorMsg"><spring:message code="no_department_for_user"/></span>
+				</div>	
+			</c:if>	
+   			
+   			
+   			<c:if test="${!empty departments}"> 
+		    <form  method="POST" action="${form_url}" enctype="multipart/form-data" class="formee" >
+		    	<div>
+		    		<label class="grid-3-12"  for="id"><spring:message code="com.jd.survey.domain.settings.department_label"/>:</label>
+			    	<select cssclass="grid-3-12" name="id" style="width:30%;" id="id">
+			    		<c:forEach items="${departments}" var="department" varStatus="loop">
+			    			<c:if test="${department.id eq departmentId}">
+			    				<option value="${department.id}" selected="true"><c:out value="${department.name}"/></option>
+			    			</c:if>
+			    			<c:if test="${department.id ne departmentId}">
+			    				<option value="${department.id}"><c:out value="${department.name}"/></option>
+			    			</c:if>
+						</c:forEach> 
+			    	</select>
+		    	</div>
+		    	
+		    	<div>
+		        	<label class="grid-3-12"  for="surveyname"><spring:message code="com.jd.survey.domain.settings.department.surveydefinition.name_label"/>:</label>
+		        	<input class="grid-8-12"  type="text" name="name" id="surveyname" size="75"/>
+		        	<c:if test="${nameError}"><span class="validationMsg"><spring:message code="surveydefinition_enter_name_message" htmlEscape="false"/></span></c:if>
+		        	<c:if test="${nameDuplicateError}"><span class="validationMsg"><spring:message code="surveydefinition_duplicate_name_message" htmlEscape="false"/></span></c:if>
+		        </div>
+		        <div>
+		        	<label class="grid-3-12"  for="file"><spring:message code="com.jd.survey.domain.settings.department.surveydefinition.file_label"/>:</label>
+		        	<input class="grid-8-12"  type="file" name="file" id="file" size="75"/>
+		        	<c:if test="${emptyFileError}"><span class="validationMsg"><spring:message code="error_upload_file_survDef"/></span></c:if>
+		        </div>
+		        <div>
+		        	<c:if test="${importError}"><span class="validationMsg"><spring:message code="error_upload_file_survDef"/></span></c:if>
+		        </div>	
+		        
+		        
+		        <div class="grid-9-12 extDivButtons" id="_submit">
+					<!-- Normal Button -->
+					<spring:message code="button_upload" var="save_button" htmlEscape="false" />
+					<spring:message code="button_cancel" var="cancel_button" htmlEscape="false" />
+					<div class="grid-9-12">
+						<input id="proceed" type="submit" name="_proceed" value="${fn:escapeXml(save_button)}" class="inputButton right" />
+						<input id="cancel" type="submit" value="${fn:escapeXml(cancel_button)}" class="inputButton right" />
+					</div>
+		        </div>
+        
+			</form>
+			</c:if>
+		</div>
+    </div>	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+   		
+    	
+</div>

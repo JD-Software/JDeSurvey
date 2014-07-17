@@ -1,0 +1,101 @@
+<div class="left-column" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+	<tiles:importAttribute name="pagemode"/>
+	<div id="sidemenudiv">
+		
+		<c:choose>
+			<c:when test="${pagemode eq 'show'}">
+				<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
+					<ul id="sidemenu" class="topmenu">
+						<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
+							<c:url value="/surveys/list?id=${surveyEntry.surveyDefinitionId}" var="url"/>		
+							<li><a href="${url}" ><i class="icon-arrow-up"> &#160;</i><spring:message code="topmenu_surveys"/></a></li>
+							
+							<c:url value="/surveys/${surveyEntry.surveyId}?pdf" var="url"/>
+							<li class="topmenu"><a href="${url}" class="fancyboxLink fancybox.iframe" target="_new"><i class="icon-print"> &#160;</i><spring:message code="leftmenu_pdf" htmlEscape="false" /></a></li>
+						</sec:authorize>
+					</ul>	
+				</sec:authorize>	
+			</c:when>
+			<c:when test="${pagemode eq 'list'}">
+				<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
+					<ul id="sidemenu" class="topmenu">
+						<c:if test="${!empty surveyDefinition}">
+							<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">						
+							
+								<spring:url value="/reports/${surveyDefinition.id}" var="form_url">
+							 	 <spring:param name="excel" />
+							 	</spring:url>
+					            <li class="topmenu">
+					            	<spring:message code="Survey_export_disclaimer_message" var="tip" />
+					            	<a href="${form_url}"  class="hastip"  title="${tip}">
+				               			<i class="icon-download-alt"> &#160;</i><spring:message code="leftmenu_xls" htmlEscape="false" />
+				               		</a>
+				               	</li>
+				               	
+				               	<spring:url value="/reports/${surveyDefinition.id}" var="form_url">
+							 	 <spring:param name="csv" />
+							 	</spring:url>
+					            <li class="topmenu">
+					            	<a href="${form_url}"  >
+				               			<i class="icon-download-alt"> &#160;</i><spring:message code="leftmenu_csv" htmlEscape="false" />
+				               		</a>
+				               	</li>
+				               	
+				               	<spring:url value="/reports/${surveyDefinition.id}" var="form_url">
+							 	 <spring:param name="spss" />
+							 	</spring:url>
+					            <li class="topmenu">
+					            	<a href="${form_url}" >
+				               			<i class="icon-download-alt"> &#160;</i><spring:message code="leftmenu_spss" htmlEscape="false" />
+				               		</a>
+				               	</li>
+				               	
+								
+								
+							</sec:authorize>
+						</c:if>
+					</ul>	
+					</sec:authorize>
+			</c:when>
+		</c:choose>
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+	
+	
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	 
+	 
+	  
+	
+	
+	
+    
+   
+</div>
+
+    

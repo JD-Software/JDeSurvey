@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.security.group')}_label" var="section_label" htmlEscape="false" />	
+			<section:block title="${section_label}" object="${group}" path="/security/groups" create="false" show_under_line="true" >
+				<field:display field="name" id="s_com.jd.survey.domain.security.Group.name" object="${group}"/>
+				<field:display field="description" id="s_com.jd.survey.domain.security.Group.description" object="${group}" cssclass="grid-9-12 alignTop"/>
+			</section:block>
+			
+			
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.security.Authority')}_label_plural" var="section_label" htmlEscape="false" />		
+			<section:block title="${section_label}:" >	
+				<table:table data="${group.authorities}" id="l_com.jd.survey.domain.security.Authority" path="/security/authorities" create="false" delete="false" update="false" show="false">
+					<table:column id="c_com.jd.survey.domain.security.Authority.name" property="name"/>
+					<table:column id="c_com.jd.survey.domain.security.Authority.description" property="description"/>
+				</table:table>
+			</section:block>
+		
+		
+		
+		<spring:message code="com.jd.survey.domain.security.user_label_plural" var="section_label" htmlEscape="false" />		
+				<section:block title="${section_label}:" >	
+					<table:table data="${group.users}" id="l_com.jd.survey.domain.security.User" path="/security/users" footer="false" create="false" update="false" delete="false" show="false">
+						<table:column id="c_com.jd.survey.domain.security.User.login" property="login"/>
+						<table:column id="c_com.jd.survey.domain.security.User.firstName" property="firstName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.lastName" property="lastName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.email" property="email"/>
+					</table:table>
+				</section:block>
+		
+		
+		
+    </div>	
+</div>
+
+
+
+

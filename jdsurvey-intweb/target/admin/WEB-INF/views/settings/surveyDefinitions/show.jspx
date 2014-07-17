@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 	
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+			 *  This will allow the iframe page to be resized 
+			 */
+			  
+			$('.fancyboxLink').fancybox({
+				   width : '80%',
+				   height : '80%',
+				   fitToView : false,
+				   autoSize : false
+				 });
+		});
+	</script>
+
+    <div class="right-column">
+    		<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.surveydefinition')}_label" var="section_label" htmlEscape="false" />
+    		
+   			<c:set value="false" var="showEditLinks"/>
+    		<c:if test="${surveyDefinition.statusAsString eq 'I' || surveyDefinition.statusAsString eq 'P'}" >  
+			 	<c:set value="true" var="showEditLinks"/>
+			</c:if>
+			
+			<c:set value="false" var="showDeleteLink"/>
+    		<c:if test="${surveyDefinition.statusAsString eq 'I' }" >  
+			 	<c:set value="true" var="showDeleteLink"/>
+			</c:if>
+    		
+    		<section:block title="${section_label}" object="${surveyDefinition}" path="/settings/surveyDefinitions" create="false" edit="${showEditLinks}" delete="${showDeleteLink}" show_under_line="true">
+				<field:link    field="department.name" path="/security/departments/${surveyDefinition.department.id}" id="c_com.jd.survey.domain.settings.surveydefinitionpage.department.name" object="${surveyDefinition}" />
+				<field:display field="name" id="s_com.jd.survey.domain.settings.surveydefinitionpage.surveydefinition.name" object="${surveyDefinition}"/>
+				<field:display field="surveyTheme" id="s_com.jd.survey.domain.settings.surveydefinition.surveytheme" object="${surveyDefinition}" theme="${surveyDefinition.surveyTheme}"/>
+				<div>
+		        	<label class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.surveydefinition.status_label"/>:</label>
+		    		<c:choose>
+			        	<c:when test="${surveyDefinition.statusAsString eq 'I'}">
+							<spring:message code="surveydefinition_status_incomplete_label"/>
+						</c:when>
+						<c:when test="${surveyDefinition.statusAsString eq 'P'}">
+							<spring:message code="surveydefinition_status_published_label"/>
+						</c:when>
+						<c:when test="${surveyDefinition.statusAsString eq 'D'}">
+							<spring:message code="surveydefinition_status_inactive_label"/>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>	
+		        </div>
+				
+				
+        		<field:display field="description" id="s_com.jd.survey.domain.settings.surveydefinitionpage.surveydefinition.description" object="${surveyDefinition}" cssclass="grid-9-12 alignTop"/>
+        		
+        		
+        		<field:display field="isPublic" isBoolean="true" id="s_com.jd.survey.domain.settings.SurveyDefinition.isPublic" object="${surveyDefinition}" />
+				<field:display field="allowMultipleSubmissions"  isBoolean="true" id="s_com.jd.survey.domain.settings.SurveyDefinition.allowMultipleSubmissions" object="${surveyDefinition}" />
+				
+				
+        		
+        		<c:if test="${surveyDefinition.statusAsString eq 'P'}">
+					<label class="grid-3-12"><spring:message code="url_to_survrey" htmlEscape="false" /></label>
+					<span>
+					<a href="${surveyLink}" target="_new"><c:out value="${surveyLink}"/></a>
+					</span>
+				</c:if>
+        		
+    		</section:block> 
+			
+			<!-- Publish Error message -->
+			<c:if test="${isNotPublishReady}"><div class="flash flash-error"><spring:message code="surveydefinition_error_publishing"/></div></c:if>
+			
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.SurveyDefinitionPage')}_label_short" var="parentSingularLabel" htmlEscape="false" />
+			<c:if test="${not empty surveyDefinition.pages}">
+				<c:forEach items="${surveyDefinition.pages}" var="page" varStatus="loop">
+					<div class="block">				
+						<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.SurveyDefinition.pages')}_label" var="section_label" htmlEscape="false" />	
+						<section:page order="${loop.index + 1}" title="${page.title}" object="${page}" path="/settings/surveyDefinitionPages">
+						
+							<field:display field="instructions" id="s_com.jd.survey.domain.settings.SurveyDefinitionPage.instructions" object="${page}" cssclass="grid-9-12 alignTop"/>
+							<div class="field"><span class="label"><spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.SurveyDefinitionPage.questions')}_label" htmlEscape="false" />:</span></div>
+								<table:questionstable questions="${page.questions}" pageid="${page.id}" pageorder="${page.order}" surveyStatus="${surveyDefinition.status}"/>
+						</section:page>
+					</div>			
+				</c:forEach>	 
+			</c:if>
+			
+			<c:if test="${empty surveyDefinition.pages}">
+				<div class="block">
+					<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.SurveyDefinitionPage')}_label_plural" var="value" htmlEscape="false" />
+					<h2><c:out value="${value}"/></h2>
+					<table:table data="${surveyDefinitionsPage}" id="l_com.jd.survey.domain.settings.SurveyDefinitionPage" path="/settings/surveyDefinitionPages" parentid="${id}" create="false">
+						<table:column id="c_com.jd.survey.domain.settings.SurveyDefinitionPage.title" property="title"/>
+					</table:table>
+				</div>
+			</c:if>
+    </div>	
+</div>
+

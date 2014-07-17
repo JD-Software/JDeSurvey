@@ -1,0 +1,69 @@
+body {
+	
+	
+}
+
+.main{	
+	margin: 0 auto;
+	position: relative;
+}
+
+.form-1{
+	width: 300px;
+}
+.flash{	
+	width:600px;
+	margin-right:50%;/*rtl*/
+	right:-300px;/*rtl*/
+}
+
+	/*		Default Layout: */ 
+	body {
+		
+		-webkit-text-size-adjust: 100%; /* Stops Mobile Safari from auto-adjusting font-sizes */
+	}
+	
+	.container{
+		width:100%;
+	}
+
+	/*	Tablet Layout: 768px.*/
+	
+	@media only screen and (min-width: 768px) and (max-width: 991px) {
+		
+		body {
+			/*background:blue;*/
+		}
+	}
+
+
+
+	/*	Mobile Layout: 320px. */
+	@media only screen and (max-width: 767px) {
+			.main{
+				width:auto;
+				
+				margin-top:75px;
+				margin-right:-7px; /*rtl*/
+				left:0;
+			}
+			.form-1{
+				width: 280px;	
+			}
+			.flash{	
+				width:97%;
+				margin-right:5px; /*rtl*/
+				right:0;/*rtl*/
+			}	
+	}
+
+
+
+/*		Wide Mobile Layout: 480px*/
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+	body {
+		/*background:green;*/
+	}
+
+}

@@ -1,0 +1,74 @@
+<div class="container"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+version="2.0">
+
+	<jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
+	<jsp:output omit-xml-declaration="yes" />
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />  
+	<jsp:directive.page pageEncoding="UTF-8" /> 
+
+
+	<div class="test" >	
+		<util:panel id="title" title="${title}">
+			<c:if test="${not empty param.login_error}">
+				<div class="flash flash-error" align="center">
+			      <div class="errors">
+			        <p>
+			          <spring:message code="security_login_unsuccessful" />
+			         
+			        </p>
+			      </div>
+			    </div>
+			</c:if>
+
+		    <spring:url value="/resources/j_spring_security_check" var="form_url" />
+			  
+			<section class="main">
+				
+				<div class="logo" align="center">
+					<spring:message code="segurity_logo_alt" htmlEscape="false" var="${logoAlt}"/>
+					<img src="../images/biglogo.png" alt="${logoAlt}"/>
+				</div>
+			
+				<spring:message code="security_login_form_name" var="nameLbl"/>
+				<spring:message code="security_login_form_password" var="passwordLbl"/>
+				
+				
+				<form name="f" action="${fn:escapeXml(form_url)}" method="POST" class="form-1">
+				<p class="field">
+					<label for="j_username" class="dontShow"><c:out value="${nameLbl}"/></label>
+				<input id="j_username" type='text' name='j_username' placeholder="${nameLbl}">
+					<i class="icon-user icon-large">&#160;</i></input>
+					<spring:message code="security_login_form_name_message" var="name_msg" htmlEscape="false" /> 
+				</p>
+				<p class="field">
+					<label for="j_password" class="dontShow"><c:out value="${passwordLbl}"/></label>
+					<input id="j_password" type='password' name='j_password' placeholder="${passwordLbl}">
+						<i class="icon-lock icon-large">&#160;</i>
+					</input>
+					<spring:message code="security_login_form_password_message" var="pwd_msg" htmlEscape="false" />
+				</p>
+				<p class="submit">
+					<spring:message code="button_submit" var="submit_label" htmlEscape="false" />
+					<button type="submit" name="submit"><i class="icon-arrow-right icon-large">&#160;</i></button>
+				</p>
+				
+				</form>
+				 
+				<div class="forgotDiv" align="center">
+					 <spring:url value="/public/?flogin" var="flogin"/>
+					<a href="${flogin}"><spring:message code="security_forgot_login_link"/></a>
+					<br/>
+					<spring:url value="/public/?fpass" var="fpass"/>
+					<a href="${fpass}"><spring:message code="security_forgot_password_link"/></a>
+				</div> 
+		   </section>
+	 </util:panel>
+  </div>
+</div>
+

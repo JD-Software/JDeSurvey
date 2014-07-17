@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	 xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	 version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="right-column">	
+   	<div class="block">
+    		<page:list id="pl_com.jd.survey.domain.settings.Sector" items="${sectors}">
+        		<table:table data="${sectors}" id="l_com.jd.survey.domain.settings.Sector" path="sectors" create="false">
+        			<!--  
+        			<table:column id="c_com.jd.survey.domain.settings.Sector.code" property="code"/>
+        			-->
+            		<table:column id="c_com.jd.survey.domain.settings.Sector.name" property="name"/>
+            		<table:column id="c_com.jd.survey.domain.settings.Sector.description" property="description"/>
+        		</table:table>
+    		</page:list>
+    	</div>
+    </div>	
+</div>	
+

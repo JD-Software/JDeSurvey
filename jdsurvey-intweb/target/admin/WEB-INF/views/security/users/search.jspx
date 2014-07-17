@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:form="http://www.springframework.org/tags/form"
+	 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	 xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	version="2.0">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+   		<div class="block">
+   			<spring:message code="com.jd.survey.domain.security.user_label_plural" var="entity"/>
+	   		<h2><spring:message arguments="${entity}" code="leftmenu_search" /></h2>
+	   		 	<c:choose>
+					<c:when test="${searchType eq 'login'}">
+						<c:set var="action" value="l"/>
+				    </c:when>
+			        <c:when test="${searchType eq 'name'}">
+						<c:set var="action" value="n"/>
+					</c:when>
+			    	<c:when test="${searchType eq 'email'}">
+			    		<c:set var="action" value="e"/>
+					</c:when>	
+			    </c:choose>	
+			    
+	   			<form:form action="${action}" method="POST" modelAttribute="user" class="formee">
+	   				<c:choose>
+						<c:when test="${searchType eq 'login'}">
+							<div>
+	   							<label class="grid-2-12" for="${searchType}"><spring:message code="com.jd.survey.domain.security.user.login_label"/>:</label>
+	   							<form:input cssclass="grid-5-12" path="login" maxlength="100" id="${searchType}"/>
+							</div>
+					    </c:when>
+				    
+					    <c:when test="${searchType eq 'name'}">
+					    	<div>
+					    		<spring:message code="com.jd.survey.domain.security.user.firstname_label" var="firstName"/>
+	   							<label for="${firstName}" class="grid-2-12"><c:out value="${firstName}"/>:</label>
+	   							<form:input cssclass="grid-5-12" path="firstName" maxlength="75" id="${firstName}"/>
+							</div>
+							
+							<div>
+	   							<label class="grid-2-12"><spring:message code="search_user_or_label"/></label>
+	   							
+							</div>
+							<div>
+								<spring:message code="com.jd.survey.domain.security.user.lastname_label" var="lastName"/>
+	   							<label for="${lastName}" class="grid-2-12"><c:out value="${lastName}"/>:</label>
+	   							<form:input cssclass="grid-5-12" path="lastName" maxlength="75" id="${lastName}"/>
+							</div>
+						</c:when>
+				    	
+				    	<c:when test="${searchType eq 'email'}">
+				    		<div>
+	   							<label for="${searchType}" class="grid-2-12"><spring:message code="com.jd.survey.domain.security.user.email_label"/>:</label>
+	   							<form:input cssclass="grid-5-12" path="email" maxlength="100" id="searchType"/>
+							</div>
+						</c:when>	
+				    </c:choose>	
+	
+	
+						<div class="extDivButtons">
+							<input class="inputButton" value="Search" name="_proceed" type="submit"/>
+							<input class="inputButton" value="Clear" name="_clear" type="submit"/>
+						</div>
+				    	   
+				</form:form>						
+		</div>
+		
+		<c:if test="${not empty users}">
+			<div class="block">
+   				<page:list id="pl_com.jd.survey.domain.security.User" items="${users}">
+	        		<table:table data="${users}" id="l_com.jd.survey.domain.security.User" path="../../users" create="false" handleTypeField="true">
+	        			<table:column id="c_com.jd.survey.domain.security.User.type" property="type"/>
+						<table:column id="c_com.jd.survey.domain.security.User.login" property="login"/>
+						<table:column id="c_com.jd.survey.domain.security.User.firstName" property="firstName"/>
+	            		<table:column id="c_com.jd.survey.domain.security.User.middleName" property="middleName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.lastName" property="lastName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.email" property="email"/>
+						<table:column id="c_com.jd.survey.domain.security.User.enabled" property="enabled" />
+	        		</table:table>
+	    		</page:list>
+	    	</div>
+    	</c:if>
+		 
+		<c:if test="${empty users and !newSearch}"> <div class="flash flash-notice"><spring:message code="no_result_search"/></div></c:if>
+		
+	</div>	
+</div>	
+
+

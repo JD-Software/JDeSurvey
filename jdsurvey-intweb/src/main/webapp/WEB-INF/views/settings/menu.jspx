@@ -1,0 +1,17 @@
+<div class="left-column" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+	
+	<menu:menu id="_menu1">
+        <menu:category id="c_global_main">
+            <menu:item id="i_com.jd.survey.domain.settings.SurveyGroup_new" messageCode="global_menu_new" url="/settings/surveyGroups/?create"/>
+            <menu:item id="i_com.jd.survey.domain.settings.SurveyGroup_list" messageCode="global_menu_list" url="/settings/surveyGroups?page=1&amp;size=${empty param.size ? 10 : param.size}" />
+        </menu:category>
+     </menu:menu>    
+   
+</div>
+
+    

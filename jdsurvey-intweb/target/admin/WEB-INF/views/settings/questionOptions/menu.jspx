@@ -1,0 +1,44 @@
+<div class="left-column" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:sec="http://www.springframework.org/security/tags" 
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+    <script>
+    	function open_popup(popup_url) {
+			var win = window.open(popup_url,'newpage','toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,width=900,height=600,left=50,top=50');
+			win.focus();
+		}
+    </script>
+
+	<div id="sidemenudiv">	
+		
+		<tiles:importAttribute name="pagemode"/>	
+		<c:choose>
+	
+			<c:when test="${pagemode eq 'create'}">
+				<ul id="sidemenu" class="topmenu">
+					<spring:url var="icon" value="/resources/images/menu/topmenu.png" />
+					<c:url value="/settings" var="url"/>		
+					<li><a href="${url}" ><img src="${icon}" alt=""/><spring:message code="leftmenu_settings"/></a></li>
+				</ul>
+			</c:when>
+			<c:when test="${pagemode eq 'update'}">
+				<ul id="sidemenu" class="topmenu">
+					<spring:url var="icon" value="/resources/images/menu/topmenu.png" />
+					<c:url value="/settings" var="url"/>		
+					<li><a href="${url}" ><img src="${icon}" alt=""/><spring:message code="leftmenu_settings"/></a></li>
+				</ul>
+			</c:when>
+			
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>	
+	</div>
+   
+</div>

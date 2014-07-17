@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0">
+	
+	<jsp:directive.page contentType="text/html;charset=UTF-8"/>	
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="right-column">
+    	<div class="block">
+		    <form:update id="fu_com.jd.survey.GlobalSettings.passwordEnforcementRegex" modelAttribute="globalSettings" path="/settings/globalSettings" versionField="Version" >
+		        <field:hidden path="id"/>
+				<field:input field="passwordEnforcementRegex" id="c_com.jd.survey.GlobalSettings.passwordEnforcementRegex" cssclass="grid-8-12" maxlength="75" required="true"/>
+				<field:textarea field="passwordEnforcementMessage" id="c_com.jd.survey.GlobalSettings.passwordEnforcementMessage" cssclass="grid-8-12" maxlength="500" required="true"/>
+				<field:textarea field="validContentTypes" id="c_com.jd.survey.GlobalSettings.validContentTypes" cssclass="grid-8-12" maxlength="3000" required="true"/>
+				<field:textarea field="validImageTypes" id="c_com.jd.survey.GlobalSettings.validImageTypes" cssclass="grid-8-12" maxlength="1000" required="true"/>
+				
+				<label for="maximunFileSize" class="grid-3-12"><spring:message code="com.jd.survey.globalsettings.maximunfilesize_label"/> :</label>
+					<select name="maximunFileSize" style="width:20%;">
+						<c:if test="${globalSettings.maximunFileSize eq '5'}">
+							<option value="5" selected="true">5 MB</option>
+							<option value="10">10 MB</option>
+							<option value="20">20 MB</option>
+							<option value="30">30 MB</option>
+							<option value="50">50 MB</option>
+						</c:if>
+			            <c:if test="${globalSettings.maximunFileSize eq '10'}">
+			           		<option value="5" >5 MB</option>    
+			                <option value="10" selected="true">10 MB</option>
+							<option value="20">20 MB</option>
+							<option value="30">30 MB</option>
+							<option value="50">50 MB</option>
+			            </c:if>    
+		                <c:if test="${globalSettings.maximunFileSize eq '20'}">
+			                <option value="5" >5 MB</option>    
+			                <option value="10">10 MB</option>
+							<option value="20" selected="true">20 MB</option>
+							<option value="30">30 MB</option>
+							<option value="50">50 MB</option>
+		                </c:if>    
+		                <c:if test="${globalSettings.maximunFileSize eq '30'}">
+			                <option value="5" >5 MB</option>    
+			                <option value="10">10 MB</option>
+							<option value="20">20 MB</option>
+							<option value="30" selected="true">30 MB</option>
+							<option value="50">50 MB</option>
+		                </c:if>    
+		                <c:if test="${globalSettings.maximunFileSize eq '50'}">
+			                <option value="5" >5 MB</option>    
+			                <option value="10">10 MB</option>
+							<option value="20">20 MB</option>
+							<option value="30">30 MB</option>
+							<option value="50" selected="true">50 MB</option>
+			            </c:if>
+	                </select> 
+				
+				<field:textarea field="invalidContentMessage" id="c_com.jd.survey.GlobalSettings.invalidContentMessage" cssclass="grid-8-12" maxlength="500" required="true"/>
+				<field:textarea field="invalidFileSizeMessage" id="c_com.jd.survey.GlobalSettings.invalidFileSizeMessage" cssclass="grid-8-12" maxlength="500" required="true"/>
+	
+			</form:update>
+			</div>
+		</div>
+    </div>	
+    

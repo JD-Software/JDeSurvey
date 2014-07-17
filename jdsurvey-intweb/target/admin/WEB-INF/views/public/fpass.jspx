@@ -1,0 +1,81 @@
+<div class="container"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="security_login_title" var="title"
+		htmlEscape="false" />
+
+
+	<div>
+
+		<util:panel id="title" title="${title}">
+			<spring:message code="date_format" var="date_format" />
+			<spring:message code="date_format_tip" arguments="${date_format}" var="tip" />
+			<c:if test="${status eq 'S'}">
+				<div class="messageLink">	
+					<div class="flashTop flash-success">
+						<spring:message code="security_password_reset_submitted_in_email" />
+					</div>
+					<div class="forgotDiv msg" align="center">
+							<spring:url value="/public/login" var="login"/>
+							<a href="${login}"><spring:message code="security_password_goback_link"/></a>
+	           		</div>
+           		</div>
+			</c:if>
+		
+			<c:if test="${status eq 'I'}">
+				<div class="flash flash-error">
+					<spring:message code="security_password_reset_incorrect" />
+				</div>
+			</c:if>
+			<section class="main">
+				<c:if test="${status ne 'S'}">
+					
+					<div class="logo" align="center">
+						<spring:message code="segurity_logo_alt" htmlEscape="false" var="${logoAlt}"/>
+						<img src="../images/biglogo.png" alt="${logoAlt}"/>
+					</div>
+					<spring:url value="/public/?fpass" var="form_url" />
+					
+					<form name="f" action="${fn:escapeXml(form_url)}" method="POST" class="form-1">
+						<h4><spring:message code="security_forgot_password_link"/></h4>
+						<p class="field">
+							<spring:message code="security_password_reset_login_field_name" var="nameLbl"/>
+							<label for="_login" class="dontShow"><c:out value="${nameLbl}"/></label> 
+							<input id="_login" type="text" name="login" placeholder="${nameLbl}">
+								<i class="icon-user icon-large">&#160;</i>
+							</input>
+						</p>
+
+						<p class="field">
+							<spring:message	code="security_password_reset_dob_field_name" var="dobLbl"/>
+							<label for="_dob" class="dontShow"><c:out value="${dobLbl}"/></label>
+							<input id="_dob" type="text" name="dob" placeholder="${dobLbl}">
+								<i class="icon-calendar icon-large">&#160;</i>
+							</input>
+							<span class="tipMsgLeftAligned"><c:out value="${tip}"/></span>
+						</p>
+						
+						 <p class="submit forgotPassword">
+							<spring:message code="button_submit" var="submit_label"	htmlEscape="false" />
+							<button type="submit" name="_proceed"><i class="icon-arrow-right icon-large">&#160;</i></button>
+						</p>
+					</form>
+					
+					<div class="forgotDiv" align="center">
+						<spring:url value="/public/login" var="login"/>
+						<a href="${login}"><spring:message code="security_password_goback_link"/></a>
+		           	</div>
+				</c:if>
+			</section>
+
+
+		</util:panel>
+
+	</div>
+</div>
+

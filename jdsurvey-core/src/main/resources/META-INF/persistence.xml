@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence	xmlns="http://java.sun.com/xml/ns/persistence" 
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				version="2.0" 
+				xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+									http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+									
+	<persistence-unit name="persistenceUnit" transaction-type="JTA">
+	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	<properties>
+	  	 <!--  <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+	           <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/> -->
+	
+	    <!-- value="create" to build a new database on each run; value="update" to modify an existing database; value="create-drop" means the same as "create" but also drops tables when Hibernate closes; value="validate" makes no changes to the database -->
+	    <property name="hibernate.hbm2ddl.auto" value="update"/>
+	    <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+	    <property name="hibernate.connection.charSet" value="UTF-8"/>
+	    <!-- use these for oracle
+	   	<property name="hibernate.show_sql" value="true"></property> 
+	   	<property name="hibernate.format_sql" value="true"></property> 
+	    <property name="hibernate.jdbc.use_streams_for_binary" value="true"></property>
+	    -->
+	    
+	    <!-- Uncomment the following two properties for JBoss only -->
+	    <!-- property name="hibernate.validator.apply_to_ddl" value="false" /-->
+	    <!-- property name="hibernate.validator.autoregister_listeners" value="false" /-->
+	</properties>
+        
+        
+          
+        
+        
+        
+        
+        
+    </persistence-unit>
+</persistence>
+
+
+
+

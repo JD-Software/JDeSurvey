@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"  
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:springform="http://www.springframework.org/tags/form"  
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+<script type="text/javaScript">
+
+   $(document).ready(function(){
+
+
+ $(".isAutoReminderEnabled ").change(function() {
+  		if ( $(this).is(':checked') ) {
+        $(".reminder_frequencies").show();
+    } else {
+        $(".reminder_frequencies").hide();
+    }
+});
+	$("#autoRemindersFrequency").change(function() {
+			var selectedValue = $(this).val();
+			
+			if(selectedValue == "MONTHLY")
+			{
+			$('#reminder_dailyRecurrence').show("fast");
+			$('#reminder_monthlyRecurrence').show("fast");
+			$('#reminder_weeklyRecurrence').hide("fast");
+			$('#reminder_days').hide("fast");
+			}
+			
+			if(selectedValue == "WEEKLY")
+			{
+			$('#reminder_weeklyRecurrence').show("fast");
+			$('#reminder_days').show("fast");
+			$('#reminder_months').hide("fast");
+			$('#reminder_dailyRecurrence').hide("fast");
+			$('#reminder_monthlyRecurrence').hide("fast");
+			
+			}
+			
+			if(selectedValue == "")
+			{
+			$('#reminder_months').hide("fast");
+			$('#reminder_days').hide("fast");
+			$('#reminder_weeklyRecurrence').hide("fast");
+			$('#reminder_dailyRecurrence').hide("fast");
+			}
+		});
+		
+		
+		
+		$('.hastip').tipsy({gravity: 'w'});
+		
+
+		});
+		
+		
+	</script>	    
+   
+ <script language="javascript" type="text/javascript">
+	tinyMCE.init({
+        // General options
+        mode : "textareas",
+		theme_advanced_path : false,
+		height: "124",
+		width : "65%",
+		theme_advanced_buttons2:false,
+        theme : "advanced",
+        verify_html : true,
+       editor_selector : "mceEditor",
+       editor_deselector: "tinyNoEditor",
+        plugins : "inlinepopups,preview",
+	
+        // Theme options
+        theme_advanced_buttons1 : "bold,italic,underline,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,|,forecolor,backcolor,|,code,|,preview",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_statusbar_location : "bottom",
+        theme_advanced_resizing : false,
+
+        // Skin options
+        skin : "o2k7",
+        skin_variant : "silver",
+
+        // Example content CSS (should be your site CSS)
+        content_css : ""
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$("#fancybox-manual-c").css("display", "inline");
+
+			$('.fancybox').fancybox({"margin":10});
+				
+			$("#fancybox-manual-c").click(function() {
+				$.fancybox.open([
+					
+					{	
+						href : '../../images/themes/standard.png',
+						title : '<spring:message code="${fn:toLowerCase('STANDARD')}_theme_label" />'
+					}, {
+						href : '../../images/themes/steel_blue.png',
+						title : '<spring:message code="${fn:toLowerCase('STEEL_BLUE')}_theme_label" />'
+					}, {
+						href : '../../images/themes/deep_chestnut.png',
+						title : '<spring:message code="${fn:toLowerCase('DEEP_CHESTNUT')}_theme_label" />'
+					}, {
+						href : '../../images/themes/spring_green.png',
+						title : '<spring:message code="${fn:toLowerCase('SPRING_GREEN')}_theme_label" />'
+					}, {
+						href : '../../images/themes/french_lilac.png',
+						title : '<spring:message code="${fn:toLowerCase('FRENCH_LILAC')}_theme_label" />'
+					}, {
+						href : '../../images/themes/celestial_blue.png',
+						title : '<spring:message code="${fn:toLowerCase('CELESTIAL_BLUE')}_theme_label" />'
+					}, {
+						href : '../../images/themes/peach_orange.png',
+						title : '<spring:message code="${fn:toLowerCase('PEACH_ORANGE')}_theme_label" />'
+					}
+					
+				]);
+			});
+			
+		});
+	</script>
+	
+	
+ 	<div class="block">
+	    <form:update id="fu_com.jd.survey.domain.settings.SurveyDefinition" showCancelButton="false"  modelAttribute="surveyDefinition" path="/settings/surveyDefinitions" versionField="Version" >
+	      	<field:hidden path="department.id"/>
+			<field:link  path="/security/departments/${surveyDefinition.department.id}" field="department.name" id="c_com.jd.survey.domain.settings.Department" object="${surveyDefinition}" cssclass="grid-8-12" hiperlink="false"/>
+			<field:input field="name" id="c_com.jd.survey.domain.settings.SurveyDefinition.name" cssclass="grid-8-12" maxlength="75" required="true"/>
+			<div>
+					<spring:message code="theme_tip" var="qTypeTip" />
+					<label for="type" class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.surveydefinition.surveytheme_label"/><em class="formee-req">*</em><a class="hastip" title="${qTypeTip}">?</a></label>
+					<springform:select  path="surveyTheme" cssClass="grid-4-12">
+						<c:if test="${surveyDefinition.surveyTheme eq 'STANDARD'}">
+							<option value="STANDARD" selected="true"><spring:message code="${fn:toLowerCase('STANDARD')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'STANDARD'}">
+							<option value="STANDARD" ><spring:message code="${fn:toLowerCase('STANDARD')}_theme_label"  /></option>
+						</c:if>
+						
+						<c:if test="${surveyDefinition.surveyTheme eq 'STEEL_BLUE'}">	
+							<option value="STEEL_BLUE" selected="true"><spring:message code="${fn:toLowerCase('STEEL_BLUE')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'STEEL_BLUE'}">	
+							<option value="STEEL_BLUE"><spring:message code="${fn:toLowerCase('STEEL_BLUE')}_theme_label"  /></option>
+						</c:if>
+						
+						<c:if test="${surveyDefinition.surveyTheme eq 'DEEP_CHESTNUT'}">	
+							<option value="DEEP_CHESTNUT" selected="true"><spring:message code="${fn:toLowerCase('DEEP_CHESTNUT')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'DEEP_CHESTNUT'}">	
+							<option value="DEEP_CHESTNUT"><spring:message code="${fn:toLowerCase('DEEP_CHESTNUT')}_theme_label"  /></option>
+						</c:if>
+						
+						<c:if test="${surveyDefinition.surveyTheme eq 'SPRING_GREEN'}">	
+							<option value="SPRING_GREEN" selected="true"><spring:message code="${fn:toLowerCase('SPRING_GREEN')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'SPRING_GREEN'}">	
+							<option value="SPRING_GREEN"><spring:message code="${fn:toLowerCase('SPRING_GREEN')}_theme_label"  /></option>
+						</c:if>
+					
+						<c:if test="${surveyDefinition.surveyTheme eq 'FRENCH_LILAC'}">	
+							<option value="FRENCH_LILAC" selected="true"><spring:message code="${fn:toLowerCase('FRENCH_LILAC')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'FRENCH_LILAC'}">	
+							<option value="FRENCH_LILAC" ><spring:message code="${fn:toLowerCase('FRENCH_LILAC')}_theme_label"  /></option>
+						</c:if>
+						
+						<c:if test="${surveyDefinition.surveyTheme eq 'CELESTIAL_BLUE'}">	
+							<option value="CELESTIAL_BLUE" selected="true"><spring:message code="${fn:toLowerCase('CELESTIAL_BLUE')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'CELESTIAL_BLUE'}">	
+							<option value="CELESTIAL_BLUE"><spring:message code="${fn:toLowerCase('CELESTIAL_BLUE')}_theme_label"  /></option>
+						</c:if>
+					
+						<c:if test="${surveyDefinition.surveyTheme eq 'PEACH_ORANGE'}">	
+							<option value="PEACH_ORANGE" selected="true"><spring:message code="${fn:toLowerCase('PEACH_ORANGE')}_theme_label"  /></option>
+						</c:if>
+						<c:if test="${surveyDefinition.surveyTheme ne 'PEACH_ORANGE'}">	
+							<option value="PEACH_ORANGE"><spring:message code="${fn:toLowerCase('PEACH_ORANGE')}_theme_label"  /></option>
+						</c:if>
+					</springform:select>
+						<a style="display: none; padding: 0 0 0 2%;" id="fancybox-manual-c" href="javascript:;"><spring:message code="quicklook_theme" /></a>
+						<noscript>
+							<c:url value="/settings/surveydefinitions/themes/lookup" var="url" />
+							<a style="padding: 0 0 0 2%;" target="new_blank" id="fancybox-manual-c" href="${url}"><spring:message code="quicklook_theme" /></a>
+						</noscript>
+					
+					</div>
+			
+			 	
+			<c:if test="${surveyDefinition.statusAsString eq 'I'}">
+			<spring:message code="isPublic_tip" var="tip"/>
+			<field:checkbox field="isPublic" id="c_com.jd.survey.domain.settings.SurveyDefinition.isPublic" tip="${tip}"/>
+			<spring:message code="allowMultipleSubmissions_tip" var="tip"/>
+			<field:checkbox field="allowMultipleSubmissions" id="c_com.jd.survey.domain.settings.SurveyDefinition.allowMultipleSubmissions" tip="${tip}"/>
+			</c:if>
+			
+			<c:if test="${surveyDefinition.statusAsString eq 'P'}">
+			<field:display field="isPublic" isBoolean="true" id="s_com.jd.survey.domain.settings.SurveyDefinition.isPublic" object="${surveyDefinition}" />
+			<field:display field="allowMultipleSubmissions"  isBoolean="true" id="s_com.jd.survey.domain.settings.SurveyDefinition.allowMultipleSubmissions" object="${surveyDefinition}" />
+			
+			</c:if>
+	        
+	        <field:textarea field="description" id="c_com.jd.survey.domain.settings.SurveyDefinition.description" cssclass="mceEditor"  />
+	        <field:textarea field="emailInvitationTemplate" id="c_com.jd.survey.domain.settings.SurveyDefinition.emailInvitationTemplate" cssclass="mceEditor"   />
+			<field:textarea field="completedSurveyTemplate" id="c_com.jd.survey.domain.settings.SurveyDefinition.completedSurveyTemplate" cssclass="mceEditor"   />
+		
+		<br/>
+			
+       	
+		
+		
+		<!-- Frequency reminder Options -->
+		<div  title='reminder_frequencies'  >
+			<h2><spring:message code="reminder_settings"/></h2>
+				<spring:message code="isAutoReminderEnabled_tip" var="tip"/>
+				<field:checkbox  field="sendAutoReminders" id="c_com.jd.survey.domain.settings.SurveyDefinition.isAutoReminderEnabled"  tip="${tip}" cssclass="isAutoReminderEnabled"  />
+		</div>								
+			
+		<div id="reminder_frequencies" class="reminder_frequencies" name="reminder_frequencies">								
+			<label for="reminder_frequencies" class="grid-3-12" ><spring:message code="com.jd.survey.domain.settings.surveydefinition.frequency_label"/></label>
+				<springform:select  path="autoRemindersFrequency">
+					<c:if test="${surveyDefinition.autoRemindersFrequency eq 'MONTHLY'}">
+						<option value="MONTHLY" selected="true"><spring:message code="${fn:toLowerCase('monthly')}_label"  /></option>
+				</c:if>
+				<c:if test="${surveyDefinition.autoRemindersFrequency ne 'MONTHLY'}">
+					<option value="MONTHLY" ><spring:message code="${fn:toLowerCase('monthly')}_label"  /></option>
+				</c:if>
+				<c:if test="${surveyDefinition.autoRemindersFrequency eq 'WEEKLY'}">
+					<option value="WEEKLY" selected="true"><spring:message code="${fn:toLowerCase('weekly')}_label"  /></option>
+				</c:if>
+				<c:if test="${surveyDefinition.autoRemindersFrequency ne 'WEEKLY'}">
+					<option value="WEEKLY" ><spring:message code="${fn:toLowerCase('weekly')}_label"  /></option>
+				</c:if>
+			 </springform:select>
+			   
+		
+		<!-- Frequency reminder Weekly Recurrence -->	   
+		<div id="reminder_weeklyRecurrence"  class="reminder_weeklyRecurrence" name="reminder_weeklyRecurrence">								
+			<label for="reminder_weeklyRecurrence" class="grid-3-12" ><spring:message code="com.jd.survey.domain.settings.surveydefinition.weeklyrecurrence_label"/></label>
+				<springform:select id="autoRemindersWeeklyOccurrence" path="autoRemindersWeeklyOccurrence">
+					<c:forEach var="i" begin="1" end="52">
+				  		<option value="${i}">${i}</option>
+ 					</c:forEach>	
+				</springform:select>
+				<label for="reminder_weeklyRecurrence" class="grid-3-12" style=",right: 150px " ><spring:message code="frequency_weeks_label"/></label>
+		</div>
+		
+		<!-- Frequency reminder Daily & Monthly Recurrence -->	   
+		<div id="reminder_dailyRecurrence"  class="reminder_dailyRecurrence" name="reminder_dailyRecurrence" hidden="true">								
+			<label for="reminder_dailyRecurrence" class="grid-3-12" ><spring:message code="com.jd.survey.domain.settings.surveydefinition.dailyrecurrence_label"/></label>
+				<springform:select id="autoRemindersDayOfMonth" path="autoRemindersDayOfMonth">
+					<c:forEach var="i" begin="1" end="31">
+				  		<option value="${i}">${i}</option>
+ 					</c:forEach>	
+				</springform:select>
+			</div>	
+				
+			<div id="reminder_monthlyRecurrence"  class="reminder_monthlyRecurrence" name="reminder_monthlyRecurrence" hidden="true">	
+				<label for="reminder_monthlyRecurrence" class="grid-3-12" ><spring:message code="frequency_of_every_label"/></label>
+				<springform:select id="autoRemindersMonthlyOccurrence" path="autoRemindersMonthlyOccurrence">
+					<c:forEach var="i" begin="1" end="12">
+				  		<option value="${i}">${i}</option>
+ 					</c:forEach>	
+				</springform:select>
+					<label for="reminder_monthlyRecurrence" class="grid-3-12" style=",right: 150px " ><spring:message code="com.jd.survey.domain.settings.surveydefinition.monthlyrecurrence_label"/></label>
+			</div>
+		
+		<div id="reminder_days">	
+			<field:checkboxes parentObjectItems="${surveyDefinition.autoRemindersDays}" id="c_com.jd.survey.domain.settings.Day" 
+								items="${autoRemindersDays}" itemLabelFieldName="dayName" itemValueFieldName="id" pathOnParentObject="autoRemindersDays" ></field:checkboxes>
+		</div>
+	</div>
+		</form:update>
+	</div>
+	
+</div>

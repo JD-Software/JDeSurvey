@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+					   	
+    <definition name="reports/surveys" extends="default" >
+    	<put-attribute name="activeTab" value ="reports" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/reports/surveys.jspx"/>
+    </definition>
+    
+     
+    <definition name="reports/entries" extends="default" >
+    	<put-attribute name="activeTab" value ="reports" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/reports/entries.jspx"/>
+    </definition>
+    
+    
+    
+  
+    <definition name="reports/survey" extends="default" >
+        <put-attribute name="activeTab" value ="reports" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/reports/survey.jspx"/>
+    </definition>
+
+    
+    
+    
+    
+    
+</tiles-definitions>

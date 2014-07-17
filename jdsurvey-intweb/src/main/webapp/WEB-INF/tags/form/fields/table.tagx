@@ -1,0 +1,358 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:form="http://www.springframework.org/tags/form" 
+version="2.0">
+  <jsp:directive.tag import="java.util.ArrayList" />
+  <jsp:output omit-xml-declaration="yes" />
+
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+  <jsp:directive.attribute name="parentid" type="java.lang.Long" required="false" rtexprvalue="true" description="The identifier for parent object" />
+  <jsp:directive.attribute name="data" type="java.util.Collection" required="true" rtexprvalue="true" description="The collection to be displayed in the table" />
+  <jsp:directive.attribute name="path" type="java.lang.String" required="true" rtexprvalue="true" description="Specify the URL path" />
+  <jsp:directive.attribute name="typeIdFieldName" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier field name for the type (settings to 'id')" />
+  <jsp:directive.attribute name="show" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'show' link into table (default true)" />
+  <jsp:directive.attribute name="create" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'create' link into table (default true)" />
+  <jsp:directive.attribute name="update" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'update' link into table (default true)" />
+  <jsp:directive.attribute name="delete" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'delete' link into table (default true)" />
+  <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  <jsp:directive.attribute name="parentLabel" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier of the parent label"/>
+  <jsp:directive.attribute name="summaryTable" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier of the parent label"/>
+  <jsp:directive.attribute name="orderNumber" type="java.lang.String" required="false" rtexprvalue="true" description="The identifier of the parent label"/>
+  <jsp:directive.attribute name="popup" type="java.lang.Boolean" required="false" rtexprvalue="true" description="open show link in popu windows"/>
+  <jsp:directive.attribute name="handleTypeField" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Will convert the security type values I, E to correspoding values from i18"/>
+  <jsp:directive.attribute name="footer" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'create' link into table (default true)" />
+  
+  <c:if test="${empty render or render}">
+
+    <c:set var="columnProperties" scope="request" />
+    <c:set var="columnLabels" scope="request" />
+    <c:set var="columnMaxLengths" scope="request" />
+    <c:set var="columnTypes" scope="request" />
+    <c:set var="columnDatePatterns" scope="request" />
+    <c:set var="columnWidthPercentages" scope="request" />
+
+    <jsp:doBody />
+
+	<c:if test="${empty handleTypeField}">
+      <c:set var="handleTypeField" value="false" />
+    </c:if>
+
+    <c:if test="${empty typeIdFieldName}">
+      <c:set var="typeIdFieldName" value="id" />
+    </c:if>
+
+	<c:if test="${empty popup}">
+		<c:set var="popup" value="false" />
+	</c:if>	
+	
+
+	<c:if test="${empty show}">
+		<c:set var="show" value="true" />
+	</c:if>	
+
+	<c:if test="${not empty data}">
+		<c:set var="tableShow" value="true" />
+	</c:if>
+	<c:if test="${empty data}">
+		<c:set var="tableShow" value="false" />
+	</c:if>
+	
+	<c:if test="${empty update}">
+		<c:set var="update" value="true" />
+	</c:if>
+	
+    <c:if test="${empty delete}">
+      <c:set var="delete" value="true" />
+    </c:if>
+    
+    <c:if test="${empty footer}">
+      <c:set var="footer" value="true" />
+    </c:if>
+	
+	<spring:message var="singularLabel" code="${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_label_short" htmlEscape="false" />
+	<spring:message var="pluralLabel" code="${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_label_plural" htmlEscape="false" />
+	<spring:message arguments="${typeName}" var="globalGeneric" code="global_generic" htmlEscape="false"/>
+	
+    <spring:message var="typeName" code="${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_new_menu" htmlEscape="false" />
+
+	
+    <c:set var="lengths" value="${fn:split(columnMaxLengths, '&#9999;')}" scope="request" />
+    <c:set var="types" value="${fn:split(columnTypes, '&#9999;')}" scope="request" />
+    <c:set var="patterns" value="${fn:split(columnDatePatterns, '&#9999;')}" scope="request" />
+    <c:set var="widthPercentages" value="${fn:split(columnWidthPercentages, '&#9999;')}" scope="request" />
+
+    <spring:eval var="colCounter" expression="1" />
+	<spring:eval var="count" expression="0" />
+	<c:if test="${tableShow eq true}">
+    <table class="record-table" cellspacing="0" cellpadding="0" summary="${summaryTable}">
+      <thead>
+        <tr>
+          <c:forTokens items="${columnLabels}" delims="${'&#9999;'}" var="columnHeading">
+            <th>
+              <c:out value="${columnHeading}" />
+              <spring:eval var="colCounter" expression="colCounter  + 1" />
+            </th>
+          </c:forTokens>
+		  
+		  <c:if test="${show}">
+		  <spring:eval var="count" expression="count  + 1" />
+          </c:if>
+		  
+		  <c:if test="${update}">
+			<spring:eval var="count" expression="count  + 1" />
+            <spring:eval var="colCounter" expression="colCounter  + 1" />
+          </c:if>
+          
+		  <c:if test="${delete}">
+			<spring:eval var="count" expression="count  + 1" />
+            <spring:eval var="colCounter" expression="colCounter  + 1" />
+          </c:if>
+		  
+		
+				<th class="iconcell">
+					<spring:message arguments="${typeName}" code="global_actions_menu" var="thTittle" htmlEscape="false" />
+					<c:out value="${fn:escapeXml(thTittle)}" />
+				</th>
+		
+        </tr>
+      </thead>
+	  
+      <c:forEach items="${data}" var="item">
+        <tr>
+          <c:forTokens items="${columnProperties}" delims="${'&#9999;'}" var="column" varStatus="num">
+            <c:set var="columnMaxLength" value="${lengths[num.count-1]}" />
+            <c:set var="columnType" value="${types[num.count-1]}" />
+            <c:set var="columnDatePattern" value="${patterns[num.count-1]}" />
+            <c:set var="widthPercentage" value="${widthPercentages[num.count-1]}" />
+          
+          
+            <c:choose>
+            	 <c:when test="${widthPercentage ne 0}">
+            	 	<c:set var="c_width" value="${widthPercentage}" />
+            	 </c:when>
+            	 <c:otherwise>
+            	 	<c:set var="c_width" value="" />
+            	 </c:otherwise>
+            </c:choose>	 
+            
+           <td width="${c_width}%">
+            
+            
+            
+              <c:choose>
+                <c:when test="${columnType eq 'date'}">
+                  <spring:escapeBody>
+                    <fmt:formatDate value="${item[column]}" pattern="${fn:escapeXml(columnDatePattern)}" var="colTxt" />
+                  </spring:escapeBody>
+                </c:when>
+                <c:when test="${columnType eq 'calendar'}">
+                  <spring:escapeBody>
+                    <fmt:formatDate value="${item[column].time}" pattern="${fn:escapeXml(columnDatePattern)}" var="colTxt"/>
+                  </spring:escapeBody>
+                </c:when>
+                <c:otherwise>
+                  <c:set var="colTxt">
+                  	<c:choose>
+                		<c:when test="${column eq 'type'}">
+                			<c:if test="${handleTypeField}">
+                					<spring:eval expression="item.${column}" htmlEscape="false" var="secTypefieldValue"/>
+                					<c:choose>
+                						<c:when test="${secTypefieldValue eq 'I'}">
+                							<spring:message code="security_type_internal"/>
+                						</c:when>
+                						<c:otherwise>
+                							<spring:message code="security_type_external"/>
+                						</c:otherwise>
+                  					</c:choose>				
+                			</c:if>
+                			<c:if test="${!handleTypeField}">
+                				<spring:eval expression="item.${column}" htmlEscape="false" />
+                			</c:if>
+                    	</c:when>
+               			<c:otherwise>	 
+                   			<spring:eval expression="item.${column}" htmlEscape="false" />
+                  		</c:otherwise>
+                  	</c:choose>		
+                    
+                  </c:set>
+                </c:otherwise>
+              </c:choose>
+              <c:if test="${columnMaxLength ge 0}">
+                <c:set value="${fn:substring(colTxt, 0, columnMaxLength)}" var="colTxt" />
+              </c:if>
+              <c:out value="${colTxt}" />
+            
+             </td>
+            
+          </c:forTokens>
+          <c:set var="itemId"><spring:eval expression="item.${typeIdFieldName}"/></c:set>
+          
+           <td class="iconcell">
+           
+		          <!-- Show Link -->
+				  <c:if test="${show}">
+			            <spring:url value="${path}/${itemId}" var="show_form_url" />
+			            <spring:url value="/resources/images/show.png" var="show_image_url" />
+						<spring:message arguments="${typeName}" code="entity_show" var="show_label" htmlEscape="false" />				
+			            <a href="${show_form_url}" title="${fn:escapeXml(show_label)}: ${itemId}" class="fancyboxLink fancybox.iframe showIcon">
+			            	<spring:message text="${show_label}" />	
+			            </a>
+				  </c:if>
+		
+				  <!-- Update Link -->
+		          <c:if test="${update}">
+		              <spring:url value="${path}/${itemId}" var="update_form_url">
+		              		<spring:param name="form" />
+		              </spring:url>
+		              <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+		              <a href="${update_form_url}" title="${fn:escapeXml(update_label)}: ${itemId}" class="updateIcon">
+		     		  		<spring:message text="${update_label}" />	
+		              </a>
+		            
+		          </c:if>
+				  
+				  <!-- Delete Link -->
+		          <c:if test="${delete}">
+		              <spring:url value="${path}/${itemId}" var="delete_form_url" />
+		              <spring:url value="/resources/images/transparent.png" var="delete_image_url" />
+		              <form:form id="${singularLabel}_id_${itemId}" action="${delete_form_url}" method="DELETE">
+		                <spring:message arguments="${typeName}" code="entity_delete" var="delete_label" htmlEscape="false" />
+		                <c:set var="delete_confirm_msg">
+		                  <spring:escapeBody javaScriptEscape="true">
+		                    <spring:message code="entity_delete_confirm" htmlEscape="false"/>
+		                  </spring:escapeBody>
+		                </c:set>
+		                <input alt="${fn:escapeXml(delete_label)}" class="deleteIcon" src="${delete_image_url}" title="${fn:escapeXml(delete_label)}" type="image" value="${fn:escapeXml(delete_label)}" onclick="return confirm('${delete_confirm_msg}');" />
+		                <c:if test="${not empty param.page}">
+		                  <input name="page" type="hidden" value="1" />
+		                </c:if>
+		                <c:if test="${not empty param.size}">
+		                  <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+		                </c:if>
+		              </form:form>		          
+		          </c:if>
+           </td>
+          
+          
+          
+        </tr>
+      </c:forEach>
+      <tr class="footer">
+        <td colspan="${colCounter}">
+          <c:if test="${empty create or create}">
+            <span class="new">
+			
+				<c:if test="${empty parentid}">
+					<spring:url value="${path}" var="create_url">
+						<spring:param name="create" />
+					</spring:url>
+				</c:if>
+				
+				<c:if test="${!empty parentid}">
+					<spring:url value="${path}/${parentid}" var="create_url">
+						<spring:param name="create" />
+					</spring:url>
+				</c:if>
+
+			  
+              <a href="${create_url}">
+               <spring:url value="/resources/images/add.png" var="create_img_url" />
+			   <spring:message arguments="${typeName}" code="global_menu_add" var="add_message" htmlEscape="false" />
+				<c:if test="${not empty parentLabel}">
+					<c:if test="${not empty orderNumber}">
+						<spring:message arguments="${typeName};${parentLabel};${orderNumber}" code="table_add_label" var="add_message" argumentSeparator=";" htmlEscape="false" />
+					</c:if>
+				</c:if>
+				<c:if test="${not empty parentLabel}">
+					<img alt="${fn:escapeXml(add_message)}" src="${create_img_url}" title="${fn:escapeXml(add_message)}" />
+				</c:if>
+				<c:if test="${empty parentLabel}">
+					
+					<img alt="${fn:escapeXml(add_message)}" src="${create_img_url}" title="${fn:escapeXml(add_message)}" />
+				</c:if>
+				</a>
+				
+            </span>
+            <c:out value=" " />
+          </c:if>
+          <c:if test="${not empty maxPages}">
+            <util:pagination maxPages="${maxPages}" page="${param.page}" size="${param.size}" />
+          </c:if>
+        </td>
+      </tr>
+    </table>
+	</c:if>
+  	
+  	<c:choose>
+	  	<c:when test="${footer eq true}">
+			<c:if test="${tableShow eq false}">
+				<div class="notFoundMessage">
+					<div class="flash flash-notice">
+						<spring:message arguments="${fn:toLowerCase(pluralLabel)}" code="entity_not_found"/>
+					</div> 
+					
+					
+					
+					<c:if test="${empty parentid}">
+						<spring:url value="${path}" var="create_url">
+							<spring:param name="create" />
+						</spring:url>
+					</c:if>
+					<c:if test="${!empty parentid}">
+						<spring:url value="${path}/${parentid}" var="create_url">
+							<spring:param name="create" />
+						</spring:url>
+					</c:if>
+					<div class="notFoundUnderline">
+					<c:choose> 		<!-- 	If surveyDefinitionsPage then will show fancyBoxes style on the link	-->
+							<c:when test="${data == surveyDefinitionsPage}">
+								<a class="formee right fancyboxLink fancybox.iframe" href="${create_url}" target="_blank">
+									<spring:url value="/resources/images/add.png" var="create_img_url" />
+									<spring:message arguments="${typeName}" code="global_menu_add" var="add_message" htmlEscape="false" />
+										<c:if test="${not empty parentLabel}">
+											<c:if test="${not empty orderNumber}">
+												<spring:message arguments="${typeName};${parentLabel};${orderNumber}" code="table_add_label" var="add_message" argumentSeparator=";" htmlEscape="false" />
+											</c:if>
+										</c:if>
+									
+									<spring:message arguments="${singularLabel}" code="global_menu_add"  />  
+									<img alt="${fn:escapeXml(add_message)}" src="${create_img_url}" title="${fn:escapeXml(add_message)}" />
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a class="formee right" href="${create_url}">
+									<spring:url value="/resources/images/add.png" var="create_img_url" />
+									<spring:message arguments="${typeName}" code="global_menu_add" var="add_message" htmlEscape="false" />
+										<c:if test="${not empty parentLabel}">
+											<c:if test="${not empty orderNumber}">
+												<spring:message arguments="${typeName};${parentLabel};${orderNumber}" code="table_add_label" var="add_message" argumentSeparator=";" htmlEscape="false" />
+											</c:if>
+										</c:if>
+									
+									<spring:message arguments="${singularLabel}" code="global_menu_add"  />  
+									<img alt="${fn:escapeXml(add_message)}" src="${create_img_url}" title="${fn:escapeXml(add_message)}" />
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${tableShow eq false}">	
+				<div class="flash flash-notice">
+					<spring:message arguments="${fn:toLowerCase(pluralLabel)}" code="entity_not_found_for_user"/>
+				</div> 
+			</c:if>
+		</c:otherwise>
+		
+	</c:choose>
+	
+	
+  </c:if>
+
+</jsp:root>

@@ -1,0 +1,67 @@
+<jsp:root 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" 
+version="2.0">
+
+  <jsp:output omit-xml-declaration="yes" />
+  
+
+	<spring:theme code="main_css" var="main_css" />
+	<spring:theme code="menu_css" var="menu_css" />
+	<spring:theme code="fancybox_css" var="fancybox_css" />
+	<spring:theme code="jquery_css" var="jquery_css" />
+	<spring:theme code="awesome_css" var="awesome_css" />
+	
+	<spring:url value="${main_css}" var="main_css_url" />
+	<spring:url value="${menu_css}" var="menu_css_url" />
+	<spring:url value="${fancybox_css}" var="fancybox_css_url" />
+	<spring:url value="${jquery_css}" var="jquery_css_url" />
+	<spring:url value="${awesome_css}" var="awesome_css_url" />
+
+  
+  
+	<spring:theme code="jquery_js" var="jquery_js" />
+	<spring:theme code="formee_js" var="formee_js" />
+	<spring:theme code="jquery_ui_js" var="jquery_ui_js" />
+	<spring:theme code="jquery_fancybox_js" var="jquery_fancybox_js" />
+	<spring:theme code="jquery_rating" var="jquery_rating" />
+	<spring:theme code="tiny_mce_js" var="tiny_mce_js" />
+	<spring:theme code="tipsy_js" var="tipsy_js" />
+  	
+  	<spring:url value="${jquery_js}" var="jquery_js_url" />
+	<spring:url value="${formee_js}" var="formee_js_url" />
+	<spring:url value="${jquery_ui_js}" var="jquery_ui_js_url" />
+	<spring:url value="${jquery_fancybox_js}" var="jquery_fancybox_js_url" />
+	<spring:url value="${jquery_rating}" var="jquery_rating_url" />
+	<spring:url value="${tiny_mce_js}" var="tiny_mce_js_url" />   														
+	<spring:url value="${tipsy_js}" var="tipsy_url" />
+
+									  				
+	
+	<script type="text/javascript" src="${jquery_js_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${formee_js_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${jquery_ui_js_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${jquery_rating_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${tiny_mce_js_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${tipsy_url}"><!-- required for FF3 and Opera --></script>
+	<script type="text/javascript" src="${jquery_fancybox_js_url}"><!-- required for FF3 and Opera --></script>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="${awesome_css_url}" />  
+	<link rel="stylesheet" type="text/css" media="screen" href="${main_css_url}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="${menu_css_url}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="${fancybox_css_url}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="${jquery_css_url}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="${jquery_rating_url}" />
+	
+	  
+  
+  
+   <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
+  <c:set var="userLocale">
+    <c:set var="plocale">${pageContext.response.locale}</c:set>
+    <c:out value="${fn:replace(plocale, '_', '-')}" default="en" />
+  </c:set>
+
+</jsp:root>

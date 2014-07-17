@@ -1,0 +1,95 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+		xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+		xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+		xmlns:form="http://www.springframework.org/tags/form" 
+		xmlns:jsp="http://java.sun.com/JSP/Page" 
+		xmlns:spring="http://www.springframework.org/tags" 
+version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+  <jsp:directive.attribute name="title" type="java.lang.String" required="false" rtexprvalue="true" description="The title used for this object" />
+  <jsp:directive.attribute name="object" type="java.lang.Object" required="false" rtexprvalue="true" description="The form backing object" />
+  <jsp:directive.attribute name="path" type="java.lang.String" required="false" rtexprvalue="true" description="Specify the URL path" />
+  <jsp:directive.attribute name="create" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'create' link into table (default false)" />
+  <jsp:directive.attribute name="edit" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'update' link into table (default false)" />
+  <jsp:directive.attribute name="delete" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'delete' link into table (default true)" />
+  <jsp:directive.attribute name="show_under_line" type="java.lang.Boolean" required="false" rtexprvalue="false" description="Shows the line under the title, false by default" />
+  
+	
+	<c:if test="${empty create}">
+      <c:set var="create" value="false" />
+    </c:if>
+	<c:if test="${empty edit}">
+      <c:set var="edit" value="false" />
+    </c:if>
+   
+	<c:if test="${empty delete}">
+      <c:set var="delete" value="false" />
+    </c:if>
+	<c:if test="${empty show_under_line}">
+      <c:set var="show_under_line" value="false" />
+    </c:if>
+	
+    <c:set var="sec_id">
+      <spring:escapeBody javaScriptEscape="true" >${id}</spring:escapeBody>
+    </c:set>
+    
+    <c:set var="sec_openPane">
+      <spring:escapeBody javaScriptEscape="true" >${openPane}</spring:escapeBody>
+    </c:set>
+  
+	
+	<div class="block">  
+	<c:choose>
+	    <c:when test="${show_under_line}">
+			<h2 class="underlined"><spring:message  text="${title}"  htmlEscape="false"  javaScriptEscape="false"/></h2>
+		</c:when>
+		<c:otherwise>
+			<h2><spring:message  text="${title}"  htmlEscape="false"  javaScriptEscape="false"/></h2>
+        </c:otherwise>
+    </c:choose>
+	
+	<c:choose>
+	    <c:when test="${not empty object}">
+          <div class="linkbuttons">
+			
+		
+			
+             
+			
+			 <c:if test="${edit}">
+                <spring:url value="${path}/${object.id}" var="update_form_url">
+                  <spring:param name="form" />
+                </spring:url>
+                <spring:message arguments="${title}" code="entity_update" var="update_label" htmlEscape="false" />
+                <a href="${update_form_url}" alt="${fn:escapeXml(update_label)}" title="${fn:escapeXml(update_label)}" class="fancyboxLink fancybox.iframe updateIcon">
+                  <spring:message text="${update_label}" />
+                </a>
+                <!-- 
+                  <img alt="${fn:escapeXml(update_label)}" class="image linkIcon" src="${update_image_url}" title="${fn:escapeXml(update_label)}" />
+                  <img alt="${fn:escapeXml(create_label)}" class="image linkIcon" src="${create_image_url}" title="${fn:escapeXml(create_label)}" />
+                 -->
+              </c:if>
+             
+
+
+			 <c:if test="${delete}">
+                <spring:url value="${path}/${itemId}" var="delete_form_url" />
+                <spring:url value="/resources/images/transparent.png" var="delete_image_url" />
+                <form:form id="${itemId}" action="${delete_form_url}" method="DELETE">
+                  <spring:message arguments="${title}" code="entity_delete" var="delete_label" htmlEscape="false" />
+                  <c:set var="delete_confirm_msg">
+                    <spring:escapeBody javaScriptEscape="true">
+                      <spring:message code="entity_delete_confirm" htmlEscape="false" />
+                    </spring:escapeBody>
+                  </c:set>
+                  <input alt="${fn:escapeXml(delete_label)}" class="deleteIcon" src="${delete_image_url}" title="${fn:escapeXml(delete_label)}" type="image" value="${fn:escapeXml(delete_label)}" onclick="return confirm('${(delete_confirm_msg)}');" />
+                </form:form>
+             </c:if>
+			 
+			 
+          </div>
+		</c:when>
+    </c:choose>
+	<jsp:doBody />	
+	</div> 
+</jsp:root>

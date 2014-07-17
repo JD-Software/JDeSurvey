@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="security/users/list"  template="/WEB-INF/layouts/default.jspx">
+    	<put-attribute name="activeTab" value="security" cascade="true"/>
+    	<put-attribute name="pagemode" value="list"  cascade="true"/>
+        <put-attribute name="body"    value="/WEB-INF/views/security/users/list.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/users/show">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="show"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/security/users/show.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/users/create">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="create"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/security/users/create.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/users/update">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="update"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/security/users/update.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="security/users/pass">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="pass"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/security/users/pass.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="security/users/search">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="search"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/security/users/search.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/security/users/menu.jspx"/>
+    </definition>
+    
+    
+</tiles-definitions>

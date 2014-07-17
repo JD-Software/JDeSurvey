@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"  
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:springform="http://www.springframework.org/tags/form"  
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    
+    
+	<div class="right-column">	
+   		<div class="block">
+   			<h2><spring:message code="com.jd.survey.domain.settings.surveytemplate.title_label"/></h2>
+   			<c:if test="${empty departments}"> 
+				<div class="block">
+					<span class="errorMsg"><spring:message code="no_department_for_user"/></span>
+				</div>	
+			</c:if>	
+   			
+   			
+   			<c:if test="${!empty departments}">
+	   			<spring:url value="/settings/surveyDefinitions/importtemplate" var="form_url" />
+			    <form  method="POST" action="${form_url}" enctype="multipart/form-data" class="formee" >
+			    	<div>
+			    		<label class="grid-3-12"  for="id"><spring:message code="com.jd.survey.domain.settings.department_label"/>:</label>
+				    	<select cssclass="grid-3-12" name="id" style="width:30%;" id="id">
+				    		<c:forEach items="${departments}" var="department" varStatus="loop">
+				    			<c:if test="${department.id eq departmentId}">
+				    				<option value="${department.id}" selected="true"><c:out value="${department.name}"/></option>
+				    			</c:if>
+				    			<c:if test="${department.id ne departmentId}">
+				    				<option value="${department.id}"><c:out value="${department.name}"/></option>
+				    			</c:if>
+							</c:forEach> 
+				    	</select>
+			    	</div>
+			    	
+			    	<div>
+			    		<label class="grid-3-12"  for="secId"><spring:message code="com.jd.survey.domain.settings.sector_label"/>:</label>
+				    	<select cssclass="grid-3-12" name="secId" style="width:30%;" id="secId">
+				    		<c:forEach items="${sectors}" var="sector" varStatus="loop">
+				    			<c:if test="${sector.id eq sectorId}">
+				    				<option value="${sector.id}" selected="true"><c:out value="${sector.name}"/></option>
+				    			</c:if>
+				    			<c:if test="${sector.id ne sectorId}">
+				    				<option value="${sector.id}"><c:out value="${sector.name}"/></option>
+				    			</c:if>
+							</c:forEach> 
+				    	</select>
+			    	</div>
+
+			        <div class="grid-9-12 extDivButtons" id="_submit">
+						<!-- Normal Button -->
+						<spring:message code="button_continue" var="continue_button" htmlEscape="false" />
+						<spring:message code="button_cancel" var="cancel_button" htmlEscape="false" />
+						<div class="grid-9-12">
+							<input id="proceed" type="submit" name="_proceed" value="${fn:escapeXml(continue_button)}" class="inputButton right" />
+							<c:url var="url" value="/settings/surveyDefinitions?page=1&amp;size=${empty param.size ? 10 : param.size}" />
+							<a href="${url}"  class="buttonLink inputButton right"><c:out value="${fn:escapeXml(cancel_button)}"/></a>
+						</div>
+			        </div>
+	        
+				</form>
+			</c:if>
+		</div>
+	</div>	
+    
+</div>

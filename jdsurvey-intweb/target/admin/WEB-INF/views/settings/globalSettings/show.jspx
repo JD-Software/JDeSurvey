@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="right-column">
+    	<spring:message code="com.jd.survey.globalsettings_label_plural" var="section_label" htmlEscape="false" />
+		<section:block title="${section_label}" object="${globalSettings}" path="/settings/globalSettings" create="false" edit="true" delete="false" show_under_line="true">
+			<field:display field="passwordEnforcementRegex" id="s_com.jd.survey.GlobalSettings.passwordEnforcementRegex" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="passwordEnforcementMessage" id="s_com.jd.survey.GlobalSettings.passwordEnforcementMessage" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="validContentTypes" id="s_com.jd.survey.GlobalSettings.validContentTypes" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="validImageTypes" id="s_com.jd.survey.GlobalSettings.validImageTypes" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="maximunFileSize" id="s_com.jd.survey.GlobalSettings.maximunFileSize" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="invalidContentMessage" id="s_com.jd.survey.GlobalSettings.invalidContentMessage" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>
+			<field:display field="invalidFileSizeMessage" id="s_com.jd.survey.GlobalSettings.invalidFileSizeMessage" object="${globalSettings}" cssclass="grid-9-12 alignTop"/>		
+		</section:block>	
+    </div>	
+</div>

@@ -1,0 +1,97 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:form="http://www.springframework.org/tags/form" 
+version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+  <jsp:directive.attribute name="object" type="java.lang.Object" required="true" rtexprvalue="true" description="The form backing object" />
+  <jsp:directive.attribute name="field" type="java.lang.String" required="true" rtexprvalue="true" description="The field name" />
+  <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this field, will default to a message bundle if not supplied" />
+  <jsp:directive.attribute name="date" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate that this field is of type java.util.Date" />
+  <jsp:directive.attribute name="dateTimePattern" type="java.lang.String" required="false" rtexprvalue="true" description="The date / time pattern to use if the field is a date or calendar type" />
+  <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  <jsp:directive.attribute name="cssclass" type="java.lang.String" required="false" rtexprvalue="true" description="the css style for the select" />
+  <jsp:directive.attribute name="isTypeField" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Will convert the security type values I, E to correspoding values from i18"/>
+  <jsp:directive.attribute name="isBoolean" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicates if this field is a boolean"/>
+  <jsp:directive.attribute name="tip" type="java.lang.String" required="false" rtexprvalue="true" description="Will display a question mark tooltip next to the field name" />
+  <jsp:directive.attribute name="theme" type="java.lang.String" required="false" rtexprvalue="true" description="Will display the descreptive value of the Theme based on the i18 value"/>	
+  
+  <c:if test="${empty render or render}">
+    <c:if test="${not empty object and empty label}">
+      <spring:message code="${fn:toLowerCase(fn:substringAfter(id,'_'))}_label" var="label" htmlEscape="false" />
+    </c:if>
+
+    <c:if test="${empty dateTimePattern}">
+      <c:set value="MM/dd/yyyy" var="dateTimePattern" />
+    </c:if>
+
+	
+	<c:if test="${empty isTypeField}">
+      <c:set var="isTypeField" value="false" />
+    </c:if>
+	
+	<c:if test="${empty isBoolean}">
+      <c:set var="isBoolean" value="false" />
+    </c:if>
+	
+
+	
+	
+	
+	
+    <div id="_${fn:escapeXml(id)}_id_${object.id}">
+      <label class="grid-3-12"><c:out value="${label}" /> :<c:if test="${not empty tip}"><a class="hastip" title="${tip}"> ?</a></c:if>
+      </label>
+	  <span class="${cssclass}">
+	  <c:choose>
+          <c:when test="${date}">
+            <spring:escapeBody>
+              <fmt:formatDate value="${object.field}" pattern="${fn:escapeXml(dateTimePattern)}" />
+            </spring:escapeBody>
+          </c:when>
+          
+          <c:when test="${isBoolean}">
+          		<spring:eval expression="object.${field}" var="booleanValue"/>   
+            	<c:if test="${booleanValue}"><spring:message code="true_message"/> </c:if>
+            	<c:if test="${!booleanValue}"><spring:message code="false_message"/></c:if>
+          </c:when>
+          
+
+		<c:when test="${isTypeField}">          
+			<spring:eval expression="object.${field}" htmlEscape="false" var="secTypefieldValue"/>         
+			<c:choose>
+				<c:when test="${secTypefieldValue eq 'I'}">
+					<spring:message code="security_type_internal"/>
+				</c:when>
+				<c:otherwise>
+					<spring:message code="security_type_external"/>
+				</c:otherwise>
+			</c:choose>		
+		</c:when>
+		
+		<c:when test="${not empty theme}">
+			<spring:eval expression="object.${field}" htmlEscape="false" var="themeValue"/> 
+			<c:if test="${themeValue eq 'STANDARD'}"><spring:message code="standard_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'STEEL_BLUE'}"><spring:message code="steel_blue_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'DEEP_CHESTNUT'}"><spring:message code="deep_chestnut_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'SPRING_GREEN'}"><spring:message code="spring_green_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'FRENCH_LILAC'}"><spring:message code="french_lilac_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'CELESTIAL_BLUE'}"><spring:message code="celestial_blue_theme_label"/></c:if>
+			<c:if test="${themeValue eq 'PEACH_ORANGE'}"><spring:message code="peach_orange_theme_label"/></c:if>
+		</c:when>
+		
+		
+  		<c:otherwise>
+  	  		<spring:eval expression="object.${field}" htmlEscape="false" />
+   		</c:otherwise>
+
+        </c:choose>
+      </span>
+    </div>
+    
+  </c:if>
+</jsp:root>

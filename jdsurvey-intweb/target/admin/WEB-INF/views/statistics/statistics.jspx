@@ -1,0 +1,1431 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<script type="text/javascript">
+			$(document).ready(function() {
+				/*
+				 *  This will allow the iframe page to be resized 
+				 */
+				  
+				$('.fancyboxLink').fancybox({
+					   width : '80%',
+					   height : '80%',
+					   fitToView : false,
+					   autoSize : false
+					 });
+			});
+		</script>
+
+	<div class="right-column">
+		<spring:message code="date_format" var="date_format" />
+		<div class="block">
+		<spring:message code="com.jd.survey.domain.survey_label_plural" var="labelPlural"/>
+		<!-- <h2><c:out value="${labelPlural}"/></h2>  -->
+		<c:if test="${empty surveyDefinitions}"> 
+			<div class="block">
+				<div class="flash flash-notice"><spring:message code="no_published_surveys_message"/></div>
+			</div>	
+		</c:if>	
+	
+		<c:if test="${!empty surveyDefinitions}">
+			<spring:url value="/statistics/list" var="formUrl"/>
+			<form:form action="${formUrl}" method="GET"
+				modelAttribute="surveyPage" class="formee">
+				<div>
+					<spring:message code="com.jd.survey.domain.survey_label_short" var="label" />
+					<label for="${labelPlural}" class="grid-2-12"><spring:message	code="entity_select" arguments="${label}" /></label> 
+					<select name="sid" class="grid-6-12" id="${labelPlural}">
+						<c:forEach items="${surveyDefinitions}" var="surveyDef"		varStatus="loop">
+							<c:if test="${surveyDef.id eq surveyDefinition.id}">
+								<option value="${surveyDef.id}" selected="selected"><c:out value="${surveyDef.surveyDefinitionLongName}"/></option>
+							</c:if>
+							<c:if test="${surveyDef.id ne surveyDefinition.id}">
+								<option value="${surveyDef.id}"><c:out value="${surveyDef.surveyDefinitionLongName}"/></option>
+							</c:if>
+								
+						</c:forEach>
+					</select>
+					<spring:message code="button_showstatistics" htmlEscape="false"
+						var="button_show_label" />
+					<c:out value=" " />
+					<input class="nextButton" name="" type="submit"
+						value="${button_show_label}" />
+				</div>
+			</form:form>
+			</c:if>
+		</div>
+		
+	<c:if test="${!empty surveyStatistic and surveyStatistic.submittedCount gt 0}"> 
+
+		<c:if test="${!empty surveyStatistic}">
+			<div class="block">
+				<spring:message	code="com.jd.survey.domain.settings.surveystatistic_label_plural" var="statsTitle"/>
+				<h2 class="underlined">
+					<c:out value="${statsTitle} :"/>
+				</h2>
+				<div>
+					<label class="grid-2-12"><spring:message
+							code="com.jd.survey.domain.survey.surveystatistic.icompletedcount_label" />
+					</label> <span> <fmt:formatNumber type="number"
+							value="${surveyStatistic.icompletedCount}" /> </span>
+				</div>
+				<div>
+					<label class="grid-2-12"><spring:message
+							code="com.jd.survey.domain.survey.surveystatistic.submittedcount_label" />
+					</label> <span><fmt:formatNumber type="number"
+							value="${surveyStatistic.submittedCount}" /> </span>
+				</div>
+				<div>
+					<label class="grid-2-12"><spring:message
+							code="com.jd.survey.domain.survey.surveystatistic.deletedcount_label" />
+					</label> <span><fmt:formatNumber type="number"
+							value="${surveyStatistic.deletedCount}" /> </span>
+				</div>
+				<div>
+					<label class="grid-2-12"><spring:message
+							code="com.jd.survey.domain.survey.surveystatistic.totalcount_label" />
+					</label> <span><fmt:formatNumber type="number"
+							value="${surveyStatistic.totalCount}" /> </span>
+				</div>
+			</div>
+		</c:if>
+		
+		<div  class="block">
+			<spring:message	code="statistics_disclaimer_message"/>
+		</div>
+		
+		<c:if test="${!empty surveyDefinition}">
+		<div id="wr">
+			<div class="questionsList">
+				<ul>
+					<c:forEach items="${surveyDefinition.pages}" var="page"	varStatus="loop">
+						<li class="pageHeader"><h3><c:out value="${page.title}" /></h3></li> 
+						<c:forEach items="${page.questions}" var="q" varStatus="loop">
+							<spring:url value="/statistics/list" var="link_url" htmlEscape="false">
+								<spring:param name="sid" value="${surveyDefinition.id}" />
+								<spring:param name="qid" value="${q.id}" />
+							</spring:url>
+							<c:if test="${q.order lt 10}" >
+								<c:set var="questionNumber" scope="page" value="0${q.order}. "/>
+							</c:if>						
+							<c:if test="${q.order gt 9}" >
+								<c:set var="questionNumber" scope="page" value="${q.order}. "/>
+							</c:if>	
+							<c:choose>
+								<c:when test="${q.id eq question.id}">
+									<li class="pressed"><a href="${link_url}"><c:out value="${questionNumber}" /><c:out value="${q.questionText}" escapeXml="false" /> <span class="arrow">&#9658;</span></a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="${link_url}"><c:out value="${questionNumber}" /><c:out value="${q.questionText}"  escapeXml="false"/></a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:forEach>
+				</ul>
+			</div>
+
+		<div id="statistics">
+			<c:if test="${question.order lt 10}" >
+				<c:set var="questionNumber" scope="page" value="0${question.order}. "/>
+			</c:if>						
+			<c:if test="${question.order gt 9}" >
+				<c:set var="questionNumber" scope="page" value="${question.order}. "/>
+			</c:if>	
+			<div class="questionTitle">
+				<c:out value="${questionNumber}" /><c:out value="${question.questionText}" escapeXml="false" />
+			</div>
+			<c:choose>
+
+				<!-- BR	'Yes No DropDown'-->
+				<c:when test="${question.type.code eq 'BR'}">
+					<table summary="${statsTitle}">
+						<thead>
+							<tr>
+								<th style="width: 25%"><spring:message code="com.jd.survey.domain.settings.questionoption.value_label" /></th>
+								<th style="width: 12%"><spring:message code="com.jd.survey.domain.survey.questionstatistic.count_label" /></th>
+								<th class="frequency" style="width: 18%"><spring:message code="com.jd.survey.domain.survey.questionstatistic.frequency_label" /></th>
+								<th style="width: 45%">
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><spring:message code="true_message" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='1'}">
+										<c:set var="found" value="true" />
+										<td><fmt:formatNumber type="number" maxFractionDigits="0"
+												value="${questionStatistic.count}" />
+										</td>
+										<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="${questionStatistic.frequency}" /></td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td><fmt:formatNumber type="number" maxFractionDigits="0"
+											value="0" />
+									</td>
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2"
+											value="0" />
+									</td>
+									<td></td>
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="false_message" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='0'}">
+										<c:set var="found" value="true" />
+										<td><fmt:formatNumber type="number" maxFractionDigits="0"
+												value="${questionStatistic.count}" />
+										</td>
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td><fmt:formatNumber type="number" maxFractionDigits="0"
+											value="0" />
+									</td>
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2"
+											value="0" />
+									</td>
+									<td></td>
+								</c:if>
+							</tr>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+
+
+				<!-- IN, //Integer Input-->
+				<c:when test="${question.type.code eq 'IN'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.min_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.max_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.average_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.samplestandarddeviation_label" />
+								</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:forEach items="${questionStatistics}" var="questionStatistic"
+								varStatus="loop">
+								<tr>
+
+
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.min}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.max}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.average}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.sampleStandardDeviation}" />
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+
+
+				<!-- CR, //Currency Input-->
+				<c:when test="${question.type.code eq 'CR'}">
+					<table>
+						<thead>
+							<tr>
+
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.min_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.max_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.average_label" />
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${questionStatistics}" var="questionStatistic"
+								varStatus="loop">
+								<tr>
+
+									<td><fmt:formatNumber type="currency" maxFractionDigits="4"
+											value="${questionStatistic.min}" />
+									</td>
+									<td><fmt:formatNumber type="currency" maxFractionDigits="4"
+											value="${questionStatistic.max}" />
+									</td>
+									<td><fmt:formatNumber type="currency" maxFractionDigits="4"
+											value="${questionStatistic.average}" />
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+
+				<!-- NM, //Decimal Input-->
+				<c:when test="${question.type.code eq 'NM'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.min_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.max_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.average_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.samplestandarddeviation_label" />
+								</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:forEach items="${questionStatistics}" var="questionStatistic"
+								varStatus="loop">
+								<tr>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.min}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.max}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.average}" />
+									</td>
+									<td><fmt:formatNumber type="number" maxFractionDigits="4"
+											value="${questionStatistic.sampleStandardDeviation}" />
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+				<!-- SD, //Single choice Drop Down-->
+				<c:when test="${question.type.code eq 'SD'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.value_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.text_label" />
+								</th>
+								
+								<th class="frequency"><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.frequency_label" />
+								</th>
+								<th style="width: 45%">
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.options}" var="option"
+								varStatus="loop">
+								<tr>
+									<td><c:out value="${option.value}" />
+									</td>
+									<td><c:out value="${option.text}" />
+									</td>
+									<c:set var="found" value="false"></c:set>
+									<c:forEach items="${questionStatistics}"
+										var="questionStatistic" varStatus="loop1">
+										<c:if test="${option.value eq questionStatistic.entry }">
+											<td class="frequency"><fmt:formatNumber type="percent"
+													maxFractionDigits="2"
+													value="${questionStatistic.frequency}" />
+											</td>
+
+											<fmt:formatNumber type="percent" maxFractionDigits="0"
+												value="${questionStatistic.frequency}" var="percentage" />
+											<td><div class="bar" style="width: ${percentage}"></div>
+											</td>
+											<c:set var="found" value="true"></c:set>
+										</c:if>
+									</c:forEach>
+									<c:if test="${!found}">
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="0" />
+										</td>
+										<td></td>
+									</c:if>
+								</tr>
+							</c:forEach>
+						</tbody>
+
+						<!--  
+					<thead>
+						<tr>
+							<th colspan="3" style="text-align:center;"><spring:message code="chart_label"/></th>
+						</tr>
+					</thead>
+					<tbody>		
+						<tr>
+							<td colspan="3" >
+							<spring:url value="/statistics/chart/${surveyDefinition.id}/${questionId}" var="chart_url" />
+							<img src="${chart_url}" />
+							</td>
+						</tr>
+						</tbody>
+						-->
+					</table>
+
+				</c:when>
+
+
+
+				<!-- MC, //Multiple Choice Checkboxes-->
+				<c:when test="${question.type.code eq 'MC'}">
+
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.value_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.text_label" />
+								</th>
+								<th class="frequency"><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.frequency_label" />
+								</th>
+								<th style="width: 45%">
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.options}" var="option" varStatus="loop">
+								<tr>
+									<td><c:out value="${option.value}" /></td>
+									<td><c:out value="${option.text}" /></td>
+									<c:set var="found" value="false"></c:set>
+									<c:forEach items="${questionStatistics}" var="questionStatistic" varStatus="loop1">
+										<c:if test="${option.order eq questionStatistic.optionOrder }">
+											<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="${questionStatistic.frequency}" /></td>
+											<fmt:formatNumber type="percent" maxFractionDigits="0"	value="${questionStatistic.frequency}" var="percentage" />
+											<td><div class="bar" style="width: ${percentage}"></div></td>
+											<c:set var="found" value="true"></c:set>
+										</c:if>
+									</c:forEach>
+									<c:if test="${!found}">
+										<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+										<td></td>
+									</c:if>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
+
+					<!--  
+				<spring:url value="/statistics/chart/${surveyDefinition.id}/${questionId}" var="chart_url" />
+				<img src="${chart_url}" />
+				<ul>
+					<c:forEach items="${question.options}" var="option" varStatus="loop">
+								<c:set var="found" value="false"></c:set>
+								<c:forEach items="${questionStatistics}" var="questionStatistic" varStatus="loop1">
+									<c:if test="${option.value eq questionStatistic.entry }">
+										<li><c:out value="${option.value}"/>:<c:out value="${option.text}"/><c:out value="("/><fmt:formatNumber type="percent" maxFractionDigits="2" value="${questionStatistic.frequency}"/><c:out value=")"/></li>
+										<c:set var="found" value="true"></c:set>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<li><c:out value="${option.value}"/>:<c:out value="${option.text}"/><c:out value="("/><fmt:formatNumber type="percent" maxFractionDigits="2" value="${0}"/><c:out value=")"/></li>
+								</c:if>
+					</c:forEach>	
+				</ul>
+				-->
+				</c:when>
+
+
+				<!-- SR; //Single Choice Radio Buttons -->
+				<c:when test="${question.type.code eq 'SR'}">
+					<table>
+						<thead>
+							<tr>
+
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.text_label" />
+								</th>
+								<th class="frequency"><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.frequency_label" />
+								</th>
+								<th style="width: 45%">
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+
+						</thead>
+						<tbody>
+							<c:forEach items="${question.options}" var="option"
+								varStatus="loop">
+								<tr>
+
+									<td><c:out value="${option.text}" />
+									</td>
+									<c:set var="found" value="false"></c:set>
+									<c:forEach items="${questionStatistics}"
+										var="questionStatistic" varStatus="loop1">
+										<c:if test="${option.value eq questionStatistic.entry }">
+											<td class="frequency"><fmt:formatNumber type="percent"
+													maxFractionDigits="2"
+													value="${questionStatistic.frequency}" />
+											</td>
+
+											<fmt:formatNumber type="percent" maxFractionDigits="0"
+												value="${questionStatistic.frequency}" var="percentage" />
+											<td><div class="bar" style="width: ${percentage}"></div>
+											</td>
+											<c:set var="found" value="true"></c:set>
+										</c:if>
+									</c:forEach>
+									<c:if test="${!found}">
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="0" />
+										</td>
+										<td></td>
+
+									</c:if>
+
+									<!--  
+								<c:if test="${loop.index eq  0}">
+									<td rowspan="${fn:length(question.options)}"> 
+										<spring:url value="/statistics/chart/${surveyDefinition.id}/${questionId}" var="chart_url" />
+										<img src="${chart_url}" />
+									</td>
+								</c:if>
+								-->
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+			
+
+
+				<!-- YES_NO_DROPDOWN_MATRIX("BRM") -->
+
+				<c:when test='${question.type.code == "BRM"}'>
+					<table>
+						<thead>
+							<tr>
+								<th class="emptyCell"></th>
+								<c:forEach items="${question.columnLabels}" var="col">
+									<th><c:out value="${col.label}" />
+									</th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.rowLabels}" var="row"
+								varStatus="rindex">
+
+								<tr>
+									<td class="matrixRowHeader"><c:out value="${row.label}" />
+									</td>
+									<c:forEach items="${question.columnLabels}" var="col"
+										varStatus="cindex">
+										<td>
+											<ul>
+												<li><spring:message code="true_message" />: <c:set
+														var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order) and (questionStatistic.entry =='1')}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="percent" maxFractionDigits="2"
+																value="${questionStatistic.frequency}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														<fmt:formatNumber type="percent" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message code="false_message" />: <c:set
+														var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order) and (questionStatistic.entry =='0')}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="percent" maxFractionDigits="2"
+																value="${questionStatistic.frequency}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														<fmt:formatNumber type="percent" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+											</ul></td>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+				<!--INTEGER_INPUT_MATRIX("INM") -->
+				<c:when test='${question.type.code == "INM"}'>
+					<table>
+						<thead>
+							<tr>
+								<th ></th>
+								<c:forEach items="${question.columnLabels}" var="col">
+									<th><c:out value="${col.label}" />
+									</th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.rowLabels}" var="row"
+								varStatus="rindex">
+
+								<tr>
+									<td class="matrixRowHeader"><c:out value="${row.label}" />
+									</td>
+									<c:forEach items="${question.columnLabels}" var="col"
+										varStatus="cindex">
+										<td>
+											<ul>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.average_label" />:
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="4"
+																value="${questionStatistic.average}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.max_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="4"
+																value="${questionStatistic.max}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.min_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="4"
+																value="${questionStatistic.min}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.samplestandarddeviation_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="4"
+																value="${questionStatistic.sampleStandardDeviation}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+											</ul></td>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+
+
+				<!--CURRENCY_INPUT_MATRIX("CRM") -->
+				<c:when test='${question.type.code == "CRM"}'>
+					<table>
+						<thead>
+							<tr>
+								<th ></th>
+								<c:forEach items="${question.columnLabels}" var="col">
+									<th><c:out value="${col.label}" />
+									</th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.rowLabels}" var="row"
+								varStatus="rindex">
+
+								<tr>
+									<td class="matrixRowHeader"><c:out value="${row.label}" />
+									</td>
+									<c:forEach items="${question.columnLabels}" var="col"
+										varStatus="cindex">
+
+										<td>
+											<ul>
+
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.average_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="CURRENCY" maxFractionDigits="4"
+																value="${questionStatistic.average}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														<fmt:formatNumber type="CURRENCY" maxFractionDigits="2"
+															value="10" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.max_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="CURRENCY" maxFractionDigits="4"
+																value="${questionStatistic.max}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														
+														<fmt:formatNumber type="CURRENCY" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.min_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="CURRENCY" maxFractionDigits="4"
+																value="${questionStatistic.min}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="CURRENCY" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+											</ul></td>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+				
+				
+				
+				<!--DECIMAL_INPUT_MATRIX("NMM") -->
+				<c:when test='${question.type.code == "NMM"}'>
+					<table>
+						<thead>
+							<tr>
+								<th ></th>
+								<c:forEach items="${question.columnLabels}" var="col">
+									<th><c:out value="${col.label}" />
+									</th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.rowLabels}" var="row"
+								varStatus="rindex">
+
+								<tr>
+									<td class="matrixRowHeader"><c:out value="${row.label}" />
+									</td>
+									<c:forEach items="${question.columnLabels}" var="col"
+										varStatus="cindex">
+										<td>
+											<ul>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.average_label" />:
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="10"
+																value="${questionStatistic.average}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.max_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="10"
+																value="${questionStatistic.max}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.min_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="10"
+																value="${questionStatistic.min}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.samplestandarddeviation_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatNumber type="number" maxFractionDigits="10"
+																value="${questionStatistic.sampleStandardDeviation}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+											</ul></td>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+				
+				
+
+				<!--'STAR_RATING' "STR"-->
+				<c:when test="${question.type.code eq 'STR'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.value_label" />
+								</th>
+								<th class="frequency"><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.frequency_label" />
+								</th>
+								<th>
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><spring:message code="extremely_satisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='5'}">
+										<c:set var="found" value="true" />
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>		
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="satisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='4'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>		
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="neutral_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='3'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>		
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="unsatisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='2'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>		
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="extremely_unsatisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='1'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>		
+								</c:if>
+							</tr>
+
+						</tbody>
+					</table>
+				</c:when>
+
+				<!--'SMILEY_FACES_RATING' "SFR"-->
+				<c:when test="${question.type.code eq 'SFR'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message	code="com.jd.survey.domain.settings.questionoption.value_label" /></th>
+								<th class="frequency"><spring:message code="com.jd.survey.domain.survey.questionstatistic.frequency_label" /></th>
+								<th>
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><spring:message code="extremely_satisfied_label" /></td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic" varStatus="loop">
+									<c:if test="${questionStatistic.entry =='5'}">
+										<c:set var="found" value="true" />
+										<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="${questionStatistic.frequency}" /></td>
+										<fmt:formatNumber type="percent" maxFractionDigits="0" value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>
+								</c:if>
+							</tr>
+							<tr>
+								<td><spring:message code="satisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='4'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>
+								</c:if>
+							</tr>
+
+							<tr>
+								<td><spring:message code="neutral_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='3'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>
+								</c:if>
+							</tr>
+
+							<tr>
+								<td><spring:message code="unsatisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='2'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>
+								</c:if>
+							</tr>
+
+							<tr>
+								<td><spring:message code="extremely_unsatisfied_label" />
+								</td>
+								<c:set var="found" value="false" />
+								<c:forEach items="${questionStatistics}" var="questionStatistic"
+									varStatus="loop">
+									<c:if test="${questionStatistic.entry =='1'}">
+										<c:set var="found" value="true" />
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="${questionStatistic.frequency}" />
+										</td>
+
+										<fmt:formatNumber type="percent" maxFractionDigits="0"
+											value="${questionStatistic.frequency}" var="percentage" />
+										<td><div class="bar" style="width: ${percentage}"></div></td>
+									</c:if>
+								</c:forEach>
+								<c:if test="${!found}">
+									<td class="frequency"><fmt:formatNumber type="percent" maxFractionDigits="2" value="0" /></td>
+									<td></td>								
+								</c:if>
+							</tr>
+
+						</tbody>
+					</table>
+				</c:when>
+
+
+				<!-- DT, //Date Input -->
+				<c:when test="${question.type.code eq 'DT'}">
+					<table>
+						<thead>
+							<tr>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.min_label" />
+								</th>
+								<th><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.max_label" />
+								</th>
+
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:forEach items="${questionStatistics}" var="questionStatistic"
+								varStatus="loop">
+								<tr>
+									<td><fmt:formatDate pattern="${date_format}"
+											value="${questionStatistic.minDate}" /></td>
+									<td><fmt:formatDate pattern="${date_format}"
+											value="${questionStatistic.maxDate}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+				<!-- DD, //Data Set Drop Down -->
+				<c:when test="${question.type.code eq 'DD'}">
+					<table>
+						<thead>
+							<tr>
+
+								<th><spring:message
+										code="com.jd.survey.domain.settings.questionoption.text_label" />
+								</th>
+								<th class="frequency"><spring:message
+										code="com.jd.survey.domain.survey.questionstatistic.frequency_label" />
+								</th>
+								<th style="width: 45%">
+									<div style="float: left; width: 20%; text-align: right">20%</div>
+									<div style="float: left; width: 20%; text-align: right">40%</div>
+									<div style="float: left; width: 20%; text-align: right">60%</div>
+									<div style="float: left; width: 20%; text-align: right">80%</div>
+									<div style="float: left; width: 20%; text-align: right">100%</div>
+								</th>
+							</tr>
+
+						</thead>
+						<tbody>
+							<c:set var="found" value="false"></c:set>
+							<c:forEach items="${questionStatistics}" var="questionStatistic" varStatus="loop1">
+										
+								<tr>
+											
+									<td><c:out value="${questionStatistic.entry}" />
+									</td>
+								
+								
+									
+										
+											<td class="frequency"><fmt:formatNumber type="percent"
+													maxFractionDigits="2"
+													value="${questionStatistic.frequency}" />
+											</td>
+
+											<fmt:formatNumber type="percent" maxFractionDigits="100"
+												value="${questionStatistic.frequency}" var="percentage" />
+											<td><div class="bar" style="width: ${percentage}"></div>
+											</td>
+											<c:set var="found" value="true"></c:set>
+										
+									
+									
+									<c:if test="${!found}">
+
+										<td class="frequency"><fmt:formatNumber type="percent"
+												maxFractionDigits="2" value="0" />
+										</td>
+										<td></td>
+										<td></td>
+									</c:if>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+				<!-- DTM //Date Input Matrix -->
+				<c:when test='${question.type.code == "DTM"}'>
+					<table>
+						<thead>
+							<tr>
+								<th ></th>
+								<c:forEach items="${question.columnLabels}" var="col">
+									<th><c:out value="${col.label}" />
+									</th>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${question.rowLabels}" var="row"
+								varStatus="rindex">
+
+								<tr>
+									<td class="matrixRowHeader"><c:out value="${row.label}" />
+									</td>
+									<c:forEach items="${question.columnLabels}" var="col"
+										varStatus="cindex">
+
+										<td>
+											<ul>
+
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.max_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatDate pattern="${date_format}"
+																value="${questionStatistic.maxDate}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+														
+														<fmt:formatNumber type="CURRENCY" maxFractionDigits="2"
+															value="0" />
+													</c:if></li>
+												<li><spring:message
+														code="com.jd.survey.domain.survey.questionstatistic.min_label" />:
+
+													<c:set var="found" value="false" /> <c:forEach
+														items="${questionStatistics}" var="questionStatistic"
+														varStatus="loop">
+														<c:if
+															test="${(questionStatistic.rowOrder eq row.order) and (questionStatistic.columnOrder eq col.order)}">
+															<c:set var="found" value="true" />
+															<fmt:formatDate pattern="${date_format}"
+																value="${questionStatistic.minDate}" />
+														</c:if>
+													</c:forEach> <c:if test="${!found}">
+
+														<fmt:formatDate pattern="${date_format}" value="0" />
+													</c:if></li>
+											</ul></td>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</c:when>
+
+
+
+				<!-- ST, //Short Text Input-->
+				<c:when test="${question.type.code eq 'ST'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+				<!-- LT, //Long Text Input-->
+				<c:when test="${question.type.code eq 'LT'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+				<!-- HT, //Huge Text Input-->
+				<c:when test="${question.type.code eq 'HT'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+				
+			
+
+
+				<!-- STM, //Short Text Input Matrix-->
+				<c:when test="${question.type.code eq 'STM'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+
+				<!-- VID, //VIDEO Display -->
+				<c:when test="${question.type.code eq 'VID'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+
+
+				<!-- IMG, //Image Display -->
+				<c:when test="${question.type.code eq 'IMG'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+
+				<!-- FIL, //File UPLOAD -->
+				<c:when test="${question.type.code eq 'FIL'}">
+					<span class="nostatMessage"><spring:message	code="statistics_not_applicable_message" /></span>
+				</c:when>
+
+
+
+
+
+
+
+			</c:choose>
+			
+			
+		</div>
+		
+	</div>
+	
+	</c:if>
+
+	</c:if>
+	
+	
+	<c:if test="${empty surveyStatistic or surveyStatistic.submittedCount le 0}">
+		<div class="block">
+			<div class="flash flash-notice">
+				<spring:message	var="stats" code="com.jd.survey.domain.settings.surveystatistic_label_plural" />
+				<spring:message	code="entity_not_found" arguments="${stats}" />
+			</div>
+		</div>	
+	</c:if>
+</div>
+<!-- single column -->
+</div>
+
+

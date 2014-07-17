@@ -1,0 +1,53 @@
+*{
+margin:0;
+padding:0;
+font-family:verdana,Helvetica,sans-serif;
+
+}
+body {background-color: rgb(51, 51, 51);}
+ 
+#showQuestion {
+	margin:40px;
+	padding:10px;
+	border: 1px solid lightGray;
+	background-color: white;		
+}
+
+#showQuestion label {font-weight:bold; font-size:0.8em; vertical-align:top; background-color: white;display: block;  float: left;	width:35%;}
+	
+
+#showQuestion label.nofloat {display: inline; float: none; font-weight:normal;padding-left:5px; }
+
+
+
+#showQuestion select {width:100px; background-color: white;}
+#showQuestion textarea {width:300px; height:150px; background-color: white;}
+#showQuestion input.checkbox {background-color: white;}
+#showQuestion input {background-color: white;}
+
+.tipMsg{
+	display: block;
+	margin-top: -1px;
+	margin-left: 35%;
+	margin-bottom: 10px;
+	font-size:0.70em;
+	color:darkblue;
+}
+
+
+.hintMsg{
+	display: block;
+	margin-top: -1px;
+	margin-left: 35%;
+	margin-bottom: 10px;
+	font-size:0.70em;
+	
+}
+
+
+
+.checkboxes {
+	display: block;
+	margin-top: -1px;
+	margin-left: 35%;
+}

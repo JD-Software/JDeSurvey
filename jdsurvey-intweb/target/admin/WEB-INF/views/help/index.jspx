@@ -1,0 +1,20 @@
+<div class="page-body" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+<spring:message var="app_name" code="application_name" htmlEscape="false" />
+ 		<!-- Left Column -->
+		<div class="single-column">		
+				<!-- Block -->
+				<div class="block">
+					<spring:message text="${helpContent}" htmlEscape="false"></spring:message>
+				</div>	
+				<!-- /Block -->
+		</div>
+		<!-- /Left Column -->
+	</div>

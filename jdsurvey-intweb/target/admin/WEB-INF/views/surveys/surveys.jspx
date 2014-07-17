@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	version="2.0">
+	
+	<jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">
+    <spring:message code="date_format" var="date_format"/>	
+	
+		
+		<c:if test="${empty surveyStatistics}"> 
+			<div class="block">
+				<div class="block">
+					<div class="flash flash-notice"><spring:message code="nosurveyStatistics_message"/></div>
+				</div>
+			</div>	
+		</c:if>	
+	
+		<c:if test="${!empty surveyStatistics}">
+			<div class="block boxed">
+			<spring:message code="Survey_export_disclaimer_message" htmlEscape="false"></spring:message>
+			</div>
+			
+			
+			<div class="block">
+			<h2><spring:message code="com.jd.survey.domain.survey_label_plural"/></h2>
+			<table summary="" cellpadding="0" cellspacing="0"  class="record-table">
+			<thead>
+			<tr>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.departmentname_label"/></th>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.surveyname_label"/></th>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.icompletedcount_label"/></th>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.submittedcount_label"/></th>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.deletedcount_label"/></th>
+				<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.totalcount_label"/></th>
+				<th class="iconcell"><spring:message code="global_actions_menu"/></th>
+			</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${surveyStatistics}" var="surveyStatistic" varStatus="loop">
+					<c:choose>
+						<c:when test="${loop.count % 2 == 0}">
+							<c:set var="rowStyle" scope="page" value="odd"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="rowStyle" scope="page" value="even"/>
+						</c:otherwise>
+					</c:choose>
+					<tr class="${rowStyle}">
+						<td><c:out value="${surveyStatistic.departmentName}"/></td>
+						<td><c:out value="${surveyStatistic.surveyName}"/></td>
+						
+						<td><fmt:formatNumber type="number" value="${surveyStatistic.icompletedCount}"/></td>
+   			   			<td><fmt:formatNumber type="number"  value="${surveyStatistic.submittedCount}"/></td>
+   			   			<td><fmt:formatNumber type="number"  value="${surveyStatistic.deletedCount}"/></td>
+   			   			<td><fmt:formatNumber type="number"  value="${surveyStatistic.totalCount}"/></td>
+						
+						
+						<td class="iconcell">
+						 	<spring:url value="/reports/${surveyStatistic.surveyDefinitionId}" var="form_url">
+						 	 <spring:param name="excel" />
+						 	</spring:url>
+						 	
+				            <spring:url value="/resources/images/excel.png" var="image_url" />
+				            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+				            <spring:message arguments="${typeName}" code="survey_export_excel" var="action_label" htmlEscape="false" />
+			               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${surveyStatistic.surveyDefinitionId}">
+			                	<img alt="${fn:escapeXml(action_label)}" class="image" src="${image_url}" title="${fn:escapeXml(action_label)}" />
+			              	</a>
+			              	
+			              	<spring:url value="/reports/${surveyStatistic.surveyDefinitionId}" var="form_url">
+			              	 <spring:param name="csv" />
+						 	</spring:url>
+				            <spring:url value="/resources/images/csv.png" var="image_url" />
+				            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+				            <spring:message arguments="${typeName}" code="survey_export_csv" var="action_label" htmlEscape="false" />
+			               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${surveyStatistic.surveyDefinitionId}">
+			                	<img alt="${fn:escapeXml(action_label)}" class="image" src="${image_url}" title="${fn:escapeXml(action_label)}" />
+			              	</a>
+			            
+			              	<spring:url value="/reports/${surveyStatistic.surveyDefinitionId}" var="form_url" >
+			              	 <spring:param name="spss" />
+			              	</spring:url>
+			              	<spring:url value="/resources/images/spss.png" var="image_url" />
+				            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+				            <spring:message arguments="${typeName}" code="survey_export_spss" var="action_label" htmlEscape="false" />
+			               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${surveyStatistic.surveyDefinitionId}">
+			                	<img alt="${fn:escapeXml(action_label)}" class="image" src="${image_url}" title="${fn:escapeXml(action_label)}" />
+			              	</a>
+			              		
+						</td>
+					</tr>
+				</c:forEach>
+			
+  				</tbody>
+  			</table>
+  			 	
+  		</div>	
+   	</c:if>
+    		
+    		
+    		
+    		
+ 
+    </div>	
+</div>	
+

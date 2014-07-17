@@ -1,0 +1,23 @@
+#Thu Sep 13 18:00:20 EDT 2012
+DELEGATES_PREFERENCE=delegateValidatorList
+USER_BUILD_PREFERENCE=enabledBuildValidatorList
+USER_MANUAL_PREFERENCE=enabledManualValidatorList
+USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.2.104.me201003160859
+eclipse.preferences.version=1
+override=true
+suspend=false
+vals/com.genuitec.eclipse.j2eedt.core.ddvalidator/global=FF01
+vals/com.genuitec.eclipse.struts2.Struts2Validator/global=FF01
+vals/com.genuitec.javascript.wst.integration.JSValidator/global=FF01
+vals/org.eclipse.jst.jsp.core.JSPBatchValidator/global=FF01
+vals/org.eclipse.jst.jsp.core.JSPContentValidator/global=FF01
+vals/org.eclipse.jst.jsp.core.TLDValidator/global=FF01
+vals/org.eclipse.php.core.org.eclipse.php.core.PHPTaskValidator/global=FF01
+vals/org.eclipse.php.ui.HTMLValidatorForPHP/global=FF01
+vals/org.eclipse.wst.dtd.core.dtdDTDValidator/global=FF01
+vals/org.eclipse.wst.html.ui.HTMLValidator/global=FF01
+vals/org.eclipse.wst.wsdl.validation.wsdl/global=FF02158org.eclipse.wst.wsdl.validation.internal.eclipse.Validator
+vals/org.eclipse.wst.xml.core.xml/global=FF03
+vals/org.eclipse.wst.xsd.core.xsd/global=FF02162org.eclipse.wst.xsd.core.internal.validation.eclipse.Validator
+vals/org.eclipse.wst.xsl.core.xsl/global=FF02
+vf.version=3

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    
+	<definition extends="default" name="account/show" >
+		<put-attribute name="activeTab" value="myAccount" cascade="true"/>
+		<put-attribute name="pagemode" value="show"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/account/show.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/account/menu.jspx"/>
+    </definition>
+	
+	<definition extends="default" name="account/update" >
+		<put-attribute name="activeTab" value="myAccount" cascade="true"/>
+		<put-attribute name="pagemode" value="update"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/account/update.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/account/menu.jspx"/>
+    </definition>
+
+
+	<definition extends="default" name="account/rpass" >
+		<put-attribute name="activeTab" value="myAccount" cascade="true"/>
+		<put-attribute name="pagemode" value="rpass"  cascade="true"/>
+		<put-attribute name="body"    value="/WEB-INF/views/account/rpass.jspx"/>
+        <put-attribute name="menu"    value="/WEB-INF/views/account/menu.jspx"/>
+    </definition>
+
+
+
+</tiles-definitions>
+
+
+
+
+
+
