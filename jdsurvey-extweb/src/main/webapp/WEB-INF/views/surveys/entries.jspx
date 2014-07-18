@@ -105,16 +105,18 @@
 				
 						<tr class="pagebottom">
 						<td colspan="6">
-				            <span class="new">
-							<spring:url value="/${survey_base_path}/${surveyDefinition.id}" var="create_url">
-								<spring:param name="create" />
-							</spring:url>							   
-				               <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />	
-							   <spring:message arguments="${typeName}" code="survey_create" var="action_label" htmlEscape="false" />
-					              <a href="${create_url}" title="${fn:escapeXml(action_label)}" class="createIcon">
-								   		<spring:message text="${action_label} "/>
-								  </a>
-				            </span>
+							<c:if test="${surveyDefinition.allowMultipleSubmissions eq true}" >
+					            <span class="new">  	
+								<spring:url value="/${survey_base_path}/${surveyDefinition.id}" var="create_url">
+									<spring:param name="create" />
+								</spring:url>							   
+					               <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />	
+								   <spring:message arguments="${typeName}" code="survey_create" var="action_label" htmlEscape="false" />
+						              <a href="${create_url}" title="${fn:escapeXml(action_label)}" class="createIcon">
+									   		<spring:message text="${action_label} "/>
+									  </a>
+					            </span>
+					            </c:if>
 				        </td>
 				      </tr>
 				
