@@ -348,6 +348,8 @@ public class SurveySettingsService {
 			dbSurveyDefinition.setAutoRemindersWeeklyOccurrence(surveyDefinition.getAutoRemindersWeeklyOccurrence()); 
 			dbSurveyDefinition.setCompletedSurveyTemplate(surveyDefinition.getCompletedSurveyTemplate());
 			dbSurveyDefinition.setSendAutoReminders(surveyDefinition.getSendAutoReminders());
+			dbSurveyDefinition.setAllowMultipleSubmissions(surveyDefinition.getAllowMultipleSubmissions());
+			dbSurveyDefinition.setIsPublic(surveyDefinition.getIsPublic());
 			surveyDefinition.setDepartment(departmentDAO.findById(surveyDefinition.getDepartment().getId()));
 			return surveyDefinitionDAO.merge(dbSurveyDefinition);
 
