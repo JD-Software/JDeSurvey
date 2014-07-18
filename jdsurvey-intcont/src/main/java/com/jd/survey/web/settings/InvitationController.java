@@ -145,6 +145,7 @@ public class InvitationController {
 	@Secured({"ROLE_ADMIN","ROLE_SURVEY_ADMIN"})
 	@RequestMapping(produces = "text/html",method = RequestMethod.GET)
 	public String listSurveys(Model uiModel, Principal principal) {
+		
 		try{
 			User user = userService.user_findByLogin(principal.getName());
 			Set<SurveyDefinition> surveyDefinitions= surveySettingsService.surveyDefinition_findAllCompletedInternal(user);
@@ -174,6 +175,7 @@ public class InvitationController {
 										Model uiModel,
 										Principal principal,
 										HttpServletRequest httpServletRequest) {
+		
 		try{
 			User user = userService.user_findByLogin(principal.getName());
 			

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	 xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	 version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="right-column">	
+   	<div class="block">
+    		<page:list id="pl_com.jd.survey.domain.settings.RegularExpression" items="${regularExpressions}">
+        		<table:table data="${regularExpressions}" id="l_com.jd.survey.domain.settings.RegularExpression" path="masks" create="false">
+        			<table:column id="c_com.jd.survey.domain.settings.RegularExpression.name" property="name"/>
+            		<table:column id="c_com.jd.survey.domain.settings.RegularExpression.regex" property="regex"/>
+            		<table:column id="c_com.jd.survey.domain.settings.RegularExpression.description" property="description"/>
+        		</table:table>
+    		</page:list>
+    	</div>
+    </div>	
+</div>	

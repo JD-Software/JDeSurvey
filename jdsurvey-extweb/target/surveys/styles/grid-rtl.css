@@ -1,0 +1,147 @@
+body {
+	font-family:  verdana,Helvetica,sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: block;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.main{
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+.form-1{
+	width: 300px;
+}
+.flash{	
+	width:600px;
+	margin-right:50%;/*rtl*/
+	right:-300px;/*rtl*/
+}
+
+	
+
+
+	/*		Default Layout: */ 
+	body {
+		color: rgb(60,60,60);
+		-webkit-text-size-adjust: 100%; /* Stops Mobile Safari from auto-adjusting font-sizes */
+	}
+	
+	.page-body{
+		clear:both;
+		float:right;/*rtl*/
+		width:100%;
+		border-top:1px solid #C0C0C0;
+		margin-bottom:80px;
+	}
+
+
+	#main-content{margin-left:285px;/*rtl*/}
+	.left-column{
+		margin-left:285px;/*rtl*/
+	}
+	
+	.right-column{
+	margin-top:17px;
+	width:280px;
+	float:left;/*rtl*/
+	margin-right:-100%;/*rtl*/
+	/*ie7*/
+	*margin-right:-14%;/*rtl*/
+	*margin-top:1%;
+	*margin-left:0%;/*rtl*/
+	*height:auto;
+	}
+
+
+
+	/*	Tablet Layout: 768px.*/
+	
+	@media only screen and (min-width: 768px) and (max-width: 991px) {
+		
+		body {
+			
+			/*background:blue;*/
+			
+		}
+		.page-body{
+			float:right;/*rtl*/
+		}	
+		#main-content{margin-left:210px;/*rtl*/}	
+		.left-column{
+			margin-left:210px;/*rtl*/
+		}
+		.right-column{
+			width:200px;
+		}
+	}
+
+
+
+/*	Mobile Layout: 320px. */
+@media only screen and (max-width: 767px) {
+		body {
+			/*background:yellow;*/
+		}
+		.page-body{
+			float:none;
+		}
+		#main-content{margin-left:0px;/*rtl*/ width:100%;}
+		.left-column{
+			margin-left:0px;/*rtl*/
+			width:100%;
+		}
+		.right-column{
+			display:none;
+		}
+		.main{
+			width:auto;
+			
+			margin-top:75px;
+			margin-right:-7px;/*rtl*/
+			left:0;
+		}
+		.form-1{
+			width: 280px;	
+		}
+		.flash{	
+			width:97%;
+			margin-right:5px;/*rtl*/
+			left:0;
+		}	
+}
+
+
+
+/*		Wide Mobile Layout: 480px*/
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+	body {
+		/*background:green;*/
+	}
+	.page-body{
+			float:right;/*rtl*/
+		}
+	#main-content{margin-left:170px;/*rtl*/}
+	
+	.left-column{
+		margin-left:170px;/*rtl*/
+		width:auto;
+	}
+	
+	.right-column{
+		display:none;
+		/*
+		display:block;
+		width:160px;
+		float:right;*/
+	}
+}

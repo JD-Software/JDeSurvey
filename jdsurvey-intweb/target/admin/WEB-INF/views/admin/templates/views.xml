@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="admin/templates/list"  >
+    	<put-attribute name="activeTab" value="admin"  cascade="true"/>
+    	<put-attribute name="pagemode" value="list"  cascade="true"/>
+    	<put-attribute name="body" value="/WEB-INF/views/admin/templates/list.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/templates/menu.jspx"/>
+    </definition>
+	
+	<definition extends="default" name="admin/templates/update">
+		<put-attribute name="activeTab" value="admin"  cascade="true"/>
+		<put-attribute name="pagemode" value="update"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/templates/update.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/templates/menu.jspx"/>
+    </definition>
+
+</tiles-definitions>

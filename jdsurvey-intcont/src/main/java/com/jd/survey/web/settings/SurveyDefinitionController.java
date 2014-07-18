@@ -971,11 +971,9 @@ public class SurveyDefinitionController {
 					  @RequestParam(value = "page", required = false) Integer page, 
 					  @RequestParam(value = "size", required = false ) Integer size, 
 					  Principal principal,
-					  Model uiModel) {
+					  Model uiModel) {	
 		
 		try {
-			
-
 			String login = principal.getName();
 			User user = userService.user_findByLogin(login);
 			log.info(login);
@@ -1027,6 +1025,8 @@ public class SurveyDefinitionController {
 						 Principal principal,
 						 Model uiModel, 
 						 HttpServletRequest httpServletRequest) {
+		
+		
 		try{
 			String login = principal.getName();
 			User user = userService.user_findByLogin(login);
@@ -1047,7 +1047,7 @@ public class SurveyDefinitionController {
 					populateEditForm(uiModel, surveyDefinition, user);
 					return "settings/surveyDefinitions/update";
 				}
-				
+				System.out.println("!!!!!!!!! MD: " + surveyDefinition.getAllowMultipleSubmissions() + " #################### PUB: " + surveyDefinition.getIsPublic());
 				Policy emailTemplatePolicy = Policy.getInstance(this.getClass().getResource(POLICY_FILE_LOCATION));
 				AntiSamy emailAs = new AntiSamy();
 				CleanResults crEmail = emailAs.scan(surveyDefinition.getEmailInvitationTemplate(), emailTemplatePolicy);
@@ -1061,6 +1061,7 @@ public class SurveyDefinitionController {
 				
 				uiModel.asMap().clear();
 				surveyDefinition = surveySettingsService.surveyDefinition_merge(surveyDefinition);
+				System.out.println("!!!!!!!!! MD: " + surveyDefinition.getAllowMultipleSubmissions() + " #################### PUB: " + surveyDefinition.getIsPublic());
 				return "settings/surveyDefinitions/saved";
 				
 

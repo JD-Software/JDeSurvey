@@ -1,0 +1,44 @@
+<div class="left-column" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+	
+	<div id="sidemenudiv">
+	
+		<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_LICENSE_ADMIN">
+		<ul id="sidemenu" class="topmenu">
+			<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_LICENSE_ADMIN">
+			<c:if test="${!empty surveyDefinition}">
+				<c:url value="/statistics/pdf/${surveyDefinition.id}" var="url"/>
+				<li class="topmenu"><a href="${url}" class="fancyboxLink fancybox.iframe" target="_new"><i class="icon-print"> &#160;</i><spring:message code="leftmenu_pdf" htmlEscape="false" /></a></li>
+				
+				
+				
+			</c:if>
+			</sec:authorize>
+		</ul>	
+	</sec:authorize>
+	</div>
+	
+	
+	
+	
+	
+	
+	 
+	 
+	  
+	
+	
+	
+    
+   
+</div>
+
+    

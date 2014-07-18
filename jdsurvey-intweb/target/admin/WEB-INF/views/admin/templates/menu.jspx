@@ -1,0 +1,53 @@
+<div class="left-column"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:sec="http://www.springframework.org/security/tags" 
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+	<div id="sidemenudiv">
+		<tiles:importAttribute name="pagemode"/>	
+		<c:choose>
+			
+			<c:when test="${pagemode eq 'list'}">
+				<ul id="sidemenu" class="topmenu">
+					<!-- <spring:url var="icon" value="/resources/images/menu/topmenu.png" /> -->
+					<c:url value="/admin/" var="url"/>		
+					<li><a href="${url}" ><i class="icon-arrow-up"> &#160;</i><spring:message code="leftmenu_settings"/></a></li>
+					<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
+						<!-- <spring:url var="icon" value="/resources/images/menu/list.png" /> -->
+						<c:url value="/admin/templates?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+						<spring:message code="com.jd.survey.domain.settings.velocitytemplate_list_menu" var="objectname" htmlEscape="false" />
+						<li class="topmenu"><a href="${url}" ><i class="icon-list"> &#160;</i><spring:message code="global_menu_list" arguments="${objectname}" htmlEscape="false"/></a></li>
+					</sec:authorize> 
+					
+				</ul>	
+			</c:when>
+			
+			<c:when test="${pagemode eq 'update'}">
+				<ul id="sidemenu" class="topmenu">
+				
+					<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
+						<!-- <spring:url var="icon" value="/resources/images/menu/list.png" /> -->
+						<c:url value="/admin" var="url"/>
+						<spring:message code="com.jd.survey.domain.settings.velocitytemplate_list_menu" var="objectname" htmlEscape="false" />
+						<li class="topmenu"><a href="${url}" ><i class="icon-arrow-up"> &#160;</i><spring:message code="global_menu_list" arguments="${objectname}" htmlEscape="false"/></a></li>
+					</sec:authorize> 
+				
+				</ul>	
+			</c:when>
+				
+			<c:otherwise>
+			</c:otherwise>
+			
+			
+		</c:choose>	
+	</div>
+		
+</div>
+
+    

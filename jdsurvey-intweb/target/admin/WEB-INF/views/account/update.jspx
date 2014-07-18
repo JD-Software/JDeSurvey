@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags/form"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form"
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+   		<div class="block">
+		    <form:update id="fu_com.jd.survey.domain.security.User" modelAttribute="user" path="/account" versionField="Version" >
+		    	<field:hidden path="id"/>
+		    	<field:hidden path="type"/>
+		    	<field:input field="login" id="c_com.jd.survey.domain.security.User.login" cssclass="grid-1-12" maxlength="10" required="true"/>
+		        <field:input field="firstName" id="c_com.jd.survey.domain.security.User.firstName" cssclass="grid-3-12" maxlength="75" required="true"/>
+				<field:input field="middleName" id="c_com.jd.survey.domain.security.User.middleName" cssclass="grid-3-12"  maxlength="75"/>
+				<field:input field="lastName" id="c_com.jd.survey.domain.security.User.lastName" cssclass="grid-3-12" maxlength="75" required="true"/>
+				<field:input field="dateOfBirth" id="c_com.jd.survey.domain.security.User.dateOfBirth" cssclass="grid-2-12" maxlength="10" required="true"/>
+				<field:input field="email" id="c_com.jd.survey.domain.security.User.email" cssclass="grid-3-12" maxlength="100" required="true"/>
+			</form:update>
+		</div>
+    </div>	
+</div>
+
+
+
+
+

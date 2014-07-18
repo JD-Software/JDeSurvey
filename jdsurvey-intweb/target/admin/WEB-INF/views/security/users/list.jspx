@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" xmlns:jsp="http://java.sun.com/JSP/Page" 
+	 xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	 xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+	 xmlns:spring="http://www.springframework.org/tags" 
+	 version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="right-column">	
+   		<div class="block">
+   			<c:if test="${not empty hasErrors}">
+   				<div class="flash flash-error">
+   					<spring:message code="error_user_delete"/>
+   				</div>
+   			</c:if>
+   			<c:if test="${empty hasErrors}">
+	    		<page:list id="pl_com.jd.survey.domain.security.User" items="${users}">
+	        		<table:table data="${users}" id="l_com.jd.survey.domain.security.User" path="../users" create="false" handleTypeField="true">
+	        			<table:column id="c_com.jd.survey.domain.security.User.type" property="type"/>
+						<table:column id="c_com.jd.survey.domain.security.User.login" property="login"/>
+						<table:column id="c_com.jd.survey.domain.security.User.firstName" property="firstName"/>
+	            		<table:column id="c_com.jd.survey.domain.security.User.middleName" property="middleName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.lastName" property="lastName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.email" property="email"/>
+						<table:column id="c_com.jd.survey.domain.security.User.enabled" property="enabled" />
+	        		</table:table>
+	    		</page:list>
+    		</c:if>
+    	</div>
+    </div>	
+</div>	
+
+
+
+

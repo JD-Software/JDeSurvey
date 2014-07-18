@@ -1,0 +1,104 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:spring="http://www.springframework.org/tags"
+xmlns:jsp="http://java.sun.com/JSP/Page"  
+xmlns:form="http://www.springframework.org/tags/form" 
+version="2.0">
+
+	<jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+	<jsp:directive.attribute name="parentObjectItems" type="java.lang.Object" required="true" rtexprvalue="true" description="The object of the checkboxes" />
+	<jsp:directive.attribute name="items" type="java.lang.Object" required="true" rtexprvalue="true" description="The object of the checkboxes" />
+	<jsp:directive.attribute name="pathOnParentObject" type="java.lang.String" required="true" rtexprvalue="true" description="The path of where the set of objects corresponds to on the parent object" />
+	<jsp:directive.attribute name="itemLabelFieldName" type="java.lang.String" required="true" rtexprvalue="true" description="The label of the object" />
+	<jsp:directive.attribute name="itemValueFieldName" type="java.lang.String" required="false" rtexprvalue="true" description="The the value(s) that will be taken from the object" />
+	<jsp:directive.attribute name="showDisabled" type="java.lang.Boolean" required="false" rtexprvalue="true" description="If show is true, the checkboxes will display as disabled " />
+	<jsp:directive.attribute name="required" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicates if this field is required (default false)" />
+	<jsp:directive.attribute name="tip" type="java.lang.String" required="false" rtexprvalue="true" description="Will display a question mark tooltip next to the field name" />
+	
+	<c:if test="${empty render or render}">
+		<c:if test="${empty showDisabled or false}">
+			<c:if test="${empty label}">
+				<spring:message code="${fn:toLowerCase(fn:substringAfter(id,'_'))}_label_plural" var="label" htmlEscape="false" />
+				<spring:message code="${fn:toLowerCase(fn:substringAfter(id,'_'))}_label" var="labelSingular" htmlEscape="false" />
+			</c:if>
+
+						<label class="grid-3-12 alignTop">
+							<c:out value="${fn:escapeXml(label)}" />
+								<c:if test="${not empty required}">
+									<em class="formee-req">*</em>
+								</c:if>
+							:<c:if test="${not empty tip}"><a class="hastip" title="${tip}"> ?</a></c:if>
+							</label>
+						<div class="checkboxDiv">
+						<c:forEach items="${items}" var="item" varStatus="loop">
+												
+							<c:set var="found" value="false" />
+							<c:forEach items="${parentObjectItems}" var="parentObjectItem" varStatus="loop2">
+								
+								<c:set value="${item[itemValueFieldName]}" var="parentItemId" />
+								<c:set value="${parentObjectItem[itemValueFieldName]}" var="itemId" />
+								<!-- debug		
+								<c:out value="parentItemId : ${parentItemId}"/> ****
+								<c:out value="itemId : ${itemId}"/>
+								<br/>
+								-->
+								<c:if test="${parentItemId eq itemId}">
+									<c:set var="found" value="true" />
+								</c:if>
+							</c:forEach>
+							
+							<c:choose>
+							<c:when test="${found}">
+								 <input id="${labelSingular} ${item[itemLabelFieldName]}"  name="${pathOnParentObject}" type="checkbox" value="${item[itemValueFieldName]}" checked="checked" class="checkbox alignTop"/>
+							</c:when>
+							<c:otherwise>
+								<input id="${labelSingular} ${item[itemLabelFieldName]}" name="${pathOnParentObject}" type="checkbox" value="${item[itemValueFieldName]}" class="checkbox alignTop"/>
+							</c:otherwise>
+							</c:choose>
+							<label for="${labelSingular} ${item[itemLabelFieldName]}" class="lblCheckBox alignTop"><c:out value="${item[itemLabelFieldName]}"/></label><br/>
+							 
+						</c:forEach>
+						</div>
+						<form:errors  id="_${label}_error_id" path="${pathOnParentObject}" class="validationMsg"/>
+		</c:if>
+		<c:if test="${showDisbled and true}">
+			<c:if test="${empty label}">
+				<spring:message code="${fn:toLowerCase(fn:substringAfter(id,'_'))}_label" var="label" htmlEscape="false" />
+			</c:if>
+
+						<label class="grid-3-12 alignTop"><c:out value="${fn:escapeXml(label)}  :" /></label>
+						<div class="checkboxDiv">
+						<c:forEach items="${items}" var="item" varStatus="loop">
+												
+							<c:set var="found" value="false" />
+							<c:forEach items="${parentObjectItems}" var="parentObjectItem" varStatus="loop2">
+								
+								<c:set value="${item[itemValueFieldName]}" var="parentItemId" />
+								<c:set value="${parentObjectItem[itemValueFieldName]}" var="itemId" />
+								<!-- debug		
+								<c:out value="parentItemId : ${parentItemId}"/> ****
+								<c:out value="itemId : ${itemId}"/>
+								<br/>
+								-->
+								<c:if test="${parentItemId eq itemId}">
+									<c:set var="found" value="true" />
+								</c:if>
+							</c:forEach>
+							
+							<c:choose>
+							<c:when test="${found}">
+								 <input id="${labelSingular} ${item[itemLabelFieldName]}"  name="${pathOnParentObject}" type="checkbox" value="${item[itemValueFieldName]}" checked="checked" disabled="" class="checkbox alignTop"/>
+							</c:when>
+							<c:otherwise>
+								<input id="${labelSingular} ${item[itemLabelFieldName]}" name="${pathOnParentObject}" type="checkbox" value="${item[itemValueFieldName]}" class="checkbox alignTop" disabled="" />
+							</c:otherwise>
+							</c:choose>
+							
+							 <label for="${labelSingular} ${item[itemLabelFieldName]}" class="grid-5-12 alignTop"><c:out value="${item[itemLabelFieldName]}"/></label><br/>
+						</c:forEach>
+						</div>
+		</c:if>
+  
+	</c:if>
+	
+</jsp:root>

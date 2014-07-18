@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.security.User')}_label" var="section_label" htmlEscape="false" />	
+			<section:block title="${section_label}" object="${user}" path="/security/users" create="false" edit="true" delete="false" show_under_line="true">
+				<field:display field="type" id="c_com.jd.survey.domain.security.User.type" object="${user}" isTypeField="true"/>
+				<field:display field="enabled" id="c_com.jd.survey.domain.security.User.enabled" object="${user}"/>
+				<field:display field="login" id="c_com.jd.survey.domain.security.User.login" object="${user}"/>
+				<field:display field="firstName" id="s_com.jd.survey.domain.security.User.firstName" object="${user}"/>
+				<field:display field="middleName" id="s_com.jd.survey.domain.security.User.middleName" object="${user}"/>
+				<field:display field="lastName" id="s_com.jd.survey.domain.security.User.lastName" object="${user}"/>
+				<field:display field="email" id="s_com.jd.survey.domain.security.User.email" object="${user}"/>
+			</section:block>						
+			
+			
+			<spring:message code="com.jd.survey.domain.security.group_label_plural" var="section_label" htmlEscape="false" />		
+			<section:block title="${section_label}:"  >	
+				<table:table data="${user.groups}" id="l_com.jd.survey.domain.security.Group" path="/security/groups" parentid="${user.id}" footer="false" create="false" update="false" delete="false" show="false" >
+					<table:column id="c_com.jd.survey.domain.security.Group.name" property="name"/>
+					<table:column id="c_com.jd.survey.domain.security.Group.description" property="description"/>
+				</table:table>
+			</section:block>
+			
+			<spring:message code="com.jd.survey.domain.security.authority_label_plural" var="section_label" htmlEscape="false" />		
+			<section:block title="${section_label}:" >	
+				<table:table data="${authorities}" id="l_com.jd.survey.domain.security.Authority" path="/security/authorities" footer="false" create="false" update="false" delete="false" show="false">
+					<table:column id="c_com.jd.survey.domain.security.Authority.name" property="name"/>
+					<table:column id="c_com.jd.survey.domain.security.Authority.description" property="description"/>
+				</table:table>
+			</section:block>
+			
+			<c:if test="${user.type eq 'I'}">
+				<spring:message code="com.jd.survey.domain.settings.department_label_plural" var="section_label" htmlEscape="false" />		
+				<section:block title="${section_label}:" >	
+					<table:table data="${user.departments}" id="l_com.jd.survey.domain.settings.Department" path="/settings/departments" footer="false" create="false" update="false" delete="false" show="false">
+						<table:column id="c_com.jd.survey.domain.settings.Department.name" property="name"/>
+						<!-- The line below cause an uncaught exception no property department found-->
+						<!--<table:column id="c_com.jd.survey.domain.settings.SurveyDefinition.department" property="department" />-->
+						<table:column id="c_com.jd.survey.domain.settings.Department.description" property="description"/>
+					</table:table>
+				</section:block>
+			</c:if>
+	
+			<c:if test="${user.type eq 'E'}">
+				<spring:message code="com.jd.survey.domain.settings.surveydefinition_label_plural" var="section_label" htmlEscape="false" />		
+				<section:block title="${section_label}:" >	
+					<table:table data="${user.surveyDefinitions}" id="l_com.jd.survey.domain.settings.SurveyDefinition" path="/settings/surveyDefinitions" footer="false" create="false" update="false" delete="false" show="false">
+						<table:column id="c_com.jd.survey.domain.settings.SurveyDefinition.name" property="name" />
+						<table:column id="c_com.jd.survey.domain.settings.SurveyDefinition.department" property="department" />
+						<!--<table:column id="c_com.jd.survey.domain.settings.SurveyDefinition.description" property="description" escapeXml="false" />-->
+					</table:table>
+				</section:block>
+			</c:if>
+	
+	
+	
+	
+	
+	</div>	
+</div>

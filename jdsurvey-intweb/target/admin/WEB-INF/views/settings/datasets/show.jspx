@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+    
+		<spring:message code="com.jd.survey.domain.settings.dataset_label" var="section_label" htmlEscape="false" />	
+		<section:block title="${section_label}" object="${dataSet}" path="/settings/datasets" create="false" edit="true" show_under_line="true">
+			<!-- 
+			<field:display field="code" 		id="s_com.jd.survey.domain.settings.Dataset.code" 		object="${dataSet}"/>
+			 -->
+			<field:display field="name" 		id="s_com.jd.survey.domain.settings.Dataset.name" 		object="${dataSet}"/>
+	        <field:display field="description"					id="s_com.jd.survey.domain.settings.Dataset.description" 	object="${dataSet}" cssclass="grid-9-12 alignTop"/>
+   		</section:block>
+
+		<c:if test="${not empty dataSetItems}">	  
+			<spring:message code="com.jd.survey.domain.settings.datasetitem_label_plural" var="section_label" htmlEscape="false" />		
+			<section:block title="${section_label}:" >	
+				<table:table data="${dataSetItems}" id="l_com.jd.survey.domain.settings.DataSetItem" path="/settings/datasetItems" parentid="${dataSet.id}" create="false" update="false"  show="false" delete="false" >
+					<table:column id="c_com.jd.survey.domain.settings.DataSetItem.order" property="order"/>
+					<table:column id="c_com.jd.survey.domain.settings.DataSetItem.text" property="text"/>
+					<table:column id="c_com.jd.survey.domain.settings.DataSetItem.value" property="value"/>
+				</table:table>
+			</section:block>
+		</c:if>
+		
+		<c:if test="${empty dataSetItems}">
+			<div class="block">
+				<div class="flash flash-notice"><spring:message code="nodatasets_message"/></div>
+			</div>
+		</c:if>  	
+			
+    </div>	
+</div>

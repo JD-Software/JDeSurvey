@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0">
+	
+	
+	<script language="javascript" type="text/javascript">
+		tinyMCE.init({
+    	    // General options
+	       	mode : "textareas",
+			theme_advanced_path : false,
+			height: "450",
+			width : "65%",
+			theme_advanced_buttons2:false,
+	        theme : "advanced",
+	        element_format : "html",
+	        plugins : "inlinepopups,preview",
+	
+	        // Theme options
+	        theme_advanced_buttons1 : "bold,italic,underline,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,|,forecolor,backcolor,|,code,|,preview",
+	        theme_advanced_toolbar_location : "top",
+	        theme_advanced_toolbar_align : "left",
+	        theme_advanced_statusbar_location : "bottom",
+	        theme_advanced_resizing : true,
+	
+	       // Skin options
+	        skin : "o2k7",
+	       skin_variant : "silver",
+	
+	        // Example content CSS (should be your site CSS)
+	        content_css : ""
+		});
+	</script>
+	
+
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">
+    	
+    		<c:choose>
+    			<!-- ForgotLogin -->
+	  			<c:when test="${velocityTemplate.id eq 1}">
+	  				<div class="block">
+	  				<spring:message code="template_edit_header_message"/>
+	   				<ul>
+	   					<li><spring:message code="login_parameter_name"/></li>
+	   				</ul>
+	   				<spring:message code="template_edit_footer_message"/>
+	   				</div>	
+	  			</c:when>
+	  			
+	  			
+	  			<!-- ForgotPassword -->
+	  			<c:when test="${velocityTemplate.id eq 2}">
+	  				<div class="block">
+	  				<spring:message code="template_edit_header_message"/>
+	   				<ul>
+	   					<li><spring:message code="reset_password_link_parameter_name"/></li>
+	   				</ul>
+	   				<spring:message code="template_edit_footer_message"/>
+	   				</div>	
+	  			</c:when>
+	  			
+	  			
+	  			<!-- InternalHelpContent -->
+	  			<c:when test="${velocityTemplate.id eq 3}">
+	  			</c:when>
+	  			
+	  			<!-- InternalHomePageContent  -->
+	  			<c:when test="${velocityTemplate.id eq 4}">
+	  				<div class="block">
+	  				<spring:message code="template_edit_header_message"/>
+	   				<ul>
+	   					<li><spring:message code="logged_user_fullname"/></li>
+	   				</ul>
+	   				<spring:message code="template_edit_footer_message"/>
+	   				</div>	
+	  			</c:when>
+	  			<!-- InvitationEmail -->
+	  			<c:when test="${velocityTemplate.id eq 5}">
+	  				<div class="block">
+	  				<spring:message code="template_edit_header_message"/>
+	   				<ul>
+	   					
+	   					<li><spring:message code="invitee_fullname_parameter_name"/></li>
+	   					<li><spring:message code="survey_name"/></li>
+	   					<li><spring:message code="invite_fill_survey_link_parameter_name"/></li>
+	   				</ul>
+	   				<spring:message code="template_edit_footer_message"/>
+	   				</div>	
+	  			</c:when>
+	  			
+	  			<!-- SurveyCompletedContent -->
+	  			<c:when test="${velocityTemplate.id eq 6}">
+	  			</c:when>
+	  			
+	  	</c:choose>						
+	  							
+   				
+   			
+   			
+    	
+   		<div class="block">
+		    <form:update id="fu_com.jd.survey.domain.settings.VelocityTemplate" modelAttribute="velocityTemplate" path="/admin/templates" versionField="Version" >
+		        <field:hidden path="name"/>
+				<field:display field="name" id="c_com.jd.survey.domain.settings.VelocityTemplate.name" object="${velocityTemplate}" />
+				<div cssclass="grid-8-12">
+		        	<field:textarea field="definition" id="c_com.jd.survey.domain.settings.VelocityTemplate.definition"  cssclass="grid-8-12 extraLargeTextArea"/>
+		        	
+		        </div>
+		    </form:update>
+		</div>
+    </div>	
+</div>
+    
+
+

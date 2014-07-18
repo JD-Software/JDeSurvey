@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+  										
+  	<definition extends="preview" name="settings/surveyDefinitionPages/show" template="/WEB-INF/layouts/preview.jspx">
+    	<put-attribute name="body" value="/WEB-INF/views/settings/surveyDefinitionPages/show.jspx"/>
+    </definition>
+    
+    <definition extends="preview" name="settings/surveyDefinitionPages/create">
+        <put-attribute name="body" value="/WEB-INF/views/settings/surveyDefinitionPages/create.jspx"/>
+
+    </definition>
+	<definition extends="preview" name="settings/surveyDefinitionPages/update">
+		<put-attribute name="body" value="/WEB-INF/views/settings/surveyDefinitionPages/update.jspx"/>
+    </definition>
+	<definition extends="preview" name="settings/surveyDefinitionPages/saved">
+		<put-attribute name="body" value="/WEB-INF/views/settings/surveyDefinitionPages/saved.jspx"/>
+    </definition>
+    
+    <definition extends="preview" name="settings/surveyDefinitionPages/fork">
+		<put-attribute name="body" value="/WEB-INF/views/settings/surveyDefinitionPages/fork.jspx"/>
+    </definition>
+    
+</tiles-definitions>

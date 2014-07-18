@@ -1,0 +1,23 @@
+<jsp:root 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:spring="http://www.springframework.org/tags" 
+version="2.0">
+
+	<jsp:output omit-xml-declaration="yes" />
+  
+	<spring:theme code="jquery_css" var="jquery_css" />
+	<spring:theme code="awesome_css" var="awesome_css" />
+	<spring:theme code="style_login_css" var="login_css" />
+	<spring:theme code="gridStyleSheet" var="grid_css" />
+	
+	<spring:url value="${awesome_css}" var="awesome_css_url" />
+	<spring:url value="${login_css}" var="login_css_url" />
+	<spring:url value="${grid_css}" var="grid_css_url" />
+	
+	<link rel="stylesheet" type="text/css" media="all" href="${grid_css_url}" />
+  	<link rel="stylesheet" type="text/css" media="screen" href="${awesome_css_url}" />  
+	<link rel="stylesheet" type="text/css" media="screen" href="${login_css_url}" />
+
+</jsp:root>

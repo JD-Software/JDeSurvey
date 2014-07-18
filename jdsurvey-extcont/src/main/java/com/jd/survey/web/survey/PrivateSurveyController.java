@@ -143,6 +143,7 @@ public class PrivateSurveyController {
 	public String listSurveys(Model uiModel,
 					   		  Principal principal,
 					   		  HttpServletRequest httpServletRequest) {
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		try{
 			String login = principal.getName();
 			User user = userService.user_findByLogin(login);

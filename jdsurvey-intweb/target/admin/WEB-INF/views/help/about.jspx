@@ -1,0 +1,30 @@
+<div class="page-body" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+<spring:message var="app_name" code="application_name" htmlEscape="false" />
+ 		<!-- Left Column -->
+		<div class="single-column">		
+				<!-- Block -->
+				<div class="block boxed">
+					<spring:message code="application_name_label"/>:<spring:message code="application_name" />
+					<br/>
+					<spring:message code="version_label" />:<spring:message code="application_version" />
+					<br/>
+					<br/>
+					<spring:message code="copyright_message"/>
+					<br/>
+					<spring:message code="website_message"/>
+					<br/>
+					<br/>
+					<spring:message code="accredidation_message" htmlEscape="false"/>
+				</div>
+				<!-- /Block -->
+		</div>
+		<!-- /Left Column -->
+	</div>

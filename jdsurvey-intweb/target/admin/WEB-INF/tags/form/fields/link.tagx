@@ -1,0 +1,54 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:jsp="http://java.sun.com/JSP/Page"
+xmlns:form="http://www.springframework.org/tags/form" 
+version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+  <jsp:directive.attribute name="object" type="java.lang.Object" required="true" rtexprvalue="true" description="The form backing object" />
+  <jsp:directive.attribute name="path" type="java.lang.String" required="true" rtexprvalue="true" description="The path name" />
+  <jsp:directive.attribute name="field" type="java.lang.String" required="true" rtexprvalue="true" description="The field name" />
+  <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this field, will default to a message bundle if not supplied" />
+  <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  <jsp:directive.attribute name="cssclass" type="java.lang.String" required="false" rtexprvalue="true" description="the css style for the select" />
+  <jsp:directive.attribute name="hiperlink" type="java.lang.Boolean" required="false" rtexprvalue="false" description="This feature disables the hiperlink, it will just display text"/>
+  <jsp:directive.attribute name="tip" type="java.lang.String" required="false" rtexprvalue="true" description="Will display a question mark tooltip next to the field name" />
+  
+  <c:if test="${empty render or render}">
+    <c:if test="${not empty object and empty label}">
+      <spring:message code="${fn:toLowerCase(fn:substringAfter(id,'_'))}_label" var="label" htmlEscape="false" />
+    </c:if>
+	<c:if test="${not empty hiperlink}">
+		<c:set value="true" var="hiperlink"/>
+	</c:if>
+	
+    <div id="_${fn:escapeXml(id)}_id" >
+      <label class="grid-3-12"><c:out value="${label}" /> :<c:if test="${not empty tip}"><a class="hastip" title="${tip}"> ?</a></c:if></label>
+	  <span class="${cssclass}">
+			<spring:url value="${path}" var="item_url"/>
+			<c:choose>
+				<c:when test="${hiperlink}">
+					<c:choose>
+						<c:when test="${field == 'code'}"> <!-- This Question is type QuestionOption -->
+							<spring:message code="${fn:toLowerCase(object)}_label" />
+						</c:when>
+						<c:otherwise>
+							<spring:eval expression="object.${field}"/>
+						</c:otherwise>
+					</c:choose>
+						
+				</c:when>
+				<c:otherwise>
+					<a href="${item_url}">
+						<spring:eval expression="object.${field}" />
+					</a>
+				</c:otherwise>
+			</c:choose>
+	  </span>
+    </div>
+    
+  </c:if>
+</jsp:root>

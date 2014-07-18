@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+  <definition name="default" template="/WEB-INF/layouts/default.jspx">
+  	<put-attribute name="activeTab" value="login" cascade="true"/>
+  	<put-attribute name="header" value="/WEB-INF/layouts/header.jspx" />
+    <put-attribute name="menu" value="/WEB-INF/layouts/menu.jspx" />
+    <put-attribute name="footer" value="/WEB-INF/layouts/footer.jspx" />
+    
+  </definition>
+
+  <definition name="public" template="/WEB-INF/layouts/default.jspx">
+  	<put-attribute name="activeTab" value="login" cascade="true"/>
+  	<put-attribute name="header" value="/WEB-INF/layouts/header.jspx"/>
+	<put-attribute name="footer" value="/WEB-INF/layouts/footer.jspx"/>
+  </definition>
+  
+  
+  <definition name="minimal" template="/WEB-INF/layouts/minimal.jspx">
+  	
+  </definition>
+  
+  <definition name="preview" template="/WEB-INF/layouts/preview.jspx">
+  	<put-attribute name="activeTab" value="login" cascade="true"/>
+  	<put-attribute name="header" value="/WEB-INF/layouts/header.jspx"/>
+  </definition>
+  
+
+</tiles-definitions>

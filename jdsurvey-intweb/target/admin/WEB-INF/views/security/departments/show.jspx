@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:section="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:form="http://www.springframework.org/tags/form"
+	 xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+	version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.Department')}_label" var="section_label" htmlEscape="false" />	
+			<section:block title="${section_label}" object="${department}" path="/security/departments" create="false" edit="true" show_under_line="true">
+				<field:display field="name" 		id="s_com.jd.survey.domain.settings.Department.name" 		object="${department}"/>
+		        <field:display field="description"					id="s_com.jd.survey.domain.settings.Department.description" 	object="${department}" cssclass="grid-9-12 alignTop"/>
+    		</section:block>
+
+			
+			<spring:message code="${fn:toLowerCase('com.jd.survey.domain.settings.surveyDefinition')}_label_plural" var="section_label" htmlEscape="false" />		
+			<section:block title="${section_label}:" >	
+					<table summary="" cellpadding="0" cellspacing="0"  class="questions-table">
+				<thead>
+				<tr>
+					<th width="20%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.department_label"/></th>
+					<th width="20%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.name_label"/></th>
+					<th width="10%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.status_label"/></th>
+					<th width="45%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.description_label"/></th>
+					<th width="5%" colspan="2"><spring:message code="global_actions_menu"/></th>
+				</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${department.surveyDefinitions}" var="surveyDefinition" varStatus="loop">
+						<c:choose>
+							<c:when test="${loop.count % 2 == 0}">
+								<c:set var="rowStyle" scope="page" value="odd"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="rowStyle" scope="page" value="even"/>
+							</c:otherwise>
+						</c:choose>
+						<tr class="${rowStyle}">
+							<td><c:out value="${surveyDefinition.department.name}"/></td>
+							<td><c:out value="${surveyDefinition.name}"/></td>
+							<td>
+								<c:choose>
+									<c:when test="${surveyDefinition.status.stringValue eq 'I'}">
+										<spring:message code="surveydefinition_status_incomplete_label"/>
+									</c:when>
+									<c:when test="${surveyDefinition.status.stringValue eq 'P'}">
+										<spring:message code="surveydefinition_status_published_label"/>
+									</c:when>
+									<c:when test="${surveyDefinition.status.stringValue eq 'D'}">
+										<spring:message code="surveydefinition_status_inactive_label"/>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td><c:out value="${surveyDefinition.description}" escapeXml="false"/></td>
+							
+							<!-- DELETE ICON LINK -->
+							<td class="alignIcon">
+						   		<!-- allow delete only for incomplete surveys  -->
+						   		<c:if test="${surveyDefinition.status.stringValue eq 'I'}">
+				             	 <spring:url value="/settings/surveyDefinitions/${surveyDefinition.id}" var="delete_form_url" />
+					              <spring:url value="/resources/images/transparent.png" var="delete_image_url" />
+					              <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					              <form:form id="delete_id_${surveyDefinition.id}" action="${delete_form_url}" method="DELETE">
+					                <spring:message arguments="${typeName}" code="entity_delete" var="delete_label" htmlEscape="false" />
+					                <c:set var="delete_confirm_msg">
+					                  <spring:escapeBody javaScriptEscape="true">
+					                    <spring:message code="entity_delete_confirm" htmlEscape="false"/>
+					                  </spring:escapeBody>
+					                </c:set>
+					                <input alt="${fn:escapeXml(delete_label)}" class="deleteIcon" src="${delete_image_url}" title="${fn:escapeXml(delete_label)}" type="image" value="${fn:escapeXml(delete_label)}" onclick="return confirm('${delete_confirm_msg}');" />
+					                <c:if test="${not empty param.page}">
+					                  <input name="page" type="hidden" value="1" />
+					                </c:if>
+					                <c:if test="${not empty param.size}">
+					                  <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+					                </c:if>
+					              </form:form>
+					              </c:if>
+				            </td> 
+				            
+				            <!-- SHOW ICON LINK -->
+							<td>
+							 	<spring:url value="/settings/surveyDefinitions/${surveyDefinition.id}?show" var="form_url" />
+					            <spring:url value="/resources/images/show.png" var="image_url" />
+					            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					            <spring:message arguments="${typeName}" code="entity_show" var="action_label" htmlEscape="false" />
+				               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${surveyDefinition.id}" class="showIcon">
+				                	<spring:message text="${fn:escapeXml(action_label)}: ${surveyDefinition.id}"/>
+				              	</a>	
+							</td>
+						  	
+							
+							
+						</tr>
+					</c:forEach>
+				
+					 <tr class="footer">
+        				<td colspan="6">
+                  			<c:if test="${not empty maxPages}">
+            					<util:pagination maxPages="${maxPages}" page="${param.page}" size="${param.size}" idFieldName="id" idFieldValue="${surveyDefinition.id}"/>
+          					</c:if>
+        				</td>
+      				 </tr>
+			
+  				</tbody>
+  			</table>
+				</section:block>
+				
+				<spring:message code="com.jd.survey.domain.security.user_label_plural" var="section_label" htmlEscape="false" />		
+				<section:block title="${section_label}:" >	
+					<table:table data="${department.users}" id="l_com.jd.survey.domain.security.User" path="/security/users" footer="false" create="false" update="false" delete="false" show="false">
+						<table:column id="c_com.jd.survey.domain.security.User.login" property="login"/>
+						<table:column id="c_com.jd.survey.domain.security.User.firstName" property="firstName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.lastName" property="lastName"/>
+						<table:column id="c_com.jd.survey.domain.security.User.email" property="email"/>
+					</table:table>
+				</section:block>
+			
+	
+   		
+    </div>	
+</div>

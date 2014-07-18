@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <div class="single-column">	
+   	<div class="block">
+   			
+   			
+   			
+   			<c:if test="${empty surveyStatistics}"> 
+				<span class="validationMsg"><spring:message code="nosurveys_message" /></span>
+			</c:if>	
+   			
+   			<c:if test="${!empty surveyStatistics}">
+   			<table summary="" cellpadding="0" cellspacing="0"  class="questions-table">
+				<thead>
+				<tr>
+					<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.departmentname_label"/></th>
+					<th><spring:message code="com.jd.survey.domain.survey.surveystatistic.surveyname_label"/></th>
+					<th class="center"><spring:message code="com.jd.survey.domain.survey.surveystatistic.icompletedcount_label"/></th>
+					<th class="center"><spring:message code="com.jd.survey.domain.survey.surveystatistic.submittedcount_label"/></th>
+					<th class="center"><spring:message code="com.jd.survey.domain.survey.surveystatistic.deletedcount_label"/></th>
+					<th class="center"><spring:message code="com.jd.survey.domain.survey.surveystatistic.totalcount_label"/></th>
+					<th><spring:message code="global_actions_menu"/></th>
+				</tr>
+				</thead>
+				<tbody>
+					
+					<c:forEach items="${surveyStatistics}" var="surveyStatistic" varStatus="loop">
+						<c:choose>
+							<c:when test="${loop.count % 2 == 0}">
+								<c:set var="rowStyle" scope="page" value="odd"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="rowStyle" scope="page" value="even"/>
+							</c:otherwise>
+						</c:choose>
+						<tr class="${rowStyle}">
+							<td><c:out value="${surveyStatistic.departmentName}"/></td>
+							<td><c:out value="${surveyStatistic.surveyName}"/> <c:out value="${surveyStatistic.surveyDefinitionId}"/> </td>
+							<td class="center"><c:out value="${surveyStatistic.icompletedCount}"/></td>
+							<td class="center"><c:out value="${surveyStatistic.submittedCount}"/></td>
+							<td class="center"><c:out value="${surveyStatistic.deletedCount}"/></td>
+							<td class="center"><c:out value="${surveyStatistic.totalCount}"/></td>
+							<td class="icon-cell">
+								<spring:url value="/reports/${surveyStatistic.surveyDefinitionId}?list" var="form_url" />
+					            <spring:url value="/resources/images/show.png" var="image_url" />
+					            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					            <spring:message arguments="${typeName}" code="survey_view" var="action_label" htmlEscape="false" />
+				               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${survey.id}" class="showIcon">
+				                	<spring:message text="${fn:escapeXml(action_label)}: ${survey.id}"/>
+				              	</a>	
+				              	
+				              	<c:out value=" "/>
+				              	<spring:url value="/reports/${surveyStatistic.surveyDefinitionId}?report" var="form_url" />
+					            <spring:url value="/resources/images/page_excel.png" var="image_url" />
+					            <spring:message code="com.jd.survey.domain.survey_label" var="typeName" htmlEscape="false" />
+					            <spring:message arguments="${typeName}" code="survey_view" var="action_label" htmlEscape="false" />
+				               	<a href="${form_url}" title="${fn:escapeXml(action_label)}: ${survey.id}">
+				                	<img alt="${fn:escapeXml(action_label)}" class="image" src="${image_url}" title="${fn:escapeXml(action_label)}" />
+				              	</a>
+				              	
+				              	
+							</td>
+						</tr>
+					</c:forEach>
+   				</tbody>
+   			</table>
+    		</c:if>
+    		
+    		
+    		
+    		
+    	</div>
+    </div>	
+</div>	
+

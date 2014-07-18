@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+	
+<div class="page-body" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"  
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:springform="http://www.springframework.org/tags/form"  
+	version="2.0">
+	
+	
+<script type="text/javascript">
+			
+	 $(document).ready(function() {
+	 	$("#type").change(function() {
+			var selectedValue = $(this).val();
+			
+			if(selectedValue == "BC" || selectedValue == "BCM")
+			{
+				
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').hide("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "BR" || selectedValue == "BRM" )
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').hide("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+
+			
+			if(selectedValue == "ST" || selectedValue == "STM" )
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').show("fast");
+				$('#string_validation').show("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				//$('#_integerMinimum_id').val("");
+				//$('#_integerMaximum_id').val("");
+				//$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+				
+			}
+			
+			
+			if(selectedValue == "LT")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').show("fast");
+				$('#string_validation').show("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				//$('#_integerMinimum_id').val("");
+				//$('#_integerMaximum_id').val("");
+				//$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "HT")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').show("fast");
+				$('#string_validation').show("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				//$('#_integerMinimum_id').val("");
+				//$('#_integerMaximum_id').val("");
+				//$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "IN" || selectedValue == "INM")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').show("fast");
+				$('#string_validation').show("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				//$('#_integerMinimum_id').val("");
+				//$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "CR"  || selectedValue == "CRM")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').hide("fast");
+				$('#string_validation').hide("fast");
+				$('#decimal_validation').show("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				//$('#_decimalMinimum_id').val("");
+				//$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			
+			if(selectedValue == "NM" || selectedValue == "NMM")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').hide("fast");
+				$('#string_validation').hide("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').hide("fast");
+				$('#randomize').hide("fast");
+				
+				$('#question_validation').show("fast");
+				$('#integer_validation').hide("fast");
+				$('#string_validation').hide("fast");
+				$('#decimal_validation').show("fast");
+				$('#date_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				//$('#_decimalMinimum_id').val("");
+				//$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			
+			if(selectedValue == "DT"  || selectedValue == "DTM")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').show("fast");
+				$('#question_options').hide("fast");
+				$('#integer_validation').hide("fast");
+				$('#string_validation').hide("fast");
+				$('#decimal_validation').hide("fast");
+				$('#date_validation').show("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				//$('#_dateMinimum_id').val("");
+				//$('#_dateMaximum_id').val("");
+			}
+			
+			
+			if(selectedValue == "SD")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#question_options').show("fast");				
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			
+			if(selectedValue == "MC")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').show("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').show("fast");
+				$('#direction_id').show("fast");
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "DD")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').show("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').show("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+			
+			if(selectedValue == "SR")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').show("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').show("fast");
+				$('#direction_id').show("fast");
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+
+			if(selectedValue == "IMG" || selectedValue == "VID")
+			{
+				$('#multimedia').show("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').hide("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			if(selectedValue == "FIL" )
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').hide("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			if(selectedValue == "SFR")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#mandatory').show("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').show("fast");
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+			}
+			
+			if (selectedValue == "STR")
+			{
+				$('#multimedia').hide("fast");
+				$('#datasets').hide("fast");
+				$('#allow_other').hide("fast");
+				$('#question_validation').hide("fast");
+				$('#mandatory').show("fast");
+				$('#direction_id').hide("fast");
+				$('#question_options').hide("fast");
+				$('#direction_id').hide("fast");
+				$('#randomize').show("fast");
+				$('#_integerMinimum_id').val("");
+				$('#_integerMaximum_id').val("");
+				$('#_regularExpresion_id').val("");
+				$('#_decimalMinimum_id').val("");
+				$('#_decimalMaximum_id').val("");
+				$('#_dateMinimum_id').val("");
+				$('#_dateMaximum_id').val("");
+				
+			}
+			
+		});	
+
+		$('#type').trigger('change');
+	});	
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$("#fancybox-manual-c").css("display", "inline");
+
+			$('.fancybox').fancybox({"margin":100});
+				
+			$("#fancybox-manual-c").click(function() {
+				$.fancybox.open([
+					
+					{	
+						href : '../../images/questions/yesnodropdown.png',
+						title : '<spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN')}_label" />'
+					}, {
+						href : '../../images/questions/shorttextinput.png',
+						title : '<spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/longtextinput.png',
+						title : '<spring:message code="${fn:toLowerCase('LONG_TEXT_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/hugetextinput.png',
+						title : '<spring:message code="${fn:toLowerCase('HUGE_TEXT_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/integerinput.png',
+						title : '<spring:message code="${fn:toLowerCase('INTEGER_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/currencyinput.png',
+						title : '<spring:message code="${fn:toLowerCase('CURRENCY_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/decimalinput.png',
+						title : '<spring:message code="${fn:toLowerCase('DECIMAL_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/dateinput.png',
+						title : '<spring:message code="${fn:toLowerCase('DATE_INPUT')}_label" />'
+					}, {
+						href : '../../images/questions/singlechoicedropdown.png',
+						title : '<spring:message code="${fn:toLowerCase('SINGLE_CHOICE_DROP_DOWN')}_label" />'
+					}, {
+						href : '../../images/questions/multiplechoicecheckboxes.png',
+						title : '<spring:message code="${fn:toLowerCase('MULTIPLE_CHOICE_CHECKBOXES')}_label" />'
+					}, {
+						href : '../../images/questions/datasetdropdown.png',
+						title : '<spring:message code="${fn:toLowerCase('DATASET_DROP_DOWN')}_label" />'
+					}, {
+						href : '../../images/questions/singlechoiceradiobuttons.png',
+						title : '<spring:message code="${fn:toLowerCase('SINGLE_CHOICE_RADIO_BUTTONS')}_label" />'
+					}, {
+						href : '../../images/questions/starrating.png',
+						title : '<spring:message code="${fn:toLowerCase('STAR_RATING')}_label" />'
+					}, {
+						href : '../../images/questions/smileyfaces.png',
+						title : '<spring:message code="${fn:toLowerCase('SMILEY_FACES_RATING')}_label" />'
+					}, {
+						href : '../../images/questions/yesnodropdownmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/shorttextinputmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/integerinputmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('INTEGER_INPUT_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/currencyinputmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('CURRENCY_INPUT_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/decimalinputmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('DECIMAL_INPUT_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/dateinputmatrix.png',
+						title : '<spring:message code="${fn:toLowerCase('DATE_INPUT_MATRIX')}_label" />'
+					}, {
+						href : '../../images/questions/imagequestion.png',
+						title : '<spring:message code="${fn:toLowerCase('IMAGE_DISPLAY')}_label" />'
+					}, {
+						href : '../../images/questions/videoquestion.png',
+						title : '<spring:message code="${fn:toLowerCase('VIDEO_DISPLAY')}_label" />'
+					}, {
+						href : '../../images/questions/fileupload.png',
+						title : '<spring:message code="${fn:toLowerCase('FILE_UPLOAD')}_label" />'
+					}
+					
+				]);
+			});
+			
+		});
+	</script>
+	
+	<script language="javascript" type="text/javascript">
+		tinyMCE.init({
+    	    // General options
+	       	mode : "textareas",
+			theme_advanced_path : false,
+			height: "124",
+			width : "65%",
+			theme_advanced_buttons2:false,
+	        theme : "advanced",
+	        element_format : "html",
+	        plugins : "inlinepopups,preview",
+	
+	        // Theme options
+	        theme_advanced_buttons1 : "bold,italic,underline,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,|,forecolor,backcolor,|,code,|,preview",
+	        theme_advanced_toolbar_location : "top",
+	        theme_advanced_toolbar_align : "left",
+	        theme_advanced_statusbar_location : "bottom",
+	        theme_advanced_resizing : true,
+	
+	       // Skin options
+	        skin : "o2k7",
+	       skin_variant : "silver",
+	
+	        // Example content CSS (should be your site CSS)
+	        content_css : ""
+		});
+	</script>
+	 
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+	
+	<div class="block">
+	    <form:update id="fu_com.jd.survey.domain.settings.question_header" showCancelButton="false" modelAttribute="question" path="/settings/questions" versionField="Version" >
+				<field:hidden path="page.id"/>
+				<field:hidden path="page.surveyDefinition.id"/>
+				<field:hidden path="page.surveyDefinition.name"/>
+				<field:hidden path="page.surveyDefinition.department.id"/>
+				<field:hidden path="page.surveyDefinition.department.name"/>
+				<field:link  field="page.surveyDefinition.department.name" id="c_com.jd.survey.domain.settings.Department"  path="/settings/departments/${question.page.surveyDefinition.department.id}" object="${question}" cssclass="grid-8-12"  hiperlink="false"/>
+				<field:link  field="page.surveyDefinition.name" id="c_com.jd.survey.domain.settings.SurveyDefinition"  path="/settings/surveyDefinitions/${question.page.surveyDefinition.id}" object="${question}" cssclass="grid-8-12"  hiperlink="false"/>
+				<field:display field="page.title" id="c_com.jd.survey.domain.settings.Question.page" object="${question}" cssclass="grid-2-12"/>
+				<field:order mode="update" field="order" id="c_com.jd.survey.domain.settings.Question.order" size="${size}" cssclass="grid-4-12" required="true" disabled="${question.page.surveyDefinition.statusAsString eq 'P' ? 'true' : 'false'}"/>
+				<c:if test="${question.page.surveyDefinition.statusAsString eq 'P'}">
+					<field:hidden path="order"/>
+					<field:hidden path="type"/>
+					<field:hidden path="direction"/>
+					<field:hidden path="allowOtherTextBox"/>
+					<field:hidden path="randomizeOptions"/>
+
+				</c:if>
+				<!-- 
+				<field:select field="type" id="c_com.jd.survey.domain.settings.Question.type" itemValue="id" items="${questionTypes}" path="/settings/questionTypes" cssclass="grid-3-12" required="true"/>
+				-->
+				 
+	
+				<div>
+					<spring:message code="question_type_tip" var="qTypeTip" />
+					<label for="type" class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.question.type_label"/><em class="formee-req">*</em><a class="hastip" title="${qTypeTip}">?</a></label>
+					<springform:select  path="type" cssClass="grid-4-12" disabled="${question.page.surveyDefinition.statusAsString eq 'P' ? 'true' : 'false'}" >
+							<spring:message code="standard_question_types_label" var="optionGroupLabel"/>
+							<optgroup label="${optionGroupLabel}">
+								
+								<c:if test="${question.type eq 'YES_NO_DROPDOWN'}">
+									<option value="BR" selected="true"><spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'YES_NO_DROPDOWN'}">	
+									<option value="BR"><spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'SHORT_TEXT_INPUT'}">	
+									<option value="ST" selected="true"><spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'SHORT_TEXT_INPUT'}">	
+									<option value="ST"><spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'LONG_TEXT_INPUT'}">	
+									<option value="LT" selected="true"><spring:message code="${fn:toLowerCase('LONG_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'LONG_TEXT_INPUT'}">	
+									<option value="LT"><spring:message code="${fn:toLowerCase('LONG_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+	
+								<c:if test="${question.type eq 'HUGE_TEXT_INPUT'}">	
+									<option value="HT" selected="true"><spring:message code="${fn:toLowerCase('HUGE_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'HUGE_TEXT_INPUT'}">
+									<option value="HT"><spring:message code="${fn:toLowerCase('HUGE_TEXT_INPUT')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'INTEGER_INPUT'}">
+									<option value="IN" selected="true"><spring:message code="${fn:toLowerCase('INTEGER_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'INTEGER_INPUT'}">
+									<option value="IN"><spring:message code="${fn:toLowerCase('INTEGER_INPUT')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'CURRENCY_INPUT'}">
+									<option value="CR" selected="true"><spring:message code="${fn:toLowerCase('CURRENCY_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'CURRENCY_INPUT'}">	
+									<option value="CR"><spring:message code="${fn:toLowerCase('CURRENCY_INPUT')}_label"  /></option>
+								</c:if>
+					
+								<c:if test="${question.type eq 'DECIMAL_INPUT'}">	
+									<option value="NM" selected="true"><spring:message code="${fn:toLowerCase('DECIMAL_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'DECIMAL_INPUT'}">	
+									<option value="NM" ><spring:message code="${fn:toLowerCase('DECIMAL_INPUT')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'DATE_INPUT'}">	
+									<option value="DT" selected="true"><spring:message code="${fn:toLowerCase('DATE_INPUT')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'DATE_INPUT'}">	
+									<option value="DT"><spring:message code="${fn:toLowerCase('DATE_INPUT')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'SINGLE_CHOICE_DROP_DOWN'}">	
+									<option value="SD" selected="true"><spring:message code="${fn:toLowerCase('SINGLE_CHOICE_DROP_DOWN')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'SINGLE_CHOICE_DROP_DOWN'}">	
+									<option value="SD"><spring:message code="${fn:toLowerCase('SINGLE_CHOICE_DROP_DOWN')}_label"  /></option>
+								</c:if>
+							
+								<c:if test="${question.type eq 'MULTIPLE_CHOICE_CHECKBOXES'}">	
+									<option value="MC" selected="true"><spring:message code="${fn:toLowerCase('MULTIPLE_CHOICE_CHECKBOXES')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'MULTIPLE_CHOICE_CHECKBOXES'}">	
+									<option value="MC"><spring:message code="${fn:toLowerCase('MULTIPLE_CHOICE_CHECKBOXES')}_label"  /></option>
+								</c:if>
+
+								<c:if test="${question.type eq 'DATASET_DROP_DOWN'}">	
+									<option value="DD" selected="true"><spring:message code="${fn:toLowerCase('DATASET_DROP_DOWN')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'DATASET_DROP_DOWN'}">	
+									<option value="DD"><spring:message code="${fn:toLowerCase('DATASET_DROP_DOWN')}_label"  /></option>
+								</c:if>
+								
+								
+								<c:if test="${question.type eq 'SINGLE_CHOICE_RADIO_BUTTONS'}">	
+									<option value="SR" selected="true"><spring:message code="${fn:toLowerCase('SINGLE_CHOICE_RADIO_BUTTONS')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'SINGLE_CHOICE_RADIO_BUTTONS'}">	
+									<option value="SR"><spring:message code="${fn:toLowerCase('SINGLE_CHOICE_RADIO_BUTTONS')}_label"  /></option>
+								</c:if>	
+								
+								
+								<c:if test="${question.type eq 'STAR_RATING'}">	
+									<option value="STR" selected="true"><spring:message code="${fn:toLowerCase('STAR_RATING')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'STAR_RATING'}">	
+									<option value="STR"><spring:message code="${fn:toLowerCase('STAR_RATING')}_label"  /></option>
+								</c:if>
+								
+								
+								<c:if test="${question.type eq 'SMILEY_FACES_RATING'}">	
+									<option value="SFR" selected="true"><spring:message code="${fn:toLowerCase('SMILEY_FACES_RATING')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'SMILEY_FACES_RATING'}">	
+									<option value="SFR"><spring:message code="${fn:toLowerCase('SMILEY_FACES_RATING')}_label"  /></option>
+								</c:if>
+							</optgroup>
+							
+							<spring:message code="matrix_question_types_label" var="optionGroupLabel"/>
+							<optgroup label="${optionGroupLabel}">    
+								<c:if test="${question.type eq 'YES_NO_DROPDOWN_MATRIX'}">		
+									<option value="BRM" selected="true"><spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN_MATRIX')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'YES_NO_DROPDOWN_MATRIX'}">
+									<option value="BRM"><spring:message code="${fn:toLowerCase('YES_NO_DROPDOWN_MATRIX')}_label"  /></option>
+								</c:if>	
+									
+								<c:if test="${question.type eq 'SHORT_TEXT_INPUT_MATRIX'}">		
+									<option value="STM" selected="true"><spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT_MATRIX')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'SHORT_TEXT_INPUT_MATRIX'}">
+									<option value="STM"><spring:message code="${fn:toLowerCase('SHORT_TEXT_INPUT_MATRIX')}_label"  /></option>
+								</c:if>	
+										
+								<c:if test="${question.type eq 'INTEGER_INPUT_MATRIX'}">		
+									<option value="INM" selected="true"><spring:message code="${fn:toLowerCase('INTEGER_INPUT_MATRIX')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'INTEGER_INPUT_MATRIX'}">	
+									<option value="INM"><spring:message code="${fn:toLowerCase('INTEGER_INPUT_MATRIX')}_label"  /></option>
+								</c:if>	
+										
+								<c:if test="${question.type eq 'CURRENCY_INPUT_MATRIX'}">		
+									<option value="CRM" selected="true"><spring:message code="${fn:toLowerCase('CURRENCY_INPUT_MATRIX')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'CURRENCY_INPUT_MATRIX'}">	
+									<option value="CRM"><spring:message code="${fn:toLowerCase('CURRENCY_INPUT_MATRIX')}_label"  /></option>
+								</c:if>			
+									
+								<c:if test="${question.type eq 'DECIMAL_INPUT_MATRIX'}">		
+									<option value="NMM" selected="true"><spring:message code="${fn:toLowerCase('DECIMAL_INPUT_MATRIX')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'DECIMAL_INPUT_MATRIX'}">	
+									<option value="NMM"><spring:message code="${fn:toLowerCase('DECIMAL_INPUT_MATRIX')}_label"  /></option>
+								</c:if>	
+
+								<c:if test="${question.type eq 'DATE_INPUT_MATRIX'}">		
+									<option value="DTM" selected="true"><spring:message code="${fn:toLowerCase('DATE_INPUT_MATRIX')}_label"  /></option>			
+								</c:if>
+								<c:if test="${question.type ne 'DATE_INPUT_MATRIX'}">	
+									<option value="DTM"><spring:message code="${fn:toLowerCase('DATE_INPUT_MATRIX')}_label"  /></option>
+								</c:if>		
+							</optgroup>	
+							
+							<spring:message code="other_question_types_label" var="optionGroupLabel"/>
+							<optgroup label="${optionGroupLabel}">
+								<c:if test="${question.type eq 'IMAGE_DISPLAY'}">
+									<option value="IMG" selected="true"><spring:message code="${fn:toLowerCase('IMAGE_DISPLAY')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'IMAGE_DISPLAY'}">
+									<option value="IMG"><spring:message code="${fn:toLowerCase('IMAGE_DISPLAY')}_label"  /></option>
+								</c:if>	
+								
+								<c:if test="${question.type eq 'VIDEO_DISPLAY'}">
+									<option value="VID" selected="true"><spring:message code="${fn:toLowerCase('VIDEO_DISPLAY')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'VIDEO_DISPLAY'}">
+									<option value="VID"><spring:message code="${fn:toLowerCase('VIDEO_DISPLAY')}_label"  /></option>
+								</c:if>	
+								
+								<c:if test="${question.type eq 'FILE_UPLOAD'}">
+									<option value="FIL" selected="true"><spring:message code="${fn:toLowerCase('FILE_UPLOAD')}_label"  /></option>
+								</c:if>
+								<c:if test="${question.type ne 'FILE_UPLOAD'}">
+									<option value="FIL"><spring:message code="${fn:toLowerCase('FILE_UPLOAD')}_label"  /></option>
+								</c:if>		
+							</optgroup>
+					</springform:select>
+				
+ 					<a style="display: none; padding: 0 2% 0 2%;" id="fancybox-manual-c" href="javascript:;"><spring:message code="quicklook_question" /></a>
+			
+					<noscript>
+						<c:url value="/settings/questions/lookup" var="url" />
+						<a style="padding: 0 0 0 2%;" target="new_blank" id="fancybox-manual-c" href="${url}"><spring:message code="quicklook_question" /></a>
+					</noscript>
+				
+				</div>
+			
+				<div id="direction_id">
+					<spring:message code="direction_tip" var="dirTip" />
+					<label for="direction" class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.question.direction_label"/><em class="formee-req">*</em><a class="hastip" title="${dirTip}">?</a></label> 
+					<springform:select  path="direction" cssClass="grid-4-12" disabled="${question.page.surveyDefinition.statusAsString eq 'P' ? 'true' : 'false'}" >
+							<c:if test="${question.direction eq 'VERTICAL'}"> 
+								<option value="VERTICAL" selected="true"><spring:message code="vertical_label" /></option>
+							</c:if>
+							<c:if test="${question.direction ne 'VERTICAL'}">	
+								<option value="VERTICAL"><spring:message code="vertical_label" /></option>
+							</c:if>
+							<c:if test="${question.direction eq 'HORIZONTAL'}">
+								<option value="HORIZONTAL" selected="true"><spring:message code="horizontal_label"  /></option>
+							</c:if>
+							<c:if test="${question.direction ne 'HORIZONTAL'}">
+								<option value="HORIZONTAL"><spring:message code="horizontal_label"  /></option>
+							</c:if>
+					</springform:select>
+				</div>
+				
+				
+				
+				
+					
+				<div id="datasets">
+					<spring:message code="dataset_question_tip" var="ddQTip" />
+					<label for="dataset" class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.dataset_label"/>:<a class="hastip" title="${ddQTip}">?</a></label>
+					<c:if test="${question.page.surveyDefinition.statusAsString eq 'P'}">
+						<select cssclass="grid-4-12" name="dataSetId" disabled="disabled">
+							<option value=""><spring:message code="select_option_message"/></option>
+					 	<c:forEach items="${datasets}" var="dataset" varStatus="loop">
+					 		<c:choose>
+								<c:when test="${question.dataSetId eq  dataset.id}">
+									 <option value="${dataset.id}" selected="true" ><c:out value="${dataset.name}"/></option>
+								</c:when>
+								<c:otherwise>
+									 <option value="${dataset.id}"><c:out value="${dataset.name}"/></option>
+								</c:otherwise>
+							</c:choose>	
+						</c:forEach>
+					</select>	
+					</c:if>
+					<c:if test="${surveyDefinition.statusAsString ne 'P'}">
+						<select cssclass="grid-4-12" name="dataSetId">
+						<option value=""><spring:message code="select_option_message"/></option>
+					 	<c:forEach items="${datasets}" var="dataset" varStatus="loop">
+					 		<c:choose>
+								<c:when test="${question.dataSetId eq  dataset.id}">
+									 <option value="${dataset.id}" selected="true" ><c:out value="${dataset.name}"/></option>
+								</c:when>
+								<c:otherwise>
+									 <option value="${dataset.id}"><c:out value="${dataset.name}"/></option>
+								</c:otherwise>
+							</c:choose>	
+						</c:forEach>
+					</select>	
+					</c:if>
+						
+				</div>	
+				
+				
+				<spring:message code="question_text_tip" var="qTxtTip" />
+				<field:textarea field="questionText" id="c_com.jd.survey.domain.settings.Question.questionText" cssclass="grid-8-12" tip="${qTxtTip}" required="true"/>
+				
+				<div id="multimedia">
+					<field:input field="width" id="c_com.jd.survey.domain.settings.Question.width" cssclass="grid-2-12"/>
+					<field:input field="height" id="c_com.jd.survey.domain.settings.Question.height" cssclass="grid-2-12"/>
+					<field:textarea field="multimediaLink" id="c_com.jd.survey.domain.settings.Question.multimediaLink" cssclass="grid-8-12"/>
+				</div>
+				
+				<spring:message code="question_tip" var="tip" />
+				<field:textarea field="tip"	id="c_com.jd.survey.domain.settings.Question.tip" cssclass="grid-8-12" tip="${tip}"  />
+				
+
+				<div id="mandatory">
+					<spring:message code="mandatory_tip" var="mandatoryTip" />
+					<field:checkbox field="required" id="c_com.jd.survey.domain.settings.Question.required" cssclass="" tip="${mandatoryTip}"/>
+				</div>
+				
+				<div id="allow_other">
+					<spring:message code="allow_other_tip" var="allowOtherTip" />
+					<field:checkbox field="allowOtherTextBox" id="c_com.jd.survey.domain.settings.Question.allowOtherTextBox" cssclass="" tip="${allowOtherTip}"  disabled="${question.page.surveyDefinition.statusAsString eq 'P' ? 'true' : 'false'}" />
+				</div>
+				
+				<div id="randomize">
+					<spring:message code="randomizeOptions_tip" var="tip"/>
+					<field:checkbox field="randomizeOptions" id="c_com.jd.survey.domain.settings.Question.randomize" tip="${tip}" disabled="${question.page.surveyDefinition.statusAsString eq 'P' ? 'true' : 'false'}"/>
+				</div>
+				
+			
+				<div id="question_validation">
+					<h2><spring:message code="com.jd.survey.domain.settings.question_validation_label"/></h2>
+						
+					<div id="integer_validation">
+						<field:input field="integerMinimum" id="c_com.jd.survey.domain.settings.Question.integerMinimum" cssclass="grid-2-12" maxlength="10"/>
+						<field:input field="integerMaximum" id="c_com.jd.survey.domain.settings.Question.integerMaximum" cssclass="grid-2-12" maxlength="10"/>
+					</div>
+					
+					<div id="string_validation">
+						<spring:message code="mask_tip" var="maskTip" />
+						<label for="regularExpression" class="grid-3-12"><spring:message code="com.jd.survey.domain.settings.question.regularexpression_label"/>:<a class="hastip" title="${maskTip}">?</a></label>
+						<select cssclass="grid-4-12" name="regularExpression">
+							<option value=""><spring:message code="select_option_message"/></option>
+						 	<c:forEach items="${regularExpressions}" var="regularExpression" varStatus="loop">
+						 		<c:choose>
+									<c:when test="${question.regularExpression eq  regularExpression.regex}">
+										 <option value="${regularExpression.regex}" selected="true" ><c:out value="${regularExpression.name}"/></option>
+									</c:when>
+									<c:otherwise>
+										 <option value="${regularExpression.regex}"><c:out value="${regularExpression.name}"/></option>
+									</c:otherwise>
+								</c:choose>	
+							</c:forEach>
+						</select>	
+					</div>
+					
+					
+					<div id="decimal_validation">
+						<spring:message code="dec_min_tip" var="decMinTip" />
+						<spring:message code="dec_max_tip" var="decMaxTip" />
+						<field:input field="decimalMinimum" id="c_com.jd.survey.domain.settings.Question.decimalMinimum" cssclass="grid-2-12" maxlength="10" tip="${decMinTip}"/>
+						<field:input field="decimalMaximum" id="c_com.jd.survey.domain.settings.Question.decimalMaximum" cssclass="grid-2-12" maxlength="10" tip="${decMaxTip}"/>
+					</div>
+					
+					<div id="date_validation">
+						<spring:message code="date_format" var="date_format" />
+						<spring:message code="date_format_tip" arguments="${date_format}" var="tip" />
+						<field:input field="dateMinimum" id="c_com.jd.survey.domain.settings.Question.dateMinimum" cssclass="grid-2-12" maxlength="10" tip="${tip}"/>
+						<field:input field="dateMaximum" id="c_com.jd.survey.domain.settings.Question.dateMaximum" cssclass="grid-2-12" maxlength="10" tip="${tip}"/>
+					</div>
+					
+					
+					
+					
+					
+				</div>
+				
+			
+
+	    </form:update>
+				
+    </div>	
+</div>
+
+

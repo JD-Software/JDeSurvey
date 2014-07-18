@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="right-column ${surveyDefinition.surveyTheme}" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+		<tiles:importAttribute name="pagemode"/>
+		<c:choose>
+			<c:when test="${pagemode eq 'page'}">
+				<ul class="right-navigation">
+					<c:forEach items="${surveyPages}" var="page" varStatus="loop">
+						<c:choose>
+							<c:when test='${page.order lt surveyPage.order}'>
+								<spring:url var="url" value="/${survey_base_path}/${survey.id}/${page.order}" />
+								<li class="past"><a href="${url}" title="">&#9658; <c:out value="${page.title}"/></a></li>
+								<!-- 10004 check mark char -->
+							</c:when>
+							<c:when test='${page.order eq surveyPage.order}'>
+								<li class="current"><span><c:out value="${page.title}"/></span></li>
+							</c:when>
+							<c:when test='${page.order gt surveyPage.order}'>
+								<li class="future"><span><c:out value="${page.title}"/></span></li>
+							</c:when>
+						</c:choose>
+					</c:forEach>	
+					<li class="future"><span class="tab"><spring:message code="rightmenu_finish"/></span></li>
+				</ul>
+			</c:when>
+			<c:when test="${pagemode eq 'submit'}">
+				<ul class="right-navigation">
+					<c:forEach items="${surveyPages}" var="page" varStatus="loop">
+						<spring:url var="url" value="/${survey_base_path}/${survey.id}/${page.order}" />
+						<li class="past"><a href="${url}" title="">&#9658; <c:out value="${page.title}"/></a></li>
+						<!-- 10004 check mark char -->
+					</c:forEach>	
+					<li class="current"><span class="tab"><spring:message code="rightmenu_finish"/></span></li>						
+				</ul>
+			</c:when>
+		</c:choose>	
+		
+</div>
+
+    

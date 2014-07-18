@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="security/groups/list"  template="/WEB-INF/layouts/default.jspx">
+    	<put-attribute name="activeTab" value="security" cascade="true"/>
+    	<put-attribute name="pagemode" value="list"  cascade="true"/>
+    	<put-attribute name="body" value="/WEB-INF/views/security/groups/list.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/security/groups/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/groups/show">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="show"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/security/groups/show.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/security/groups/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/groups/create">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="create"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/security/groups/create.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/security/groups/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="security/groups/update">
+		<put-attribute name="activeTab" value="security" cascade="true"/>
+		<put-attribute name="pagemode" value="update"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/security/groups/update.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/security/groups/menu.jspx"/>
+    </definition>
+</tiles-definitions>

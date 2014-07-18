@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
+
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	
+	
+	<div class="single-column">
+		<div id="menublocks">
+	
+		<sec:authorize ifAnyGranted="ROLE_ADMIN">
+			
+			<spring:url var="addIcon" value="/resources/images/menu/add.png" />
+			<spring:url var="listIcon" value="/resources/images/menu/list.png" />
+			
+			<spring:message		code="com.jd.survey.domain.security.user_label_plural"		var="usersPlural"	htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.user.internal_label"	var="usersInt" 		htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.user.external_label"	var="usersExt" 		htmlEscape="false" />
+			
+			<spring:message		code="com.jd.survey.domain.settings.department_label_plural"	var="deptPlural" htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.settings.department_label_short"		var="deptShort" htmlEscape="false" />
+			
+			<spring:message		code="com.jd.survey.domain.security.group_label_plural"		var="groupsPlural"  htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.group.internal_label"	var="groupsInt" 	htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.group.external_label"	var="groupsExt" 	htmlEscape="false" />
+			
+			<spring:message		code="com.jd.survey.domain.security.authority_label_plural"	var="rolesPlural" htmlEscape="false" />
+			
+			<spring:message		code="com.jd.survey.domain.security.user.search_label"	var="searchBy" htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.user.login_label"	var="login" htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.user.email_label"	var="email" htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.security.user.name_label"	var="name" htmlEscape="false" />
+			
+			<spring:message		code="com.jd.survey.domain.settings.regularexpression_label_plural"	var="regulaExpressionPlural" htmlEscape="false" />
+			<spring:message		code="com.jd.survey.domain.settings.regularexpression_label_short"	var="regulaExpressionShort" htmlEscape="false" />
+			<spring:message code="global_menu_add" var="add_RegularExpression"	arguments="${regulaExpressionShort}" htmlEscape="false" />
+			
+			<spring:message code="global_menu_add" var="add_IntUser"	arguments="${usersInt}" 	htmlEscape="false" />
+			<spring:message code="global_menu_add" var="add_ExtUser"	arguments="${usersExt}" 	htmlEscape="false" />
+			<spring:message code="global_menu_list" var="list_Users" 	arguments="${usersPlural}"	htmlEscape="false" />
+			<spring:message code="global_menu_add" var="add_Dep"	arguments="${deptShort}" htmlEscape="false" />
+			<spring:message code="global_menu_list" var="list_Depts" arguments="${deptPlural}" htmlEscape="false" />
+			
+			<spring:message code="global_menu_add" var="add_IntGroup"	arguments="${groupsInt}" 	htmlEscape="false" />
+			<spring:message code="global_menu_add" var="add_ExtGroup" 	arguments="${groupsExt}" 	htmlEscape="false" />
+			<spring:message code="global_menu_list" var="list_Groups"	arguments="${groupsPlural}" htmlEscape="false" />
+			
+			<spring:message code="global_menu_list" var="list_Roles"	arguments="${rolesPlural}" htmlEscape="false" />
+			
+			<spring:message code="search_by" var="login" arguments="${login}" htmlEscape="false" />
+			<spring:message code="search_by" var="email" arguments="${email}" htmlEscape="false" />
+			<spring:message code="search_by" var="name" arguments="${name}" htmlEscape="false" />
+		
+			<spring:message code="global_menu_list" var="list_RegularExpression"	arguments="${regulaExpressionPlural}" htmlEscape="false" />
+			<spring:message code="entity_upload" var="upload_SurvDef" arguments="${survDefPlural}" htmlEscape="false" />
+		
+		
+		
+			
+			<div class="menublock sidemenu">
+				<h2><c:out value="${usersPlural}" /></h2>
+				<ul class="topmenu">
+					<li>
+						<c:url value="/security/users/?icreate" var="url"/>	
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${add_IntUser}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/?ecreate" var="url"/>	
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${add_ExtUser}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/search/l" var="url"/>
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${login}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/search/e" var="url"/>
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${email}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/search/n" var="url"/>
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${name}" />
+						</a>
+					</li>
+					<!--  
+					<c:url value="/security/users?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+					<li><a href="${url}"><img src="${listIcon}" alt="" />
+						<c:out value="${list_Users}" />
+					</a>
+					</li>
+					-->
+				</ul>
+			</div>
+			
+			<div class="menublock sidemenu">
+				<h2><c:out value="${deptPlural}" /></h2>
+				<c:url value="/security/departments/?create" var="url"/>	
+				<ul class="topmenu">
+					<li><a href="${url}"><i class="icon-plus"> &#160;</i>
+						<c:out value="${add_Dep}" />
+					</a>
+					</li>
+					<c:url value="/security/departments?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+					<li><a href="${url}"><i class="icon-list"> &#160;</i>
+						<c:out value="${list_Depts}" />
+					</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="menublock sidemenu">
+			
+				<h2><c:out value="${groupsPlural}" /></h2>
+				<ul class="topmenu">
+					<li>
+						<c:url value="/security/groups/?icreate" var="url"/>
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${add_IntGroup}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/groups/?ecreate" var="url"/>
+						<a href="${url}"><i class="icon-plus"> &#160;</i>
+							<c:out value="${add_ExtGroup}" />
+						</a>
+					</li>
+					<c:url value="/security/groups?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+					<li>
+						<a href="${url}"><i class="icon-list"> &#160;</i>
+							<c:out value="${list_Groups}" />
+						</a>
+					</li>
+					</ul>
+			</div>
+			
+			<div class="menublock sidemenu">
+			<c:url value="/security/authorities?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+				<h2><c:out value="${rolesPlural}" /></h2>
+				<ul class="topmenu">
+					<c:url value="/security/authorities?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+					<li>
+						<a href="${url}"><i class="icon-list"> &#160;</i>
+							<c:out value="${list_Roles}" />
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- 
+			<div class="menublock sidemenu">
+			
+				<h2><c:out value="${searchBy}"/></h2>
+				<ul class="topmenu">
+					<li>
+						<c:url value="/security/users/search/l" var="url"/>
+						<a href="${url}"><img src="${addIcon}" alt="" />
+							<c:out value="${login}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/search/e" var="url"/>
+						<a href="${url}"><img src="${addIcon}" alt="" />
+							<c:out value="${email}" />
+						</a>
+					</li>
+					<li>
+						<c:url value="/security/users/search/n" var="url"/>
+						<a href="${url}"><img src="${addIcon}" alt="" />
+							<c:out value="${name}" />
+						</a>
+					</li>
+					</ul>
+			</div>
+			 -->
+			
+			<!-- 
+				<div class="menublock sidemenu">
+					<c:url value="/security/regularExpressions/?create" var="url"/>
+						<h2><c:out value="${regulaExpressionPlural}" /></h2>
+						<ul class="topmenu">
+							<li>
+								<a href="${url}"><img src="${addIcon}" alt="" />
+									<c:out value="${add_RegularExpression}" />
+								</a>
+							</li>
+							<c:url value="/security/regularExpressions?page=1&amp;size=${empty param.size ? 10 : param.size}" var="url"/>
+							<li>
+								<a href="${url}"><img src="${listIcon}" alt="" />
+									<c:out value="${list_RegularExpression}" />
+								</a>
+							</li>
+						</ul>
+					</div>
+				 -->
+			
+		</sec:authorize>
+
+	</div>
+	</div>
+
+</div>
+
+

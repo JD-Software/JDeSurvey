@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="admin/masks/list"  template="/WEB-INF/layouts/default.jspx">
+        <put-attribute name="activeTab" value="admin"  cascade="true"/>
+        <put-attribute name="pagemode" value="list"  cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/masks/list.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/masks/menu.jspx"/>
+    </definition>
+    <definition extends="default" name="admin/masks/show">
+		<put-attribute name="activeTab" value="admin"  cascade="true"/>
+		<put-attribute name="pagemode" value="show"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/masks/show.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/masks/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="admin/masks/create">
+		<put-attribute name="activeTab" value="admin"  cascade="true"/>
+		<put-attribute name="pagemode" value="create"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/masks/create.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/masks/menu.jspx"/>
+    </definition>
+	<definition extends="default" name="admin/masks/update">
+		<put-attribute name="activeTab" value="admin"  cascade="true"/>
+		<put-attribute name="pagemode" value="update"  cascade="true"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/masks/update.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/admin/masks/menu.jspx"/>
+    </definition>
+	
+</tiles-definitions>

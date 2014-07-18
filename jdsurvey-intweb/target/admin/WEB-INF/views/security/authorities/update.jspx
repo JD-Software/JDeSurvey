@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div class="page-body" 
+	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" 
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" 
+	xmlns:jsp="http://java.sun.com/JSP/Page" 
+	version="2.0">
+	
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <div class="right-column">	
+   		<div class="block">
+		    <form:update id="fu_com.jd.survey.domain.security.Authority" modelAttribute="authority" path="/security/authorities" versionField="Version" >
+				<field:hidden path="type"/>
+				<field:display field="type" id="c_com.jd.survey.domain.security.Authority.type" object="${authority}" isTypeField="true"/>
+				<field:hidden path="name"/>
+				<field:display field="name" id="c_com.jd.survey.domain.security.Authority.name" object="${authority}" />
+				<field:textarea field="description" id="c_com.jd.survey.domain.security.Authority.description" cssclass="grid-8-12"/>
+		    </form:update>
+		</div>
+    </div>	
+</div>
+
+
+
+
+

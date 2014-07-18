@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+					   	
+    <definition name="surveys/surveys" extends="default" >
+    	<put-attribute name="activeTab" value ="surveys" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/surveys.jspx"/>
+    </definition>
+    
+    <definition name="surveys/entries" extends="default" >
+    	<put-attribute name="activeTab" value ="surveys" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/entries.jspx"/>
+    </definition>
+    
+    
+    
+    <definition name="surveys/survey" extends="default" >
+        <put-attribute name="activeTab" value ="surveys" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/survey.jspx"/>
+    </definition>
+    
+    
+    <definition name="surveys/page" extends="default" >
+    	<put-attribute name="activeTab" value ="surveys" cascade="true"/>
+    	<put-attribute name="pagemode" value="page"  cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/page.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/surveys/menu.jspx"/>
+    </definition>
+    
+    <definition name="surveys/submit" extends="default" >
+    	<put-attribute name="activeTab" value ="surveys" cascade="true"/>
+    	<put-attribute name="pagemode" value="submit"  cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/submit.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/views/surveys/menu.jspx"/>
+    </definition>
+    
+      <definition name="surveys/submitted" extends="default" >
+    	<put-attribute name="activeTab" value ="surveys" cascade="true"/>
+        <put-attribute name="body" value="/WEB-INF/views/surveys/submitted.jspx"/>
+    </definition>
+    
+    
+</tiles-definitions>

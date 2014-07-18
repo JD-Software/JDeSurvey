@@ -1,0 +1,73 @@
+<div class="container"
+xmlns:spring="http://www.springframework.org/tags" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:jsp="http://java.sun.com/JSP/Page" 
+version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8" />
+  <jsp:output omit-xml-declaration="yes" />
+  <spring:message code="security_login_title" var="title" htmlEscape="false" />
+	<div>		
+
+		 <util:panel id="title" title="${title}">
+			<c:if test="${status eq 'S'}">
+				<div class="messageLink">	
+					<div class="flashTop flash-success">
+				         <spring:message code="security_forgot_login_submitted_in_email" />
+					</div>
+					<div class="forgotDiv msg" align="center">
+							<spring:url value="/public/login" var="login"/>
+							<a href="${login}"><spring:message code="security_password_goback_link"/></a>
+	           		</div>
+           		</div>
+			</c:if>
+			
+			<c:if test="${status eq 'I'}">	
+				<div class="flash flash-error">
+			         <spring:message code="security_forgot_login_incorrect_email" />
+				</div>
+			</c:if>
+			
+			<section class="main">
+				<c:if test="${status ne 'S'}">
+					
+					<div class="logo" align="center">
+						<spring:message code="segurity_logo_alt" htmlEscape="false" var="${logoAlt}"/>
+						<img src="../images/biglogo.png" alt="${logoAlt}"/>
+					</div>	
+					<spring:url value="/public/?flogin" var="form_url" />
+					
+					<form name="f" action="${fn:escapeXml(form_url)}" method="POST" class="form-1">
+						<h4><spring:message code="security_forgot_login_link"/></h4>
+					
+						<p class="field">
+							<spring:message code="security_forgot_login_email_field_name" var="emailLbl"/>
+							<label for="_email" class="dontShow"><c:out value="${emailLbl}"/></label>
+							<input id="_email" type='text' name='email' placeholder="${emailLbl}">
+								<i class="icon-envelope icon-large">&#160;</i>
+							</input>
+					  	</p>
+						         
+						<p class="submit">
+							<spring:message code="button_submit" var="submit_label" htmlEscape="false" />
+							<button type="submit" name="_proceed">
+								<i class="icon-arrow-right icon-large">&#160;</i>
+							</button>
+						</p>
+					</form>
+									        
+				     <div class="forgotDiv" align="center">
+						
+						<spring:url value="/public/login" var="login"/>
+						<a href="${login}"><spring:message code="security_password_goback_link"/></a>
+		           	</div>
+				</c:if>
+			</section>
+			
+		 
+		 </util:panel>
+
+	</div>
+</div>
+

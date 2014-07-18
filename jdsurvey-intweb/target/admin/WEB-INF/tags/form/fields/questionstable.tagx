@@ -1,0 +1,826 @@
+<jsp:root 	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+			xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+			xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" 
+			xmlns:spring="http://www.springframework.org/tags" 
+			xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+			xmlns:jsp="http://java.sun.com/JSP/Page" 
+			xmlns:form="http://www.springframework.org/tags/form" 
+			version="2.0">
+		
+  <jsp:directive.tag import="java.util.ArrayList" />
+  <jsp:output omit-xml-declaration="yes" />
+  <jsp:directive.attribute name="questions" type="java.util.Collection" required="true" rtexprvalue="true" description="The collection to be displayed in the table" />
+  <jsp:directive.attribute name="pageid" type="java.lang.Long" required="true" rtexprvalue="true" description="The identifier of the question page" />
+  <jsp:directive.attribute name="pageorder" type="java.lang.Short" required="true" rtexprvalue="true" description="The identifier of the question page" />
+  <jsp:directive.attribute name="surveyStatus" type="java.lang.String" required="true" rtexprvalue="true" description="The status of the survey definition: I Incomplete P published D Inactive " />
+  	
+					<c:if test="${empty questions}">
+						<br/>
+						<div class="flash flash-notice"><spring:message code="page.noquestion_message"/></div>
+					</c:if>	
+			    	
+		    		<c:forEach items="${questions}" var="question" varStatus="loop">
+						
+						
+						
+						<c:choose>
+							<c:when test="${loop.index % 2 == 0}">
+								<c:set var="rowStyle" scope="page" value="odd"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="rowStyle" scope="page" value="odd"/>
+							</c:otherwise>
+						</c:choose>
+							
+						<c:if test="${question.order lt 10}" >
+							<c:set var="questionNumber" scope="page" value="0${question.order}. "/>
+						</c:if>						
+						<c:if test="${question.order gt 9}" >
+							<c:set var="questionNumber" scope="page" value="${question.order}. "/>
+						</c:if>	
+
+						<div class="${rowStyle}">	
+		    			<c:choose>
+	    					<!-- BR	'Yes No DropDown'-->
+							<c:when test='${question.type.code == "BR"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/></label>
+								<div class="questionAnswer">
+									<select  path="" style="width:30%;">
+										<option value="false" selected="selected">No</option>
+										<option value="true" >Yes</option>
+									</select>
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false" /></span>
+								</div>
+							</c:when>
+							
+							<!-- ST	'Short Text Input'-->
+							<c:when test='${question.type.code == "ST"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input  name="q" size="50" type="text" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>
+							</c:when>
+							
+							<!-- LT	'Long Text Input'-->
+							<c:when test='${question.type.code == "LT"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input class="grid-8-12" name="q" readonly="true" type="text" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>								
+							</c:when>
+							
+							<!-- HT	'Huge Text Input'-->
+							<c:when test='${question.type.code == "HT"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<textarea class="grid-8-12" name="q" readonly="true">..</textarea>
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>
+							</c:when>
+							
+							<!-- IN	'Integer Input'-->
+							<c:when test='${question.type.code == "IN"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input class="questionText" name="q" readonly="true"  type="text" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>
+							</c:when>
+							
+							<!-- CR	'Currency Input'-->
+							<c:when test='${question.type.code == "CR"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input  name="q" type="text"/>
+									<span class="tipPreviewMsg">
+										<fmt:formatNumber value="1234567.89" type="currency"   var="field_format_example"/>
+										<c:out value="${question.tip}" escapeXml="false"/>&#160;<spring:message code="field_format_tip" argumentSeparator=";"  arguments="${field_format_example}"/>
+									</span>
+								</div>
+							</c:when>
+							
+							<!-- NM	'Numeric Input' -->
+							<c:when test='${question.type.code == "NM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false" />
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input  name="q" type="text"/>
+									<span class="tipPreviewMsg">
+										<fmt:formatNumber value="1234567.8923" type="number"  var="field_format_example"/>
+										<c:out value="${question.tip}" escapeXml="false"/> &#160;<spring:message code="field_format_tip" argumentSeparator=";"  arguments="${field_format_example}"/>
+									</span>
+								</div>	
+							</c:when>
+							
+							<!-- 	DT	'Date Input' -->
+							<c:when test='${question.type.code == "DT"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input  name="q" type="text"/>
+									<spring:message code="date_format" var="date_format" />
+									<spring:message code="date_format_tip" arguments="${date_format}" var="fieldFormat" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/> &#160; <c:out value="${fieldFormat}"/></span>	
+								</div>
+							</c:when>
+							
+							<!-- SD 'Single choice Drop Down'-->
+							<c:when test='${question.type.code == "SD"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.options}">
+										<select style="width:50%;">
+										<option value=""><spring:message code="select_option_message"/></option>	
+										<c:forEach items="${question.options}" var="option" varStatus="loop2">	
+		  									<option value="${option.value}"><c:out value="${option.text}"/></option>
+		  								</c:forEach>
+										</select> 
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>
+								
+								
+							</c:when>
+							
+							<!-- MC 'Multiple Choice Checkboxes'-->
+							<c:when test='${question.type.code == "MC"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+								<c:if test="${empty question.options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+								</c:if>
+								<c:if test="${!empty question.options}">
+									<c:choose>
+										<c:when test='${question.direction == "HORIZONTAL"}'>
+											<table class="questionMultiOption">
+												<c:forEach items="${question.options}" var="option" varStatus="loop">
+													<label style="margin-right:4em;display: inline-block;"><input type="checkbox" name="question" value="option.value" class="checkbox"></input><c:out value="${option.text}"/></label>
+												</c:forEach>
+												<c:if test="${question.allowOtherTextBox}">
+													<input type="text" class="grid-5-12" maxlength="50" style="width:20%;margin-left:-3em;"/>
+												</c:if>
+											</table>	
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${question.options}" var="option" varStatus="loop2">	
+												<input type="checkbox" name="question" value="option.value" class="checkbox"><label><c:out value="${option.text}"/></label></input> <br/>
+											</c:forEach>
+											<c:if test="${question.allowOtherTextBox}">
+													<input type="text" class="grid-5-12" maxlength="50" style="width:20%;"/>
+											</c:if>
+										</c:otherwise>
+									</c:choose>
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</c:if>	
+								</div>	
+							</c:when>
+							
+							<!-- DD 'DataSet Drop Down'-->
+							<c:when test='${question.type.code == "DD"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<spring:message text="datasetItemsp${pageorder}q${question.order}" var="options" htmlEscape="false" />
+									<c:if test="${empty options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+									</c:if>
+									<c:if test="${!empty options}">
+										<select name="question[${question.order}].stringAnswerValue" style="width:50%;">
+											<option value=""><spring:message code="select_option_message"/></option>
+											<!-- <c:forEach items="${requestScope[options]}" var="item"> -->
+												<c:forEach items="${question.options}" var="option" varStatus="loop2">
+		  										<option value="${option.value}"><c:out value="${option.text}"/></option>
+		  									</c:forEach>
+										</select> 
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>
+							</c:when>
+							
+							
+							<!-- SR 'Single Choice Radio'-->
+							<c:when test='${question.type.code == "SR"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.options}">
+									<c:choose>
+										<c:when test='${question.direction == "HORIZONTAL"}'>
+											<table class="questionMultiOption">
+												<c:forEach items="${question.options}" var="option" varStatus="loop2">
+													<label style="margin-right:4em;display: inline-block;"><input type="radio" name="question" value="option.value" class="checkbox"></input><c:out value="${option.text}"/></label>
+												</c:forEach>
+												<c:if test="${question.allowOtherTextBox}">
+													<input type="text" class="grid-5-12" maxlength="50" style="width:20%;margin-left:-3em;" disabled="true"/>
+												</c:if>
+											</table>
+										</c:when>
+								
+										<c:otherwise>
+											<c:forEach items="${question.options}" var="option" varStatus="loop2">	
+												<label><input type="radio" name="question" value="option.value" class="checkbox"></input><c:out value="${option.text}"/></label><br/>
+											</c:forEach>
+											<c:if test="${question.allowOtherTextBox}">
+													<input type="text" class="grid-5-12" maxlength="50" style="width:20%;" disabled="true"/>
+												</c:if>
+										</c:otherwise>
+									</c:choose>
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>	
+									</c:if>
+								</div>
+							</c:when>								
+							
+					
+							<!-- BRM: Yes No DropDown Matrix-->
+							<c:when test='${question.type.code == "BRM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">	
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<select style="width:60px;"  path="questionAnswers[${loop.index}].booleanAnswerValuesMatrix[${rindex.index}][${cindex.index}]">
+																	<option value="false" selected="selected">No</option>
+																	<option value="true" >Yes</option>
+																</select>
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>	
+							</c:when>
+					
+							<!-- STM: Short Text Input Matrix-->
+							<c:when test='${question.type.code == "STM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<input path="questionAnswers[${loop.index}].stringAnswerValuesMatrix[${rindex.index}][${cindex.index}]" type="text" maxlength="50" size="20"/>	
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>	
+							</c:when>
+					
+							<!-- INM: Integer Input Matrix-->
+							<c:when test='${question.type.code == "INM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<input  path="questionAnswers[${loop.index}].stringAnswerValuesMatrix[${rindex.index}][${cindex.index}]" type="text" maxlength="35"/>
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<span class="tipPreviewMsg">
+											<fmt:formatNumber value="1234567.8923" type="number"  var="field_format_example"/>
+											<c:out value="${question.tip}" escapeXml="false"/> &#160;<spring:message code="field_format_tip" argumentSeparator=";"  arguments="${field_format_example}"/>
+										</span>
+									</c:if>	
+								</div>	
+							</c:when>
+					
+							<!-- CRM: Currency Input Matrix-->
+							<c:when test='${question.type.code == "CRM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<input  path="questionAnswers[${loop.index}].stringAnswerValuesMatrix[${rindex.index}][${cindex.index}]" type="text" maxlength="50"/>	
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<span class="tipPreviewMsg">
+											<fmt:formatNumber value="1234567.89" type="currency"   var="field_format_example"/>
+											<c:out value="${question.tip}" escapeXml="false"/> &#160;<spring:message code="field_format_tip" argumentSeparator=";"  arguments="${field_format_example}"/>
+										</span>
+									</c:if>		
+								</div>	
+							</c:when>		
+							
+							<!-- NMM: Decimal Input Matrix-->
+							<c:when test='${question.type.code == "NMM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<input path="questionAnswers[${loop.index}].stringAnswerValuesMatrix[${rindex.index}][${cindex.index}]" type="text" maxlength="50"/>		
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<span class="tipPreviewMsg">
+											<fmt:formatNumber value="1234567.8923" type="number"  var="field_format_example"/>
+											<c:out value="${question.tip}" escapeXml="false"/> &#160;<spring:message code="field_format_tip" argumentSeparator=";"  arguments="${field_format_example}"/>
+										</span>
+									</c:if>	
+								</div>	
+							</c:when>
+							
+							<!-- DTM: Date Input Matrix-->
+							<c:when test='${question.type.code == "DTM"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.rowLabels}">
+										<div class="flash flash-notice"><spring:message code="question.norowlabels_message"/></div>
+									</c:if>
+									<c:if test="${empty question.columnLabels}">
+										<div class="flash flash-notice"><spring:message code="question.nocolumnlabels_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.rowLabels and !empty question.columnLabels}">	
+										<table class="questionsMatrix">
+											<thead>
+												<tr>
+													<th class="emptyCell"></th>
+													<c:forEach items="${question.columnLabels}" var="col">
+														<th><c:out value="${col.label}"/></th>
+													</c:forEach>
+												</tr>
+											</thead>		
+											<tbody>
+												<c:forEach items="${question.rowLabels}" var="row" varStatus="rindex">
+													<c:choose>
+														<c:when test="${rindex.index % 2 == 0}">
+															<c:set var="matrixRowStyle" scope="page" value="even"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="matrixRowStyle" scope="page" value="odd"/>
+														</c:otherwise>
+													</c:choose>
+													<tr class="${matrixRowStyle}">
+														<td class="rowHeader"><c:out value="${row.label}"/></td>
+														<c:forEach items="${question.columnLabels}" var="col" varStatus="cindex">
+															<td>
+																<input  path="questionAnswers[${loop.index}].stringAnswerValuesMatrix[${rindex.index}][${cindex.index}]" type="text" maxlength="50"/>	
+															</td>
+														</c:forEach>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+										<spring:message code="date_format" var="date_format" />
+										<spring:message code="date_format_tip" arguments="${date_format}" var="tip" />
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/> &#160;  <c:out value="${tip}"/></span>
+									</c:if>	
+								</div>	
+							</c:when>
+							
+							<!-- IMG	'Image'-->
+							<c:when test='${question.type.code == "IMG"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								</label>
+								<div class="questionAnswer">
+									<img src="${question.multimediaLink}" height="${question.height}" width="${question.width}" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>	
+							</c:when>							
+							
+							<!-- VID	'Video'-->
+							<c:when test='${question.type.code == "VID"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								</label>
+								<div class="questionAnswer">
+									<img src="http://lh6.ggpht.com/_1Q1cgK2sxXk/SYuK88cnoOI/AAAAAAAAAU4/YDVIaZXjTa0/videoca78bd5b72f3.jpg" height="${question.height}" width="${question.width}" />
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>	
+							</c:when>	
+							
+							<!-- FIL	'File Upload'-->
+							<c:when test='${question.type.code == "FIL"}'>
+							
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<input class="grid-8-12"  type="file" name="file${question.id}" id="file${question.id}" size="50"/>
+									<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+								</div>	
+							</c:when>
+							
+							
+							
+							<!-- STR	'Star rating'-->
+							<c:when test='${question.type.code == "STR"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+									<c:if test="${question.required}">
+										<em class="formee-req">*</em>
+									</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.options}">
+										<c:forEach items="${question.options}" var="option" varStatus="loop2">
+												<c:if test="${stringAnswerValue eq  option.value}">
+													<input class="star" type="radio" name="p[${question.id}].question[${loop.index}].stringAnswerValue" value="${option.value}" checked="true">
+													<label id="ratingStarLabel${loop2.index}"><!--<c:out value="${option.text}"/>--></label></input> <br/>
+												</c:if>
+												
+												<c:if test="${stringAnswerValue ne  option.value}">
+													<input class="star" type="radio" name="p[${question.id}].question[${loop.index}].stringAnswerValue" value="${option.value}" >
+													<label id="ratingStarLabel${loop2.index}"><!--<c:out value="${option.text}"/>--></label></input>
+												</c:if>
+										</c:forEach><br/>
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>			
+							</c:when>
+							
+							
+							<!-- SFR	'Smiley faces Rating'-->
+							<c:when test='${question.type.code == "SFR"}'>
+								<label class="questionText"><c:out value="${questionNumber}"/><c:out value="${question.questionText}" escapeXml="false"/>
+								<c:if test="${question.required}">
+									<em class="formee-req">*</em>
+								</c:if>
+								</label>
+								<div class="questionAnswer">
+									<c:if test="${empty question.options}">
+										<div class="flash flash-notice"><spring:message code="question.nooptions_message"/></div>
+									</c:if>
+									<c:if test="${!empty question.options}">
+										<div class="smileyDiv">
+											<c:choose>
+												<c:when test='${question.direction == "HORIZONTAL" }'>
+													<c:forEach items="${question.options}" var="option" varStatus="loop2">
+															<div class="smileyV">
+															<spring:url value="/resources/images/rating/smiley${loop2.index + 1}.png" var="smiley_image_url" />
+															<img src="${smiley_image_url}" alt="${option.text}" />
+															
+															<c:if test="${stringAnswerValue eq  option.value}">
+																<input  type="radio" name="questionAnswers[${loop.index}].stringAnswerValue" value="${option.value}" class="checkbox" checked="true">
+																<label><c:out value="${option.text}"/></label></input> 
+															</c:if>
+															
+															<c:if test="${stringAnswerValue ne  option.value}">
+																	<input type="radio" name="questionAnswers[${loop.index}].stringAnswerValue" value="${option.value}" class="checkbox" > 
+																	<label><c:out value="${option.text}"/></label></input>
+															</c:if>
+															</div>
+													</c:forEach>
+												</c:when>
+												
+												<c:otherwise>
+													<c:forEach items="${question.options}" var="option" varStatus="loop2">
+															<div class="smileyH">
+															<spring:url value="/resources/images/rating/smiley${loop2.index + 1}.png" var="smiley_image_url" />
+															<img src="${smiley_image_url}" alt="${option.text}" />
+															
+															<c:if test="${stringAnswerValue eq  option.value}">
+																<input  type="radio" name="questionAnswers[${loop.index}].stringAnswerValue" value="${option.value}" class="checkbox" checked="true">
+																<label><c:out value="${option.text}"/></label></input> <br/>
+															</c:if>
+															
+															<c:if test="${stringAnswerValue ne  option.value}">
+																	<input type="radio" name="questionAnswers[${loop.index}].stringAnswerValue" value="${option.value}" class="checkbox" > 
+																	<label><c:out value="${option.text}"/></label></input> <br/>
+															</c:if>
+															</div>
+													</c:forEach>
+												</c:otherwise>
+												
+											</c:choose>
+										</div>
+										<span class="tipPreviewMsg"><c:out value="${question.tip}" escapeXml="false"/></span>
+									</c:if>	
+								</div>				
+							</c:when>
+					</c:choose>
+					
+					<div class="questionLinks" style="text-align:right;">
+				
+				
+					
+					
+						      <!-- Update link Allow only when survey status is equal to 'I' Incomplete -->
+						      <c:if test="${surveyStatus eq 'I' || surveyStatus eq 'P'}" >	
+					              <spring:url value="/settings/questions/${question.id}" var="update_form_url">
+					                <spring:param name="form" />
+					              </spring:url>
+					              <spring:url value="/resources/images/update.png" var="update_image_url" />
+					              <spring:message code="com.jd.survey.domain.settings.question_label_short" var="typeName" htmlEscape="false" />
+					              <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+					             
+					              <a href="${update_form_url}" class="fancyboxLink fancybox.iframe" target="_blank" >
+					                <i class="icon-edit">&#160;</i><c:out value="${fn:toLowerCase(update_label)}"/>
+					              </a>
+					           </c:if>   
+					           
+					            <!-- Update options link Allow only when survey surveyStatus is equal to 'I' Incomplete -->
+							      <c:if test="${question.type.requiresOptions and surveyStatus eq 'I'}" >		
+						              <spring:url value="/settings/questionOptions/${question.id}" var="update_form_url">
+						                <spring:param name="form" />
+						              </spring:url>
+						              <spring:url value="/resources/images/update.png" var="update_image_url" />
+						              <spring:message code="options_label" var="typeName" htmlEscape="false" />
+						              <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+						             
+						              <a href="${update_form_url}" class="fancyboxLink fancybox.iframe" target="_blank" >
+						                <i class="icon-list-ul">&#160;</i><c:out value="${fn:toLowerCase(update_label)}"/>
+						              </a>
+						          </c:if>  
+						          
+						          <!-- Update columns link Allow only when survey surveyStatus is equal to 'I' Incomplete -->
+						          <c:if test="${question.type.isMatrix and  surveyStatus eq 'I'}" >
+					          		 <spring:url value="/settings/questionCols/${question.id}" var="update_form_url">
+										<spring:param name="form" />
+									  </spring:url>
+									  <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+									  <spring:url value="/resources/images/update.png" var="update_image_url" />
+									  <spring:message code="columns_label" var="typeName" htmlEscape="false" />
+									  <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+									 
+									  <a href="${update_form_url}" class="fancyboxLink fancybox.iframe" target="_blank" >
+										<i class="icon-list-ul">&#160;</i><c:out value="${fn:toLowerCase(update_label)}"/>
+									  </a>
+						          </c:if>
+						          
+						          <!-- Update columns link Allow only when survey surveyStatus is equal to 'I' Incomplete -->
+						          <c:if test="${question.type.isMatrix and  surveyStatus eq 'I'}" >
+						          	 <spring:url value="/settings/questionRows/${question.id}" var="update_form_url">
+										<spring:param name="form" />
+									  </spring:url>
+									  <spring:url value="/resources/images/update.png" var="update_image_url" />
+									  <spring:message code="rows_label" var="typeName" htmlEscape="false" />
+									  <spring:message arguments="${typeName}" code="entity_update" var="update_label" htmlEscape="false" />
+									 
+									  <a href="${update_form_url}"  class="fancyboxLink fancybox.iframe" target="_blank">
+										<i class="icon-list-ul">&#160;</i><c:out value="${fn:toLowerCase(update_label)}"/>
+									  </a>
+						          </c:if>
+						          
+						          
+						          
+						          
+				    			<!-- Delete link Allow only when survey surveyStatus is equal to 'I' Incomplete -->
+								<c:if test="${surveyStatus eq 'I'}" >
+									<spring:url value="/settings/questions/${question.id}" var="delete_form_url" />
+									<spring:url value="/resources/images/delete.png" var="delete_image_url" />
+									<form:form id="${question.type.code}_id_${question.id}" action="${delete_form_url}" method="DELETE" cssClass="iconform">
+									  <spring:message code="com.jd.survey.domain.settings.question_label_short" var="typeName" htmlEscape="false" />	
+									  <spring:message arguments="${typeName}" code="entity_delete" var="delete_label" htmlEscape="false" />
+									  <c:set var="delete_confirm_msg">
+									    <spring:escapeBody javaScriptEscape="true">
+									      <spring:message code="entity_delete_confirm" htmlEscape="false"/>
+									    </spring:escapeBody>
+									  </c:set>
+									  <button type="submit" class="buttonAsText" alt="${fn:escapeXml(delete_label)}" title="${fn:escapeXml(delete_label)}" onclick="return confirm('${delete_confirm_msg}');">
+										<i class="icon-trash icon-1x deletelink">&#160;</i><c:out value="${fn:toLowerCase(delete_label)}"/>
+									  </button>
+									  
+									  <c:if test="${not empty param.page}">
+									    <input name="page" type="hidden" value="1" />
+									  </c:if>
+									  <c:if test="${not empty param.size}">
+									    <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+									  </c:if>
+									</form:form>	
+								</c:if>  
+						</div>
+					</div>
+					
+					
+				</c:forEach>
+				<div class="questionLinks" style="text-align:right;">
+				<c:if test="${surveyStatus eq 'I'}" >  
+								<spring:url value="/settings/questions/${pageid}" var="create_url">
+									<spring:param name="create" />
+								</spring:url>
+								<spring:url value="/resources/images/add.png" var="create_img_url" />
+			               		<spring:message code="com.jd.survey.domain.settings.question_label_short" var="typeName" htmlEscape="false" />	
+						   		<spring:message arguments="${typeName}" code="entity_add" var="add_message" htmlEscape="false" />
+				              	<a href="${create_url}" class="fancyboxLink fancybox.iframe" target="_blank" >	
+							   		<i class="icon-plus icon-1x">&#160;</i><c:out value="${fn:toLowerCase(add_message)}"/>
+							  	</a>
+							 </c:if> 
+			</div>
+  	  
+  </jsp:root>
