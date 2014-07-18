@@ -1,4 +1,4 @@
-![JDeSurvey Logo](http://github.com/JD-Software/JD_eSurvey/Logo.png)
+![JDeSurvey Logo](https://github.com/JD-Software/JD_eSurvey/blob/master/Logo.png)
 
 # JD eSurvey: Data Gathering Made Easy
 
