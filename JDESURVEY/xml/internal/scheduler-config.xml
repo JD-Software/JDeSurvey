@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd  
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd 
+						http://www.springframework.org/schema/task  
+						http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+						
+						
+	<!--Property For @Scheduled Annotation 		-->
+	<bean id="schedulerService" class="com.jd.survey.service.settings.SchedulerService" />
+	<task:annotation-driven executor="myExecutor" scheduler="myScheduler" />
+	<task:executor id="myExecutor" pool-size="5" />
+	<task:scheduler id="myScheduler" pool-size="10" />	
+	<!--						
+	<context:component-scan annotation-config="true" base-package="com.jd.survey.service.settings"/>
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <task:executor id="executor" pool-size="10"/>
+    <task:annotation-driven scheduler="scheduler" executor="executor"/>
+	<bean id="schedulerService" class="com.jd.survey.service.settings.SchedulerService" />
+-->	
+						
+						
+ 
+</beans>

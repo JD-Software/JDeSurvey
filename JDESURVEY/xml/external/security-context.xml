@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 	xmlns="http://www.springframework.org/schema/security" 
+				xmlns:beans="http://www.springframework.org/schema/beans" 
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				xsi:schemaLocation="http://www.springframework.org/schema/beans 
+									http://www.springframework.org/schema/beans/spring-beans.xsd
+									http://www.springframework.org/schema/security 
+									http://www.springframework.org/schema/security/spring-security.xsd
+									">
+    <!-- HTTP security configurations -->
+    <http auto-config="true" use-expressions="true" access-denied-page="/accessDenied" >
+        <form-login login-processing-url="/resources/j_spring_security_check" login-page="/public/login" authentication-failure-url="/public/login?login_error=t"  default-target-url="/private" />
+        <logout logout-url="/resources/j_spring_security_logout" />
+        <!-- Configure these elements to secure URIs in your application -->
+	    
+		<intercept-url pattern="/private/**" access="hasAnyRole('ROLE_SURVEY_PARTICIPANT','ROLE_SURVEY_ADMIN','ROLE_ADMIN')" />
+		<intercept-url pattern="/public/**" access="permitAll" />
+		<intercept-url pattern="/" access="isAuthenticated()" />
+	    <intercept-url pattern="/resources/**" access="permitAll" />
+        <intercept-url pattern="/**" access="permitAll" />
+		
+		
+    </http>
+    <!-- Configure Authentication mechanism -->
+	
+	<beans:bean id="jdUserDetailsService" class="com.jd.survey.service.security.JDUserDetailsService"/>
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="jdUserDetailsService">
+			<password-encoder hash="sha-256">
+				<salt-source user-property="salt"/>
+			</password-encoder>
+		</authentication-provider>
+    </authentication-manager>
+	
+	
+	<global-method-security secured-annotations="enabled" />
+	
+	
+	
+	
+	
+	
+	
+	
+</beans:beans>
+
+
