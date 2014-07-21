@@ -1679,7 +1679,9 @@ button.buttonAsText {background:none; border:none; margin:0;padding:0;color:#559
 .questionLinks a:hover, button.buttonAsText:hover {color:#004179; text-decoration:none;}
 
 a.hastip {color:#5599ff;}
+i.hastip {color:#5599ff;}
 table thead tr th a.hastip {color:#5599ff;}
+
 	
 
 .tipsy { padding: 5px; font-size: 0.8em; position: absolute; z-index: 100000;}
