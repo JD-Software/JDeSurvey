@@ -41,13 +41,13 @@
 					<th width="25%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.name_label"/></th>
 					<th width="15%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.status_label"/></th>
 					<th width="15%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.isavailabletopublic_label"/>
-									<spring:message code="isPublic_tip" var="tip"/>
-									<a class="hastip" title="${tip}">?</a>
+									<spring:message code="isPublic_label_tip" var="tip"/>
+									<i class="hastip" title="${tip}">?</i>
 					</th>
 									
 					<th width="10%"><spring:message code="com.jd.survey.domain.settings.surveydefinition.allowmultiplesubmissions_label"/>
-									<spring:message code="allowMultipleSubmissions_tip" var="tip"/>
-									<a class="hastip" title="${tip}">?</a>
+									<spring:message code="allowMultipleSubmissions_label_tip" var="tip"/>
+									<i class="hastip" title="${tip}">?</i>
 					</th>
 					<th class="iconcell"><spring:message code="global_actions_menu"/></th>
 				</tr>
