@@ -12,7 +12,7 @@
 		
 		<tiles:importAttribute name="pagemode"/>	
 		<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SURVEY_ADMIN">
-		
+		<h2 class="sidemenuHeading">Menu</h2>
 		<c:choose>
 			<c:when test="${pagemode eq 'list'}">
 				<ul id="sidemenu" class="topmenu">
