@@ -214,6 +214,10 @@ ul#topmenu ul li:focus>a,ul#topmenu ul li a:focus{
 
 }
 
+.sidemenuHeading {
+	visibility:hidden;
+	}
+
 .sidemenu ul{
 	margin:0;
 	list-style:none;
