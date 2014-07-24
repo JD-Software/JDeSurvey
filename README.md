@@ -2,7 +2,7 @@
 
 # JD eSurvey: Data Gathering Made Easy
 
-JD eSurvey is an open-source business intelligence web application for the creation, collection, and analysis of surveys. Written in Java and built using the Spring Framework and Hibernate ORM, JD eSurvey is a powerful enterprise class application. Powered by a range of features from branching and randomization, to piping for survey control, to a diverse list of question types JD eSurvey is the ideal solution for any individual or organization.
+JD eSurvey is an open-source business intelligence web application for the creation, collection, and analysis of surveys created by [JD Software](http://www.jdsoft.com). Written in Java and built using the Spring Framework and Hibernate ORM, JD eSurvey is a powerful enterprise class application. Powered by a range of features from branching and randomization, to piping for survey control, to a diverse list of question types JD eSurvey is the ideal solution for any individual or organization.
 
 Both easy and customizable, our interface eliminates the time-wasting confusion and labor usually required to produce professional-looking surveys. With just a few clicks, you can gather comprehensive survey data in a readable format with graphs and statistics for analysis purposes. Plus, because JD eSurvey is ADA 508 compliant and has the ability to customize the look and feel of surveys, send email invitations, and validate responses it can handle any situation to assure survey flow. Best of all, with reliable security features built into JD eSurvey, you can be confident that your surveys and data will be kept safe and confidential.    
 
