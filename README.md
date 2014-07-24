@@ -417,10 +417,10 @@ Watch this [video](http://vimeo.com/61912283) to see how you can personalize you
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 Watch this [video](http://vimeo.com/97945474) to see how to install and run a pre-compiled demonstration version of the application on a Windows machine using Apache Tomcat and MySQL.
 
-## Bug Reporting
+## [Bug Reporting](https://jdsoftware.lighthouseapp.com/projects/114531-jd-esurvey/overview)
 To report bugs please use JD eSuvey's [Lighthouse issue tracker](https://jdsoftware.lighthouseapp.com/projects/114531-jd-esurvey/overview)
 
-## License
+## [License](http://www.gnu.org/licenses/)
 
 JD eSurvey
 Copyright (C) 2014  JD Software, Inc.
