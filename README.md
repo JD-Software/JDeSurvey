@@ -5,7 +5,7 @@
 
 Both easy and customizable, our interface eliminates the time-wasting confusion and labor usually required to produce professional-looking surveys. With just a few clicks, you can gather comprehensive survey data in a readable format with graphs and statistics for analysis purposes. Plus, because JD eSurvey is ADA 508 compliant and has the ability to customize the look and feel of surveys, send email invitations, and validate responses it can handle any situation to assure survey flow. Best of all, with reliable security features built into JD eSurvey, you can be confident that your surveys and data will be kept safe and confidential.    
 
-Please see our [GitHub Wiki](https://github.com/JD-Software/JD_eSurvey/wiki) for more information.
+##### Please see our [GitHub Wiki](https://github.com/JD-Software/JD_eSurvey/wiki) for more information.
 
 ## Communication
 
