@@ -1,4 +1,4 @@
-![JDeSurvey Logo](https://github.com/JD-Software/JD_eSurvey/blob/master/Logo.png)
+![JDeSurvey Logo](https://github.com/JD-Software/JD_eSurvey/blob/master/images/Logo.png)
 
 # JD eSurvey: Data Gathering Made Easy
 
@@ -352,7 +352,8 @@ Masks are text patterns that responses must adhere to. If a mask is applied to a
 See all of our videos for JD eSurvey at (http://jdsoft.com/jdesurvey/)
 
 ### Creating and Publishing Surveys
-
+<a href="http://vimeo.com/61911800" target="_blank"><img src="https://github.com/JD-Software/JD_eSurvey/blob/master/images/creating-and-publishing.png" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 In this [video](http://vimeo.com/61911800) tutorial we guide you through the basics on how to create surveys from scratch using JD eSurvey. We show you the architecture of surveys with JD eSurvey and examples of some of the question types. After going through the steps in this video you will be able to competently develop and deliver your own surveys with ease.
 
 ### Accessing and Filling Out Surveys
