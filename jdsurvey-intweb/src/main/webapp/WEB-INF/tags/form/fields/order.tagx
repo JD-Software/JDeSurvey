@@ -94,7 +94,7 @@
 				<!-- More than 1 element in the set-->
 				<c:otherwise>
 					<div id="_${fn:escapeXml(id)}_id">
-						<label class="grid-3-12" for="_${sec_field}_id"><c:out value="${fn:escapeXml(label)}" /><c:if test="${not empty required}"><em class="formee-req">*</em></c:if>:</label>
+						<label class="grid-3-12" for="${sec_field}"><c:out value="${fn:escapeXml(label)}" /><c:if test="${not empty required}"><em class="formee-req">*</em></c:if>:</label>
 						<form:select path="${sec_field}" class="${cssclass}" disabled="${disabled}">
 							<c:forEach var="i" begin="1" end="${size + 1}" step="1" varStatus ="status">
 								<c:choose>

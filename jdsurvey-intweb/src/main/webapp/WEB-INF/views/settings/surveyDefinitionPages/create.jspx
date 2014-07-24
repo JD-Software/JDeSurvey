@@ -23,6 +23,4 @@
        	</form:create>
 		<form:dependency dependencies="${dependencies}" id="d_com.jd.survey.domain.settings.SurveyDefinitionPage" render="${not empty dependencies}"/>
 	</div>
-</div>	
-
-
+</div>

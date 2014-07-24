@@ -16,7 +16,7 @@
 <noscript>
 <div class="flash flash-notice"><spring:message code="browser_no_javascript"/></div>
 </noscript>
-	
+ 
 <script type="text/javaScript">
 
    $(document).ready(function(){
@@ -136,16 +136,16 @@
 
 
     <div class="right-column">	
-   		<div class="block">
-			<form:create id="fc_com.jd.survey.domain.settings.SurveyDefinition" modelAttribute="surveyDefinition" path="/settings/surveyDefinitions" render="${empty dependencies}" >
-				<c:if test="${!empty surveyDefinition.department}">
+		<div class="block">
+ 		 hello two<form:create id="fc_com.jd.survey.domain.settings.SurveyDefinition" modelAttribute="surveyDefinition" path="/settings/surveyDefinitions" render="${empty dependencies}" >
+					<c:if test="${!empty surveyDefinition.department}">
 					<field:hidden path="department.id"/>
 					<field:link  field="department.name" id="c_com.jd.survey.domain.settings.Department"  path="/security/departments/${surveyDefinition.department.id}" object="${surveyDefinition}" cssclass="grid-8-12"/>
 				</c:if>
 				<c:if test="${empty surveyDefinition.department}">
 					<field:select field="department" id="c_com.jd.survey.domain.settings.SurveyDefinition.department" itemValue="id" itemLabel="name" items="${departments}" path="/security/departments" cssclass="grid-3-12" required="true"/>
 				</c:if>
-				
+				 	
 				<field:input field="name" id="c_com.jd.survey.domain.settings.SurveyDefinition.name" cssclass="grid-8-12" maxlength="75" required="true"/>
 				<div>
 					<spring:message code="theme_tip" var="qTypeTip" />
@@ -254,7 +254,7 @@
 		
 		<!-- Frequency reminder Weekly Recurrence -->	   
 		<div id="reminder_weeklyRecurrence"  class="reminder_weeklyRecurrence" name="reminder_weeklyRecurrence">								
-			<label for="reminder_weeklyRecurrence" class="grid-3-12" ><spring:message code="com.jd.survey.domain.settings.surveydefinition.weeklyrecurrence_label"/></label>
+			<label for="autoRemindersWeeklyOccurrence" class="grid-3-12" ><spring:message code="com.jd.survey.domain.settings.surveydefinition.weeklyrecurrence_label"/></label>
 				<springform:select id="autoRemindersWeeklyOccurrence" path="autoRemindersWeeklyOccurrence">
 					<c:forEach var="i" begin="1" end="52">
 				  		<option value="${i}">${i}</option>
