@@ -7,12 +7,6 @@ Both easy and customizable, our interface eliminates the time-wasting confusion 
 
 ##### Please see our [GitHub Wiki](https://github.com/JD-Software/JD_eSurvey/wiki) for more information.
 
-## Communication
-
-* Web: [JDSoft.com](https://www.jdsoft.com/)
-* Sales: <sales@jdsoft.com>
-* Careers: <careers@jdsoft.com>
-* Inquiries: <info@jdsoft.com>
 
 ## [License](http://www.gnu.org/licenses/)
 
