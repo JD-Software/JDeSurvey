@@ -16,7 +16,7 @@ Both easy and customizable, our interface eliminates the time-wasting confusion 
 ##[FAQs](https://github.com/JD-Software/JD_eSurvey/wiki/FAQs)
 
 
-## [License](http://www.gnu.org/licenses/)
+## [License](http://www.gnu.org/licenses/agpl.html)
 
 JD eSurvey
 Copyright (C) 2014  JD Software, Inc.
