@@ -7,7 +7,7 @@ Both easy and customizable, our interface eliminates the time-wasting confusion 
 
 ##### Please see our [GitHub Wiki](https://github.com/JD-Software/JD_eSurvey/wiki) for more information.
 
-## [Can't wait to try it out, then see our precompiled demo version and companion instalation video](https://github.com/JD-Software/JD_eSurvey/wiki/Download-and-Installation)
+## [Can't wait to try it out, then see our precompiled version and companion instalation video](https://github.com/JD-Software/JD_eSurvey/wiki/Download-and-Installation)
 
 ## [Features](https://github.com/JD-Software/JD_eSurvey/wiki/Features)
 
