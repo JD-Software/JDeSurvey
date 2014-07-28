@@ -1,21 +1,21 @@
-#[![JDeSurvey Logo](https://github.com/JD-Software/JD_eSurvey/blob/master/images/Logo.png)](http://www.jdsoft.com/jdesurvey)
+#[![JDeSurvey Logo](https://github.com/JD-Software/JDeSurvey/blob/master/images/Logo.png)](http://www.jdsoft.com/jdesurvey)
 ### Data Gathering Made Easy
 
 [JD eSurvey](http://www.jdsoft.com/jdesurvey) is an open-source web application developed by [JD Software](http://www.jdsoft.com) for the creation, collection, and analysis of surveys. Written in Java and built using the Spring Framework and Hibernate ORM, JD eSurvey is a powerful web application. It has a range of features from branching and randomization, to piping for survey control, to a long list of question types, including video questions.
 
-![sreen shot](https://github.com/JD-Software/JD_eSurvey/blob/master/images/survey-creation.png)
+![sreen shot](https://github.com/JD-Software/JDeSurvey/blob/master/images/survey-creation.png)
 
 The interface allows users to produce professional-looking surveys easily. With just a few clicks, you can gather comprehensive survey data in an easy to read format with graphs and statistics for analysis purposes. The application has the ability to customize the look and feel of surveys, send email invitations, and validate responses. It Also comes with reliable security features based on Spring Security.    
 
-##### Please see our [GitHub Wiki](https://github.com/JD-Software/JD_eSurvey/wiki) for more information.
+##### Please see our [GitHub Wiki](https://github.com/JD-Software/JDeSurvey/wiki) for more information.
 
-#### [Can't wait to try it out, then see our precompiled version and companion instalation video](https://github.com/JD-Software/JD_eSurvey/wiki/Download-and-Installation)
+#### [Can't wait to try it out, then see our precompiled version and companion instalation video](https://github.com/JD-Software/JDeSurvey/wiki/Download-and-Installation)
 
-#### [Features](https://github.com/JD-Software/JD_eSurvey/wiki/Features)
+#### [Features](https://github.com/JD-Software/JDeSurvey/wiki/Features)
 
-#### [Video Tutorials](https://github.com/JD-Software/JD_eSurvey/wiki/Video%20Tutorials)
+#### [Video Tutorials](https://github.com/JD-Software/JDeSurvey/wiki/Video%20Tutorials)
 
-####[FAQs](https://github.com/JD-Software/JD_eSurvey/wiki/FAQs)
+####[FAQs](https://github.com/JD-Software/JDeSurvey/wiki/FAQs)
 
 
 #### [License](http://www.gnu.org/licenses/agpl.html)
