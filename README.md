@@ -9,7 +9,7 @@ The interface allows users to produce professional-looking surveys easily. With 
 
 ##### Please see our [GitHub Wiki](https://github.com/JD-Software/JDeSurvey/wiki) for more information.
 
-#### [Can't wait to try it out, then see our precompiled version and companion instalation video](https://github.com/JD-Software/JDeSurvey/wiki/Download-and-Installation)
+#### [Can't wait to try it out, then click here](https://github.com/JD-Software/JDeSurvey/wiki/Download-and-Installation)
 
 #### [Features](https://github.com/JD-Software/JDeSurvey/wiki/Features)
 
