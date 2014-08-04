@@ -53,7 +53,6 @@
   	<module>../jdsurvey-extcont</module>
     <module>../jdsurvey-extweb</module>
    
-    
  </modules>
 
 <dependencies>
