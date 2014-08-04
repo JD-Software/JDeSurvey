@@ -46,11 +46,10 @@
 
  <modules>
 	<module>../jdsurvey-core</module>
-	 <module>../jdsurvey-comcont</module>
+	<module>../jdsurvey-comcont</module>
 	<module>../jdsurvey-intcont</module>
     <module>../jdsurvey-intweb</module>
-     
-  	<module>../jdsurvey-extcont</module>
+    <module>../jdsurvey-extcont</module>
     <module>../jdsurvey-extweb</module>
    
  </modules>
