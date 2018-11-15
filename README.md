@@ -14,7 +14,7 @@ The interface allows users to produce professional-looking surveys easily. With 
 #### [Features](https://github.com/JD-Software/JDeSurvey/wiki/Features)
 
 #### [Video Tutorials](https://github.com/JD-Software/JDeSurvey/wiki/Video%20Tutorials)
-See all of our videos for JD eSurvey here: [JDsoft.com/JDeSurvey](http://www.jdsoft.com/jdesurvey/)
+See all of our videos for JD eSurvey here: [JDsoft.com/JDeSurvey](https://www.jdsoft.com/jd-esurvey.html)
 
 ### Creating and Publishing Surveys
 
