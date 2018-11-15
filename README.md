@@ -1,4 +1,4 @@
-#[![JDeSurvey Logo](https://github.com/JD-Software/JDeSurvey/blob/master/images/Logo.png)](http://www.jdsoft.com/jdesurvey)
+#[![JDeSurvey Logo](https://github.com/JD-Software/JDeSurvey/blob/master/images/Logo.png)](http://www.jdsoft.com/jd-esurvey)
 ### Data Gathering Made Easy
 
 [JD eSurvey](https://www.jdsoft.com/jd-esurvey.html) is an open-source web application developed by [JD Software](https://www.jdsoft.com) for the creation, collection, and analysis of surveys. Written in Java and built using the Spring Framework and Hibernate ORM, JD eSurvey is a powerful web application. It has a range of features from branching and randomization, to piping for survey control, to a long list of question types, including video questions.
