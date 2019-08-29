@@ -54,7 +54,7 @@
 
 
 		<spring.version>3.1.1.RELEASE</spring.version>
-		<spring-security.version>3.1.0.RELEASE</spring-security.version>
+		<spring-security.version>5.1.6.RELEASE</spring-security.version>
 		
 		<hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
 		<hibernate.version>4.1.1.Final</hibernate.version>
