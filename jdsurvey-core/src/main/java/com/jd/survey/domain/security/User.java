@@ -416,11 +416,8 @@ public class User implements Comparable <User>, UserDetails , Serializable , Sec
 	public String getFullName() {
 		StringBuilder s = new StringBuilder("");
 		if (this.firstName != null) {
-			if (this.firstName != null) {s.append(this.firstName).append(" ").append(this.lastName);} else {s.append(this.firstName);}
-		}	
-		else{
-			if (this.lastName != null) {s.append(this.lastName);}
-		} 
+			s.append(this.firstName).append(" ").append(this.lastName);
+		}
 		return s.toString();
 	}
 	
