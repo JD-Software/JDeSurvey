@@ -1,3 +1,7 @@
+```diff
+- ⚠️ JDESURVEY IS NO LONGER BEING MAINTAINED BY JD SOFTWARE ⚠️
+```
+
 #[![JDeSurvey Logo](https://github.com/JD-Software/JDeSurvey/blob/master/images/Logo.png)](http://www.jdsoft.com/jd-esurvey.html)
 ### Data Gathering Made Easy
 
